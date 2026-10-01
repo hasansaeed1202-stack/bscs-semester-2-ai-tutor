@@ -1,0 +1,218 @@
+{
+  "subjectSlug": "expository-writing",
+  "units": [
+    {
+      "id": "expository-writing-week-1",
+      "type": "week",
+      "title": "Week 1",
+      "topics": [
+        {
+          "id": "expository-writing-topic-1-writing-process",
+          "title": "Writing Process"
+        },
+        {
+          "id": "expository-writing-topic-2-purpose-and-audience",
+          "title": "Purpose and Audience"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "expository-writing-week-2",
+      "type": "week",
+      "title": "Week 2",
+      "topics": [
+        {
+          "id": "expository-writing-topic-3-paragraph-writing",
+          "title": "Paragraph Writing"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "expository-writing-week-3",
+      "type": "week",
+      "title": "Week 3",
+      "topics": [
+        {
+          "id": "expository-writing-topic-4-essay-writing",
+          "title": "Essay Writing"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "expository-writing-week-4",
+      "type": "week",
+      "title": "Week 4",
+      "topics": [
+        {
+          "id": "expository-writing-topic-5-descriptive-essays",
+          "title": "Descriptive Essays"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "expository-writing-week-5",
+      "type": "week",
+      "title": "Week 5",
+      "topics": [
+        {
+          "id": "expository-writing-topic-6-persuasive-writing",
+          "title": "Persuasive Writing"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "expository-writing-week-6",
+      "type": "week",
+      "title": "Week 6",
+      "topics": [
+        {
+          "id": "expository-writing-topic-7-sentence-errors",
+          "title": "Sentence Errors"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "expository-writing-week-7",
+      "type": "week",
+      "title": "Week 7",
+      "topics": [
+        {
+          "id": "expository-writing-topic-8-how-to-give-presentations",
+          "title": "How to Give Presentations"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "expository-writing-week-8",
+      "type": "week",
+      "title": "Week 8",
+      "topics": [
+        {
+          "id": "expository-writing-topic-9-oral-presentations",
+          "title": "Oral Presentations"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "expository-writing-milestone-9",
+      "type": "milestone",
+      "title": "Mid Semester Exam",
+      "label": null
+    },
+    {
+      "id": "expository-writing-week-9",
+      "type": "week",
+      "title": "Week 9",
+      "topics": [
+        {
+          "id": "expository-writing-topic-10-comparison-and-contrast-essays",
+          "title": "Comparison and Contrast Essays"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "expository-writing-week-10",
+      "type": "week",
+      "title": "Week 10",
+      "topics": [
+        {
+          "id": "expository-writing-topic-11-dialogue-writing",
+          "title": "Dialogue Writing"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "expository-writing-week-11",
+      "type": "week",
+      "title": "Week 11",
+      "topics": [
+        {
+          "id": "expository-writing-topic-12-short-story-writing",
+          "title": "Short Story Writing"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "expository-writing-week-12",
+      "type": "week",
+      "title": "Week 12",
+      "topics": [
+        {
+          "id": "expository-writing-topic-13-review-writing",
+          "title": "Review Writing"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "expository-writing-week-13",
+      "type": "week",
+      "title": "Week 13",
+      "topics": [
+        {
+          "id": "expository-writing-topic-14-narrative-essays",
+          "title": "Narrative Essays"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "expository-writing-week-14",
+      "type": "week",
+      "title": "Week 14",
+      "topics": [
+        {
+          "id": "expository-writing-topic-15-letter-writing",
+          "title": "Letter Writing"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "expository-writing-week-15",
+      "type": "week",
+      "title": "Week 15",
+      "topics": [
+        {
+          "id": "expository-writing-topic-16-public-speaking",
+          "title": "Public Speaking"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "expository-writing-milestone-17",
+      "type": "milestone",
+      "title": "End Semester Exam",
+      "label": null
+    }
+  ],
+  "topicCount": 16,
+  "curriculumVersion": "23a6fbacb981f7bf1d4556177a8284a3fa8601104eccf2aa1786538dd379d291"
+}

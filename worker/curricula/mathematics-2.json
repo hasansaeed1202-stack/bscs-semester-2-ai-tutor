@@ -1,0 +1,407 @@
+{
+  "subjectSlug": "mathematics-2",
+  "units": [
+    {
+      "id": "mathematics-2-week-1",
+      "type": "week",
+      "title": "Week 1",
+      "topics": [
+        {
+          "id": "mathematics-2-topic-1-concept-of-function",
+          "title": "Concept of function"
+        },
+        {
+          "id": "mathematics-2-topic-2-domain-and-range-of-a-function",
+          "title": "Domain and range of a function"
+        },
+        {
+          "id": "mathematics-2-topic-3-notation-and-value-of-a-function",
+          "title": "Notation and value of a function"
+        },
+        {
+          "id": "mathematics-2-topic-4-types-of-functions",
+          "title": "Types of functions"
+        },
+        {
+          "id": "mathematics-2-topic-5-graph-sketching",
+          "title": "Graph sketching"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "mathematics-2-week-2",
+      "type": "week",
+      "title": "Week 2",
+      "topics": [
+        {
+          "id": "mathematics-2-topic-6-limits-of-a-function",
+          "title": "Limits of a function"
+        },
+        {
+          "id": "mathematics-2-topic-7-theorems-on-limits",
+          "title": "Theorems on limits"
+        },
+        {
+          "id": "mathematics-2-topic-8-left-and-right-hand-limits",
+          "title": "Left- and right-hand limits"
+        },
+        {
+          "id": "mathematics-2-topic-9-limits-at-infinity",
+          "title": "Limits at infinity"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "mathematics-2-week-3",
+      "type": "week",
+      "title": "Week 3",
+      "topics": [
+        {
+          "id": "mathematics-2-topic-10-continuous-and-discontinuous-functions",
+          "title": "Continuous and discontinuous functions"
+        },
+        {
+          "id": "mathematics-2-topic-11-criteria-for-existence-of-a-limit-of-function",
+          "title": "Criteria for existence of a limit of function"
+        },
+        {
+          "id": "mathematics-2-topic-12-continuity-of-a-function-at-a-point",
+          "title": "Continuity of a function at a point"
+        },
+        {
+          "id": "mathematics-2-topic-13-continuity-at-entire-domain",
+          "title": "Continuity at entire domain"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "mathematics-2-week-4",
+      "type": "week",
+      "title": "Week 4",
+      "topics": [
+        {
+          "id": "mathematics-2-topic-14-dependent-and-independent-variables",
+          "title": "Dependent and independent variables"
+        },
+        {
+          "id": "mathematics-2-topic-15-average-rate-of-change",
+          "title": "Average rate of change"
+        },
+        {
+          "id": "mathematics-2-topic-16-derivative-of-a-function",
+          "title": "Derivative of a function"
+        },
+        {
+          "id": "mathematics-2-topic-17-notation-for-derivative",
+          "title": "Notation for derivative"
+        },
+        {
+          "id": "mathematics-2-topic-18-derivative-as-limit-of-a-function",
+          "title": "Derivative as limit of a function"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "mathematics-2-week-5",
+      "type": "week",
+      "title": "Week 5",
+      "topics": [
+        {
+          "id": "mathematics-2-topic-19-theorems-on-derivative",
+          "title": "Theorems on derivative"
+        },
+        {
+          "id": "mathematics-2-topic-20-chain-rule-of-derivative",
+          "title": "Chain Rule of derivative"
+        },
+        {
+          "id": "mathematics-2-topic-21-derivative-of-inverse-functions",
+          "title": "Derivative of inverse functions"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "mathematics-2-week-6",
+      "type": "week",
+      "title": "Week 6",
+      "topics": [
+        {
+          "id": "mathematics-2-topic-22-derivative-of-polynomial-functions",
+          "title": "Derivative of polynomial functions"
+        },
+        {
+          "id": "mathematics-2-topic-23-derivative-of-parametric-functions",
+          "title": "Derivative of parametric functions"
+        },
+        {
+          "id": "mathematics-2-topic-24-derivative-of-implicit-relations",
+          "title": "Derivative of implicit relations"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "mathematics-2-week-7",
+      "type": "week",
+      "title": "Week 7",
+      "topics": [
+        {
+          "id": "mathematics-2-topic-25-derivative-of-trigonometric-and-inverse-trigonometric-functions",
+          "title": "Derivative of trigonometric and inverse trigonometric functions"
+        },
+        {
+          "id": "mathematics-2-topic-26-derivative-of-exponential-functions",
+          "title": "Derivative of exponential functions"
+        },
+        {
+          "id": "mathematics-2-topic-27-logarithmic-functions",
+          "title": "Logarithmic functions"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "mathematics-2-week-8",
+      "type": "week",
+      "title": "Week 8",
+      "topics": [
+        {
+          "id": "mathematics-2-topic-28-derivative-of-hyperbolic-functions-and-inverse-hyperbolic-functions",
+          "title": "Derivative of hyperbolic functions and inverse hyperbolic functions"
+        },
+        {
+          "id": "mathematics-2-topic-29-higher-order-derivatives",
+          "title": "Higher order derivatives"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "mathematics-2-week-9",
+      "type": "week",
+      "title": "Week 9",
+      "topics": [
+        {
+          "id": "mathematics-2-topic-30-series-expansions-of-functions",
+          "title": "Series expansions of functions"
+        },
+        {
+          "id": "mathematics-2-topic-31-maclaurin-theorem",
+          "title": "Maclaurin theorem"
+        },
+        {
+          "id": "mathematics-2-topic-32-taylors-series-expansion-of-functions",
+          "title": "Taylor’s series expansion of functions"
+        },
+        {
+          "id": "mathematics-2-topic-33-geometrical-interpretation-of-derivative",
+          "title": "Geometrical interpretation of derivative"
+        },
+        {
+          "id": "mathematics-2-topic-34-increasing-and-decreasing-functions",
+          "title": "Increasing and decreasing functions"
+        },
+        {
+          "id": "mathematics-2-topic-35-maxima-and-minima",
+          "title": "Maxima and minima"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "mathematics-2-week-10",
+      "type": "week",
+      "title": "Week 10",
+      "topics": [
+        {
+          "id": "mathematics-2-topic-36-integration-as-anti-derivative",
+          "title": "Integration as anti-derivative"
+        },
+        {
+          "id": "mathematics-2-topic-37-theorems-on-anti-derivative",
+          "title": "Theorems on anti-derivative"
+        },
+        {
+          "id": "mathematics-2-topic-38-integration-by-substitution-method",
+          "title": "Integration by substitution method"
+        },
+        {
+          "id": "mathematics-2-topic-39-by-parts-method-of-integration",
+          "title": "By parts method of integration"
+        },
+        {
+          "id": "mathematics-2-topic-40-integration-of-partial-fractions",
+          "title": "Integration of partial fractions"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "mathematics-2-week-11",
+      "type": "week",
+      "title": "Week 11",
+      "topics": [
+        {
+          "id": "mathematics-2-topic-41-definition-of-differential-equation",
+          "title": "Definition of Differential equation"
+        },
+        {
+          "id": "mathematics-2-topic-42-order-and-degree-of-differential-equation",
+          "title": "Order and degree of differential equation"
+        },
+        {
+          "id": "mathematics-2-topic-43-solution-of-1st-order-differential-equation",
+          "title": "Solution of 1st order differential equation"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "mathematics-2-week-12",
+      "type": "week",
+      "title": "Week 12",
+      "topics": [
+        {
+          "id": "mathematics-2-topic-44-introduction-to-analytical-geometry",
+          "title": "Introduction to analytical geometry"
+        },
+        {
+          "id": "mathematics-2-topic-45-types-of-straight-lines",
+          "title": "Types of straight lines"
+        },
+        {
+          "id": "mathematics-2-topic-46-translation-and-rotation-of-axes",
+          "title": "Translation and rotation of axes"
+        },
+        {
+          "id": "mathematics-2-topic-47-general-equation-of-2nd-degree",
+          "title": "General equation of 2nd degree"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "mathematics-2-week-13",
+      "type": "week",
+      "title": "Week 13",
+      "topics": [
+        {
+          "id": "mathematics-2-topic-48-line-through-the-intersection-of-two-lines",
+          "title": "Line through the intersection of two lines"
+        },
+        {
+          "id": "mathematics-2-topic-49-distance-of-point-from-a-line",
+          "title": "Distance of point from a line"
+        },
+        {
+          "id": "mathematics-2-topic-50-area-of-triangular-region",
+          "title": "Area of triangular region"
+        },
+        {
+          "id": "mathematics-2-topic-51-angle-between-two-lines",
+          "title": "Angle between two lines"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "mathematics-2-week-14",
+      "type": "week",
+      "title": "Week 14",
+      "topics": [
+        {
+          "id": "mathematics-2-topic-52-linear-inequalities",
+          "title": "Linear inequalities"
+        },
+        {
+          "id": "mathematics-2-topic-53-graphing-of-linear-inequalities-in-two-variables",
+          "title": "Graphing of linear inequalities in two variables"
+        },
+        {
+          "id": "mathematics-2-topic-54-feasible-solution-set",
+          "title": "Feasible solution set"
+        },
+        {
+          "id": "mathematics-2-topic-55-linear-programming",
+          "title": "Linear programming"
+        },
+        {
+          "id": "mathematics-2-topic-56-linear-programming-problems",
+          "title": "Linear programming problems"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "mathematics-2-week-15",
+      "type": "week",
+      "title": "Week 15",
+      "topics": [
+        {
+          "id": "mathematics-2-topic-57-introduction-to-conic-sections",
+          "title": "Introduction to conic sections"
+        },
+        {
+          "id": "mathematics-2-topic-58-equation-of-a-circle-in-different-forms",
+          "title": "Equation of a circle in different forms"
+        },
+        {
+          "id": "mathematics-2-topic-59-tangent-and-normal",
+          "title": "Tangent and normal"
+        },
+        {
+          "id": "mathematics-2-topic-60-equation-of-parabola-ellipse-and-hyperbola",
+          "title": "Equation of parabola, ellipse, and hyperbola"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "mathematics-2-week-16",
+      "type": "week",
+      "title": "Week 16",
+      "topics": [
+        {
+          "id": "mathematics-2-topic-61-introduction-to-scalars-and-vectors",
+          "title": "Introduction to scalars and vectors"
+        },
+        {
+          "id": "mathematics-2-topic-62-algebra-of-vectors",
+          "title": "Algebra of vectors"
+        },
+        {
+          "id": "mathematics-2-topic-63-properties-of-vectors",
+          "title": "Properties of vectors"
+        },
+        {
+          "id": "mathematics-2-topic-64-dot-and-cross-product-of-vectors",
+          "title": "Dot and cross product of vectors"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    }
+  ],
+  "topicCount": 64,
+  "curriculumVersion": "c80027482d349e9e8c5dc1e24fcb239e5b53e49a8193ca449de5327fdeaff283"
+}

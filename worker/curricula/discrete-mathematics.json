@@ -1,0 +1,453 @@
+{
+  "subjectSlug": "discrete-mathematics",
+  "units": [
+    {
+      "id": "discrete-mathematics-week-1",
+      "type": "week",
+      "title": "Week 1",
+      "topics": [
+        {
+          "id": "discrete-mathematics-topic-1-sets-introduction-to-sets",
+          "title": "Sets: Introduction to sets"
+        },
+        {
+          "id": "discrete-mathematics-topic-2-set-operations",
+          "title": "Set operations"
+        },
+        {
+          "id": "discrete-mathematics-topic-3-union",
+          "title": "Union"
+        },
+        {
+          "id": "discrete-mathematics-topic-4-intersection",
+          "title": "Intersection"
+        },
+        {
+          "id": "discrete-mathematics-topic-5-difference",
+          "title": "Difference"
+        },
+        {
+          "id": "discrete-mathematics-topic-6-absolute-difference",
+          "title": "Absolute difference"
+        },
+        {
+          "id": "discrete-mathematics-topic-7-relative-difference",
+          "title": "Relative difference"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "discrete-mathematics-week-2",
+      "type": "week",
+      "title": "Week 2",
+      "topics": [
+        {
+          "id": "discrete-mathematics-topic-8-functions",
+          "title": "Functions"
+        },
+        {
+          "id": "discrete-mathematics-topic-9-introduction-to-functions",
+          "title": "Introduction to functions"
+        },
+        {
+          "id": "discrete-mathematics-topic-10-injective-function",
+          "title": "Injective function"
+        },
+        {
+          "id": "discrete-mathematics-topic-11-bijective-function",
+          "title": "Bijective function"
+        },
+        {
+          "id": "discrete-mathematics-topic-12-composition-of-functions",
+          "title": "Composition of functions"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "discrete-mathematics-week-3",
+      "type": "week",
+      "title": "Week 3",
+      "topics": [
+        {
+          "id": "discrete-mathematics-topic-13-characteristic-functions-with-computer-applications",
+          "title": "Characteristic functions with computer applications"
+        }
+      ],
+      "assessments": [
+        "Assignment #01"
+      ],
+      "milestones": []
+    },
+    {
+      "id": "discrete-mathematics-week-4",
+      "type": "week",
+      "title": "Week 4",
+      "topics": [
+        {
+          "id": "discrete-mathematics-topic-14-sequences",
+          "title": "Sequences"
+        },
+        {
+          "id": "discrete-mathematics-topic-15-types-of-sequences",
+          "title": "Types of sequences"
+        },
+        {
+          "id": "discrete-mathematics-topic-16-convergence-of-sequences",
+          "title": "Convergence of sequences"
+        },
+        {
+          "id": "discrete-mathematics-topic-17-series",
+          "title": "Series"
+        },
+        {
+          "id": "discrete-mathematics-topic-18-types-of-series",
+          "title": "Types of series"
+        },
+        {
+          "id": "discrete-mathematics-topic-19-convergence-of-series",
+          "title": "Convergence of series"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "discrete-mathematics-week-5",
+      "type": "week",
+      "title": "Week 5",
+      "topics": [
+        {
+          "id": "discrete-mathematics-topic-20-relations",
+          "title": "Relations"
+        },
+        {
+          "id": "discrete-mathematics-topic-21-introduction-to-relations",
+          "title": "Introduction to relations"
+        },
+        {
+          "id": "discrete-mathematics-topic-22-binary-relations",
+          "title": "Binary relations"
+        },
+        {
+          "id": "discrete-mathematics-topic-23-n-array-relations",
+          "title": "n-array relations"
+        },
+        {
+          "id": "discrete-mathematics-topic-24-congruence-relations",
+          "title": "Congruence relations"
+        },
+        {
+          "id": "discrete-mathematics-topic-25-representation-of-relation",
+          "title": "Representation of relation"
+        },
+        {
+          "id": "discrete-mathematics-topic-26-partitions",
+          "title": "Partitions"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "discrete-mathematics-week-6",
+      "type": "week",
+      "title": "Week 6",
+      "topics": [
+        {
+          "id": "discrete-mathematics-topic-27-equivalence-relations",
+          "title": "Equivalence Relations"
+        },
+        {
+          "id": "discrete-mathematics-topic-28-equivalence-class",
+          "title": "Equivalence Class"
+        },
+        {
+          "id": "discrete-mathematics-topic-29-partial-ordering",
+          "title": "Partial ordering"
+        }
+      ],
+      "assessments": [
+        "Quiz #01"
+      ],
+      "milestones": []
+    },
+    {
+      "id": "discrete-mathematics-week-7",
+      "type": "week",
+      "title": "Week 7",
+      "topics": [
+        {
+          "id": "discrete-mathematics-topic-30-properties-of-general-relations",
+          "title": "Properties of General Relations"
+        },
+        {
+          "id": "discrete-mathematics-topic-31-introduction-to-combinatorics",
+          "title": "Introduction to combinatorics"
+        },
+        {
+          "id": "discrete-mathematics-topic-32-basic-counting-techniques",
+          "title": "Basic counting techniques"
+        }
+      ],
+      "assessments": [
+        "Presentations"
+      ],
+      "milestones": []
+    },
+    {
+      "id": "discrete-mathematics-week-8",
+      "type": "week",
+      "title": "Week 8",
+      "topics": [
+        {
+          "id": "discrete-mathematics-topic-33-covering-of-sets",
+          "title": "Covering of sets"
+        },
+        {
+          "id": "discrete-mathematics-topic-34-posets",
+          "title": "Posets"
+        },
+        {
+          "id": "discrete-mathematics-topic-35-hasse-diagrams-with-applications",
+          "title": "Hasse diagrams with applications"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "discrete-mathematics-week-9",
+      "type": "week",
+      "title": "Week 9",
+      "topics": [],
+      "assessments": [],
+      "milestones": [
+        "Mid-Semester Examination"
+      ]
+    },
+    {
+      "id": "discrete-mathematics-week-10",
+      "type": "week",
+      "title": "Week 10",
+      "topics": [
+        {
+          "id": "discrete-mathematics-topic-36-the-logic-of-compound-statements",
+          "title": "The logic of compound statements"
+        },
+        {
+          "id": "discrete-mathematics-topic-37-logical-equivalence",
+          "title": "Logical equivalence"
+        },
+        {
+          "id": "discrete-mathematics-topic-38-conditional-statements",
+          "title": "Conditional statements"
+        },
+        {
+          "id": "discrete-mathematics-topic-39-valid-and-invalid-argument",
+          "title": "Valid and invalid argument"
+        },
+        {
+          "id": "discrete-mathematics-topic-40-biconditional-statements",
+          "title": "Biconditional statements"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "discrete-mathematics-week-11",
+      "type": "week",
+      "title": "Week 11",
+      "topics": [
+        {
+          "id": "discrete-mathematics-topic-41-properties-of-logical-equivalence-with-computer-applications",
+          "title": "Properties of logical equivalence with computer applications"
+        },
+        {
+          "id": "discrete-mathematics-topic-42-quantifiers",
+          "title": "Quantifiers"
+        },
+        {
+          "id": "discrete-mathematics-topic-43-proof-techniques",
+          "title": "Proof techniques"
+        },
+        {
+          "id": "discrete-mathematics-topic-44-language-of-proofs",
+          "title": "Language of proofs"
+        }
+      ],
+      "assessments": [
+        "Assignment #02"
+      ],
+      "milestones": []
+    },
+    {
+      "id": "discrete-mathematics-week-12",
+      "type": "week",
+      "title": "Week 12",
+      "topics": [
+        {
+          "id": "discrete-mathematics-topic-45-applications",
+          "title": "Applications"
+        },
+        {
+          "id": "discrete-mathematics-topic-46-digital-logic-circuits",
+          "title": "Digital logic circuits"
+        },
+        {
+          "id": "discrete-mathematics-topic-47-different-types-of-logic-gates",
+          "title": "Different types of logic gates"
+        },
+        {
+          "id": "discrete-mathematics-topic-48-boolean-expressions",
+          "title": "Boolean expressions"
+        },
+        {
+          "id": "discrete-mathematics-topic-49-simplification-of-circuits",
+          "title": "Simplification of circuits"
+        }
+      ],
+      "assessments": [
+        "Presentations"
+      ],
+      "milestones": []
+    },
+    {
+      "id": "discrete-mathematics-week-13",
+      "type": "week",
+      "title": "Week 13",
+      "topics": [
+        {
+          "id": "discrete-mathematics-topic-50-partitioning-properties-with-computer-applications",
+          "title": "Partitioning properties with computer applications"
+        }
+      ],
+      "assessments": [
+        "Quiz #02"
+      ],
+      "milestones": []
+    },
+    {
+      "id": "discrete-mathematics-week-14",
+      "type": "week",
+      "title": "Week 14",
+      "topics": [
+        {
+          "id": "discrete-mathematics-topic-51-counting",
+          "title": "Counting"
+        },
+        {
+          "id": "discrete-mathematics-topic-52-addition-rule",
+          "title": "Addition rule"
+        },
+        {
+          "id": "discrete-mathematics-topic-53-multiplication-rule",
+          "title": "Multiplication rule"
+        },
+        {
+          "id": "discrete-mathematics-topic-54-permutations-and-combinations",
+          "title": "Permutations and combinations"
+        }
+      ],
+      "assessments": [
+        "Presentations"
+      ],
+      "milestones": []
+    },
+    {
+      "id": "discrete-mathematics-week-15",
+      "type": "week",
+      "title": "Week 15",
+      "topics": [
+        {
+          "id": "discrete-mathematics-topic-55-counting-with-repetitions",
+          "title": "Counting with repetitions"
+        },
+        {
+          "id": "discrete-mathematics-topic-56-combinatorial-identities",
+          "title": "Combinatorial identities"
+        },
+        {
+          "id": "discrete-mathematics-topic-57-pigeon-hole-principle",
+          "title": "Pigeon hole principle"
+        },
+        {
+          "id": "discrete-mathematics-topic-58-inclusion-exclusion-principle",
+          "title": "Inclusion-exclusion principle"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "discrete-mathematics-week-16",
+      "type": "week",
+      "title": "Week 16",
+      "topics": [
+        {
+          "id": "discrete-mathematics-topic-59-graphs",
+          "title": "Graphs"
+        },
+        {
+          "id": "discrete-mathematics-topic-60-introduction-to-graphs",
+          "title": "Introduction to graphs"
+        },
+        {
+          "id": "discrete-mathematics-topic-61-graph-terminology",
+          "title": "Graph terminology"
+        },
+        {
+          "id": "discrete-mathematics-topic-62-connectivity-in-graphs",
+          "title": "Connectivity in graphs"
+        },
+        {
+          "id": "discrete-mathematics-topic-63-euler-and-hamilton-paths",
+          "title": "Euler and Hamilton paths"
+        },
+        {
+          "id": "discrete-mathematics-topic-64-shortest-path-problems",
+          "title": "Shortest path problems"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "discrete-mathematics-week-17",
+      "type": "week",
+      "title": "Week 17",
+      "topics": [
+        {
+          "id": "discrete-mathematics-topic-65-trees-sorting",
+          "title": "Trees & Sorting"
+        },
+        {
+          "id": "discrete-mathematics-topic-66-introduction-to-trees",
+          "title": "Introduction to trees"
+        },
+        {
+          "id": "discrete-mathematics-topic-67-application-of-trees",
+          "title": "Application of trees"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "discrete-mathematics-week-18",
+      "type": "week",
+      "title": "Week 18",
+      "topics": [],
+      "assessments": [],
+      "milestones": [
+        "Final Semester Examination"
+      ]
+    }
+  ],
+  "topicCount": 67,
+  "curriculumVersion": "25f9c6ec415c660b13dd60c4ecce8b25e1de333c7307d66cc20706762eb059b6"
+}

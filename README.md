@@ -1,6 +1,6 @@
 # BSCS Semester 2 Study Companion
 
-A mobile-first, syllabus-led study site for seven BSCS courses. Phase 1 is a fully static Vite + React application: it has no account system, API keys, backend, database, AI chat, remote grading, analytics, or tracking.
+A mobile-first, syllabus-led study site for seven BSCS courses. The static GitHub Pages frontend now includes an optional AI Tutor client backed by a separately deployed Cloudflare Worker; provider credentials never enter the frontend bundle.
 
 ## Run locally
 
@@ -33,11 +33,13 @@ The normalizer:
 - stores quizzes, assignments, and presentations as assessment metadata rather than lessons;
 - fails when a required weekly plan or its topics are missing.
 
-Commit regenerated JSON whenever a root syllabus changes.
+Commit regenerated JSON whenever a root syllabus changes. The generator also writes seven deterministic, SHA-256-versioned Worker snapshots to `worker/curricula/`; the Worker fails closed if a selected artifact is unavailable. See `docs/ai-tutor-contract.md` for the API, privacy, and cost contract.
 
 ## Deployment
 
 `.github/workflows/deploy-pages.yml` tests and builds every push to `main`, then uploads `dist/` to GitHub Pages. In the repository settings, set **Pages → Source** to **GitHub Actions**. No secrets are required.
+
+The Pages build may set `VITE_TUTOR_API_URL` to the Worker route. The Worker starts disabled in `wrangler.toml`. Before release, configure exact origins, the fixed provider endpoint/model, numeric budgets, provider caps/alerts, and encrypted `AI_API_KEY` and `CLIENT_KEY_SECRET` secrets. Never put secrets in a `VITE_` variable or tracked file.
 
 ## Accessibility and responsive checklist
 

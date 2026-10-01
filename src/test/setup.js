@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom/vitest'
 
 afterEach(() => {
-  window.location.hash = ''
+  if (typeof window !== 'undefined') window.location.hash = ''
 })

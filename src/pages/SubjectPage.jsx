@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { syllabi } from '../data/syllabi'
 import TopicNavigation, { flattenTopics } from '../components/TopicNavigation'
 import StudyPanel from '../components/StudyPanel'
+import TutorChat from '../components/TutorChat'
 import { getSeed } from '../content/studyContent'
 
 export default function SubjectPage({ subject }) {
@@ -36,6 +37,7 @@ export default function SubjectPage({ subject }) {
           </div>
           <StudyPanel tab={tab} seed={seed} topicTitle={activeTopic.title} />
         </section>
+        <TutorChat subject={subject} activeTopicId={activeTopic.id} />
       </div>
     </div>
   )
