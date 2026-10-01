@@ -1,0 +1,388 @@
+{
+  "subjectSlug": "digital-logic-design",
+  "units": [
+    {
+      "id": "digital-logic-design-week-1",
+      "type": "week",
+      "title": "Week 1",
+      "topics": [
+        {
+          "id": "digital-logic-design-topic-1-introduction",
+          "title": "Introduction"
+        },
+        {
+          "id": "digital-logic-design-topic-2-number-systems-binary-octal-hexadecimal",
+          "title": "Number Systems: Binary, Octal, Hexadecimal"
+        },
+        {
+          "id": "digital-logic-design-topic-3-number-ranges",
+          "title": "Number Ranges"
+        },
+        {
+          "id": "digital-logic-design-topic-4-arithmetic-operations",
+          "title": "Arithmetic Operations"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "digital-logic-design-week-2",
+      "type": "week",
+      "title": "Week 2",
+      "topics": [
+        {
+          "id": "digital-logic-design-topic-5-conversion-from-decimal-to-other-bases",
+          "title": "Conversion from Decimal to Other Bases"
+        }
+      ],
+      "assessments": [
+        "Assignment #01"
+      ],
+      "milestones": []
+    },
+    {
+      "id": "digital-logic-design-week-3",
+      "type": "week",
+      "title": "Week 3",
+      "topics": [
+        {
+          "id": "digital-logic-design-topic-6-negative-number-representations",
+          "title": "Negative Number Representations"
+        }
+      ],
+      "assessments": [
+        "Quiz #01"
+      ],
+      "milestones": []
+    },
+    {
+      "id": "digital-logic-design-week-4",
+      "type": "week",
+      "title": "Week 4",
+      "topics": [
+        {
+          "id": "digital-logic-design-topic-7-binary-logic-and-gates",
+          "title": "Binary Logic and Gates"
+        },
+        {
+          "id": "digital-logic-design-topic-8-boolean-algebra",
+          "title": "Boolean Algebra"
+        },
+        {
+          "id": "digital-logic-design-topic-9-standard-forms",
+          "title": "Standard Forms"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "digital-logic-design-week-5",
+      "type": "week",
+      "title": "Week 5",
+      "topics": [
+        {
+          "id": "digital-logic-design-topic-10-sop-and-pos",
+          "title": "SOP and POS"
+        },
+        {
+          "id": "digital-logic-design-topic-11-expressing-functions-from-one-form-into-another",
+          "title": "Expressing functions from one form into another"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "digital-logic-design-week-6",
+      "type": "week",
+      "title": "Week 6",
+      "topics": [
+        {
+          "id": "digital-logic-design-topic-12-k-maps-sop-pos",
+          "title": "K-maps: SOP, POS"
+        },
+        {
+          "id": "digital-logic-design-topic-13-manipulating-maps",
+          "title": "Manipulating maps"
+        },
+        {
+          "id": "digital-logic-design-topic-14-dont-care-conditions",
+          "title": "Don’t-care conditions"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "digital-logic-design-week-7",
+      "type": "week",
+      "title": "Week 7",
+      "topics": [
+        {
+          "id": "digital-logic-design-topic-15-k-map-dont-care-conditions",
+          "title": "K-map don’t-care conditions"
+        }
+      ],
+      "assessments": [
+        "Assignment #02"
+      ],
+      "milestones": []
+    },
+    {
+      "id": "digital-logic-design-week-8",
+      "type": "week",
+      "title": "Week 8",
+      "topics": [
+        {
+          "id": "digital-logic-design-topic-16-nand-nor-and-exclusive-or-gates-and-circuits",
+          "title": "NAND, NOR and Exclusive-OR Gates and Circuits"
+        },
+        {
+          "id": "digital-logic-design-topic-17-integrated-circuits",
+          "title": "Integrated Circuits"
+        },
+        {
+          "id": "digital-logic-design-topic-18-positive-and-negative-logic",
+          "title": "Positive and Negative Logic"
+        }
+      ],
+      "assessments": [
+        "Quiz #02"
+      ],
+      "milestones": []
+    },
+    {
+      "id": "digital-logic-design-milestone-9",
+      "type": "milestone",
+      "title": "Mid-Semester Examination",
+      "label": null
+    },
+    {
+      "id": "digital-logic-design-week-9",
+      "type": "week",
+      "title": "Week 9",
+      "topics": [
+        {
+          "id": "digital-logic-design-topic-19-combinational-circuits",
+          "title": "Combinational Circuits"
+        },
+        {
+          "id": "digital-logic-design-topic-20-analysis-procedure",
+          "title": "Analysis Procedure"
+        },
+        {
+          "id": "digital-logic-design-topic-21-design-procedure",
+          "title": "Design Procedure"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "digital-logic-design-week-10",
+      "type": "week",
+      "title": "Week 10",
+      "topics": [
+        {
+          "id": "digital-logic-design-topic-22-decoders",
+          "title": "Decoders"
+        },
+        {
+          "id": "digital-logic-design-topic-23-encoders",
+          "title": "Encoders"
+        },
+        {
+          "id": "digital-logic-design-topic-24-priority-encoders",
+          "title": "Priority Encoders"
+        }
+      ],
+      "assessments": [
+        "Assignment #03"
+      ],
+      "milestones": []
+    },
+    {
+      "id": "digital-logic-design-week-11",
+      "type": "week",
+      "title": "Week 11",
+      "topics": [
+        {
+          "id": "digital-logic-design-topic-25-multiplexers",
+          "title": "Multiplexers"
+        },
+        {
+          "id": "digital-logic-design-topic-26-demultiplexers",
+          "title": "Demultiplexers"
+        },
+        {
+          "id": "digital-logic-design-topic-27-binary-adders",
+          "title": "Binary Adders",
+          "children": [
+            {
+              "id": "digital-logic-design-topic-28-half-adder",
+              "title": "Half Adder"
+            },
+            {
+              "id": "digital-logic-design-topic-29-full-adder",
+              "title": "Full Adder"
+            },
+            {
+              "id": "digital-logic-design-topic-30-ripple-carry",
+              "title": "Ripple Carry"
+            },
+            {
+              "id": "digital-logic-design-topic-31-carry-lookahead",
+              "title": "Carry Lookahead"
+            }
+          ]
+        }
+      ],
+      "assessments": [
+        "Quiz #03"
+      ],
+      "milestones": []
+    },
+    {
+      "id": "digital-logic-design-week-12",
+      "type": "week",
+      "title": "Week 12",
+      "topics": [
+        {
+          "id": "digital-logic-design-topic-32-binary-subtraction",
+          "title": "Binary Subtraction"
+        },
+        {
+          "id": "digital-logic-design-topic-33-signed-binary-numbers",
+          "title": "Signed Binary Numbers"
+        },
+        {
+          "id": "digital-logic-design-topic-34-overflow",
+          "title": "Overflow"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "digital-logic-design-week-13",
+      "type": "week",
+      "title": "Week 13",
+      "topics": [
+        {
+          "id": "digital-logic-design-topic-35-sequential-circuits",
+          "title": "Sequential Circuits"
+        },
+        {
+          "id": "digital-logic-design-topic-36-latches",
+          "title": "Latches"
+        },
+        {
+          "id": "digital-logic-design-topic-37-flip-flops",
+          "title": "Flip-Flops"
+        },
+        {
+          "id": "digital-logic-design-topic-38-sequential-circuit-analysis",
+          "title": "Sequential Circuit Analysis"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "digital-logic-design-week-14",
+      "type": "week",
+      "title": "Week 14",
+      "topics": [
+        {
+          "id": "digital-logic-design-topic-39-state-diagram",
+          "title": "State Diagram"
+        },
+        {
+          "id": "digital-logic-design-topic-40-sequential-circuit-design-word-problems",
+          "title": "Sequential Circuit Design Word Problems"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "digital-logic-design-week-15",
+      "type": "week",
+      "title": "Week 15",
+      "topics": [
+        {
+          "id": "digital-logic-design-topic-41-registers-and-counters",
+          "title": "Registers and Counters"
+        },
+        {
+          "id": "digital-logic-design-topic-42-register-with-parallel-load",
+          "title": "Register with Parallel Load"
+        },
+        {
+          "id": "digital-logic-design-topic-43-shift-registers",
+          "title": "Shift Registers"
+        },
+        {
+          "id": "digital-logic-design-topic-44-shift-register-with-parallel-load",
+          "title": "Shift Register with Parallel Load"
+        },
+        {
+          "id": "digital-logic-design-topic-45-serial-and-parallel-counters",
+          "title": "Serial and Parallel Counters"
+        },
+        {
+          "id": "digital-logic-design-topic-46-up-down-binary-counter",
+          "title": "Up-Down Binary Counter"
+        },
+        {
+          "id": "digital-logic-design-topic-47-binary-counter-with-parallel-load",
+          "title": "Binary Counter with Parallel Load"
+        }
+      ],
+      "assessments": [
+        "Assignment #04"
+      ],
+      "milestones": []
+    },
+    {
+      "id": "digital-logic-design-week-16",
+      "type": "week",
+      "title": "Week 16",
+      "topics": [
+        {
+          "id": "digital-logic-design-topic-48-programmable-logic-technologies",
+          "title": "Programmable Logic Technologies"
+        },
+        {
+          "id": "digital-logic-design-topic-49-read-only-memory",
+          "title": "Read-only Memory"
+        },
+        {
+          "id": "digital-logic-design-topic-50-programmable-logic-arrays",
+          "title": "Programmable Logic Arrays"
+        },
+        {
+          "id": "digital-logic-design-topic-51-programmable-array-logic-devices",
+          "title": "Programmable Array Logic Devices"
+        },
+        {
+          "id": "digital-logic-design-topic-52-introduction-to-fpgas",
+          "title": "Introduction to FPGAs"
+        }
+      ],
+      "assessments": [
+        "Quiz #04"
+      ],
+      "milestones": []
+    },
+    {
+      "id": "digital-logic-design-milestone-18",
+      "type": "milestone",
+      "title": "Final Semester Examination",
+      "label": null
+    }
+  ],
+  "topicCount": 52
+}

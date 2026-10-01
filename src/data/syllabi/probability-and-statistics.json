@@ -1,0 +1,372 @@
+{
+  "subjectSlug": "probability-and-statistics",
+  "units": [
+    {
+      "id": "probability-and-statistics-week-1",
+      "type": "week",
+      "title": "Week 1",
+      "topics": [
+        {
+          "id": "probability-and-statistics-topic-1-introduction-to-statistics-and-data-analysis",
+          "title": "Introduction to Statistics and Data Analysis"
+        },
+        {
+          "id": "probability-and-statistics-topic-2-statistical-inference",
+          "title": "Statistical Inference"
+        },
+        {
+          "id": "probability-and-statistics-topic-3-samples",
+          "title": "Samples"
+        },
+        {
+          "id": "probability-and-statistics-topic-4-populations",
+          "title": "Populations"
+        },
+        {
+          "id": "probability-and-statistics-topic-5-role-of-probability",
+          "title": "Role of Probability"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "probability-and-statistics-week-2",
+      "type": "week",
+      "title": "Week 2",
+      "topics": [
+        {
+          "id": "probability-and-statistics-topic-6-sampling-procedures",
+          "title": "Sampling Procedures"
+        },
+        {
+          "id": "probability-and-statistics-topic-7-discrete-and-continuous-data",
+          "title": "Discrete and Continuous Data"
+        },
+        {
+          "id": "probability-and-statistics-topic-8-statistical-modeling",
+          "title": "Statistical Modeling"
+        },
+        {
+          "id": "probability-and-statistics-topic-9-types-of-statistical-studies",
+          "title": "Types of Statistical Studies"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "probability-and-statistics-week-3",
+      "type": "week",
+      "title": "Week 3",
+      "topics": [
+        {
+          "id": "probability-and-statistics-topic-10-probability",
+          "title": "Probability"
+        },
+        {
+          "id": "probability-and-statistics-topic-11-sample-space",
+          "title": "Sample Space"
+        },
+        {
+          "id": "probability-and-statistics-topic-12-events",
+          "title": "Events"
+        },
+        {
+          "id": "probability-and-statistics-topic-13-counting-sample-points",
+          "title": "Counting Sample Points"
+        },
+        {
+          "id": "probability-and-statistics-topic-14-probability-of-an-event",
+          "title": "Probability of an Event"
+        },
+        {
+          "id": "probability-and-statistics-topic-15-additive-rules",
+          "title": "Additive Rules"
+        },
+        {
+          "id": "probability-and-statistics-topic-16-conditional-probability",
+          "title": "Conditional Probability"
+        },
+        {
+          "id": "probability-and-statistics-topic-17-independence",
+          "title": "Independence"
+        },
+        {
+          "id": "probability-and-statistics-topic-18-product-rule",
+          "title": "Product Rule"
+        },
+        {
+          "id": "probability-and-statistics-topic-19-bayes-rule",
+          "title": "Bayes’ Rule"
+        },
+        {
+          "id": "probability-and-statistics-topic-20-random-variables-and-probability-distributions",
+          "title": "Random Variables and Probability Distributions"
+        }
+      ],
+      "assessments": [
+        "Assignment #01"
+      ],
+      "milestones": []
+    },
+    {
+      "id": "probability-and-statistics-week-4",
+      "type": "week",
+      "title": "Week 4",
+      "topics": [
+        {
+          "id": "probability-and-statistics-topic-21-mathematical-expectation",
+          "title": "Mathematical Expectation"
+        },
+        {
+          "id": "probability-and-statistics-topic-22-mean-of-a-random-variable",
+          "title": "Mean of a Random Variable"
+        },
+        {
+          "id": "probability-and-statistics-topic-23-variance-and-covariance-of-random-variables",
+          "title": "Variance and Covariance of Random Variables"
+        },
+        {
+          "id": "probability-and-statistics-topic-24-means-and-variances-of-linear-combinations-of-random-variables",
+          "title": "Means and Variances of Linear Combinations of Random Variables"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "probability-and-statistics-week-5",
+      "type": "week",
+      "title": "Week 5",
+      "topics": [
+        {
+          "id": "probability-and-statistics-topic-25-chebyshevs-theorem",
+          "title": "Chebyshev’s Theorem"
+        },
+        {
+          "id": "probability-and-statistics-topic-26-discrete-probability-distributions",
+          "title": "Discrete Probability Distributions"
+        },
+        {
+          "id": "probability-and-statistics-topic-27-continuous-probability-distributions",
+          "title": "Continuous Probability Distributions"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "probability-and-statistics-week-6",
+      "type": "week",
+      "title": "Week 6",
+      "topics": [
+        {
+          "id": "probability-and-statistics-topic-28-fundamental-sampling-distributions-and-data-descriptions",
+          "title": "Fundamental Sampling Distributions and Data Descriptions"
+        },
+        {
+          "id": "probability-and-statistics-topic-29-random-sampling",
+          "title": "Random Sampling"
+        },
+        {
+          "id": "probability-and-statistics-topic-30-sampling-distributions",
+          "title": "Sampling Distributions"
+        }
+      ],
+      "assessments": [
+        "Quiz #01"
+      ],
+      "milestones": []
+    },
+    {
+      "id": "probability-and-statistics-week-7",
+      "type": "week",
+      "title": "Week 7",
+      "topics": [
+        {
+          "id": "probability-and-statistics-topic-31-sampling-distribution-of-means",
+          "title": "Sampling Distribution of Means"
+        },
+        {
+          "id": "probability-and-statistics-topic-32-central-limit-theorem",
+          "title": "Central Limit Theorem"
+        }
+      ],
+      "assessments": [
+        "Presentations"
+      ],
+      "milestones": []
+    },
+    {
+      "id": "probability-and-statistics-week-8",
+      "type": "week",
+      "title": "Week 8",
+      "topics": [
+        {
+          "id": "probability-and-statistics-topic-33-sampling-distribution-of-s2",
+          "title": "Sampling Distribution of S²"
+        },
+        {
+          "id": "probability-and-statistics-topic-34-t-distribution",
+          "title": "t-Distribution"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "probability-and-statistics-week-9",
+      "type": "week",
+      "title": "Week 9",
+      "topics": [],
+      "assessments": [],
+      "milestones": [
+        "Mid-Semester Examination"
+      ]
+    },
+    {
+      "id": "probability-and-statistics-week-10",
+      "type": "week",
+      "title": "Week 10",
+      "topics": [
+        {
+          "id": "probability-and-statistics-topic-35-f-quantile-and-probability-plots",
+          "title": "F Quantile and Probability Plots"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "probability-and-statistics-week-11",
+      "type": "week",
+      "title": "Week 11",
+      "topics": [
+        {
+          "id": "probability-and-statistics-topic-36-single-sample-estimation-problems",
+          "title": "Single Sample Estimation Problems"
+        },
+        {
+          "id": "probability-and-statistics-topic-37-one-and-two-sample-estimation-problems",
+          "title": "One- and Two-Sample Estimation Problems"
+        }
+      ],
+      "assessments": [
+        "Assignment #02"
+      ],
+      "milestones": []
+    },
+    {
+      "id": "probability-and-statistics-week-12",
+      "type": "week",
+      "title": "Week 12",
+      "topics": [
+        {
+          "id": "probability-and-statistics-topic-38-single-sample-tests-of-hypotheses",
+          "title": "Single Sample Tests of Hypotheses"
+        },
+        {
+          "id": "probability-and-statistics-topic-39-one-and-two-sample-tests-of-hypotheses",
+          "title": "One- and Two-Sample Tests of Hypotheses"
+        }
+      ],
+      "assessments": [
+        "Presentations"
+      ],
+      "milestones": []
+    },
+    {
+      "id": "probability-and-statistics-week-13",
+      "type": "week",
+      "title": "Week 13",
+      "topics": [
+        {
+          "id": "probability-and-statistics-topic-40-use-of-p-values-for-decision-making-in-testing-hypotheses",
+          "title": "Use of P-Values for Decision Making in Testing Hypotheses"
+        },
+        {
+          "id": "probability-and-statistics-topic-41-single-sample-and-one-two-sample-tests",
+          "title": "Single Sample and One-/Two-Sample Tests"
+        }
+      ],
+      "assessments": [
+        "Quiz #02"
+      ],
+      "milestones": []
+    },
+    {
+      "id": "probability-and-statistics-week-14",
+      "type": "week",
+      "title": "Week 14",
+      "topics": [
+        {
+          "id": "probability-and-statistics-topic-42-linear-regression-and-correlation",
+          "title": "Linear Regression and Correlation"
+        }
+      ],
+      "assessments": [
+        "Presentations"
+      ],
+      "milestones": []
+    },
+    {
+      "id": "probability-and-statistics-week-15",
+      "type": "week",
+      "title": "Week 15",
+      "topics": [
+        {
+          "id": "probability-and-statistics-topic-43-least-squares-and-the-fitted-model",
+          "title": "Least Squares and the Fitted Model"
+        },
+        {
+          "id": "probability-and-statistics-topic-44-multiple-linear-regression",
+          "title": "Multiple Linear Regression"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "probability-and-statistics-week-16",
+      "type": "week",
+      "title": "Week 16",
+      "topics": [
+        {
+          "id": "probability-and-statistics-topic-45-nonlinear-regression-models",
+          "title": "Nonlinear Regression Models"
+        },
+        {
+          "id": "probability-and-statistics-topic-46-linear-regression-model-using-matrices",
+          "title": "Linear Regression Model Using Matrices"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "probability-and-statistics-week-17",
+      "type": "week",
+      "title": "Week 17",
+      "topics": [
+        {
+          "id": "probability-and-statistics-topic-47-properties-of-the-least-squares-estimators",
+          "title": "Properties of the Least Squares Estimators"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "probability-and-statistics-week-18",
+      "type": "week",
+      "title": "Week 18",
+      "topics": [],
+      "assessments": [],
+      "milestones": [
+        "Final Semester Examination"
+      ]
+    }
+  ],
+  "topicCount": 47
+}

@@ -1,0 +1,363 @@
+{
+  "subjectSlug": "oop",
+  "units": [
+    {
+      "id": "oop-week-1",
+      "type": "week",
+      "title": "Week 1",
+      "topics": [
+        {
+          "id": "oop-topic-1-problem-solving-in-object-oriented-programming",
+          "title": "Problem solving in Object oriented Programming"
+        },
+        {
+          "id": "oop-topic-2-revision-of-structures",
+          "title": "Revision of Structures"
+        },
+        {
+          "id": "oop-topic-3-identification-of-problems-in-structural-programming",
+          "title": "Identification of problems in structural programming"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "oop-week-2",
+      "type": "week",
+      "title": "Week 2",
+      "topics": [
+        {
+          "id": "oop-topic-4-structures-vs-classes",
+          "title": "Structures vs classes"
+        },
+        {
+          "id": "oop-topic-5-classes-and-objects",
+          "title": "Classes and objects"
+        },
+        {
+          "id": "oop-topic-6-basics-of-classes-and-objects",
+          "title": "Basics of classes and objects"
+        },
+        {
+          "id": "oop-topic-7-syntax-of-class",
+          "title": "Syntax of class"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "oop-week-3",
+      "type": "week",
+      "title": "Week 3",
+      "topics": [
+        {
+          "id": "oop-topic-8-data-members",
+          "title": "Data Members"
+        },
+        {
+          "id": "oop-topic-9-data-encapsulation",
+          "title": "Data encapsulation"
+        },
+        {
+          "id": "oop-topic-10-member-access-specifiers",
+          "title": "Member Access specifiers"
+        },
+        {
+          "id": "oop-topic-11-types-of-data-members",
+          "title": "Types of data members"
+        },
+        {
+          "id": "oop-topic-12-accessing-data-from-objects",
+          "title": "Accessing data from objects"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "oop-week-4",
+      "type": "week",
+      "title": "Week 4",
+      "topics": [
+        {
+          "id": "oop-topic-13-member-functions",
+          "title": "Member functions"
+        },
+        {
+          "id": "oop-topic-14-constructors-and-destructors",
+          "title": "Constructors and destructors"
+        }
+      ],
+      "assessments": [
+        "Assignment #01"
+      ],
+      "milestones": []
+    },
+    {
+      "id": "oop-week-5",
+      "type": "week",
+      "title": "Week 5",
+      "topics": [
+        {
+          "id": "oop-topic-15-function-overloading",
+          "title": "Function overloading"
+        }
+      ],
+      "assessments": [
+        "Quiz #01"
+      ],
+      "milestones": []
+    },
+    {
+      "id": "oop-week-6",
+      "type": "week",
+      "title": "Week 6",
+      "topics": [
+        {
+          "id": "oop-topic-16-constructor-overloading",
+          "title": "Constructor overloading"
+        },
+        {
+          "id": "oop-topic-17-default-constructor",
+          "title": "Default constructor"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "oop-week-7",
+      "type": "week",
+      "title": "Week 7",
+      "topics": [
+        {
+          "id": "oop-topic-18-operator-overloading",
+          "title": "Operator overloading"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "oop-week-8",
+      "type": "week",
+      "title": "Week 8",
+      "topics": [
+        {
+          "id": "oop-topic-19-overloading-unary-and-binary-operators",
+          "title": "Overloading unary and binary operators"
+        }
+      ],
+      "assessments": [
+        "Assignment #02"
+      ],
+      "milestones": []
+    },
+    {
+      "id": "oop-milestone-9",
+      "type": "milestone",
+      "title": "Mid Term",
+      "label": null
+    },
+    {
+      "id": "oop-week-9",
+      "type": "week",
+      "title": "Week 9",
+      "topics": [
+        {
+          "id": "oop-topic-20-inheritance",
+          "title": "Inheritance"
+        },
+        {
+          "id": "oop-topic-21-basics-of-inheritance",
+          "title": "Basics of inheritance"
+        },
+        {
+          "id": "oop-topic-22-base-class",
+          "title": "Base class"
+        },
+        {
+          "id": "oop-topic-23-child-class",
+          "title": "Child class"
+        }
+      ],
+      "assessments": [
+        "Quiz #02"
+      ],
+      "milestones": []
+    },
+    {
+      "id": "oop-week-10",
+      "type": "week",
+      "title": "Week 10",
+      "topics": [
+        {
+          "id": "oop-topic-24-types-of-inheritance",
+          "title": "Types of inheritance"
+        },
+        {
+          "id": "oop-topic-25-rules-for-public-private-protected-inheritance",
+          "title": "Rules for Public, Private, Protected inheritance"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "oop-week-11",
+      "type": "week",
+      "title": "Week 11",
+      "topics": [
+        {
+          "id": "oop-topic-26-function-overriding",
+          "title": "Function overriding"
+        },
+        {
+          "id": "oop-topic-27-multiple-inheritance",
+          "title": "Multiple inheritance"
+        },
+        {
+          "id": "oop-topic-28-polymorphism",
+          "title": "Polymorphism"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "oop-week-12",
+      "type": "week",
+      "title": "Week 12",
+      "topics": [
+        {
+          "id": "oop-topic-29-virtual-functions",
+          "title": "Virtual functions"
+        },
+        {
+          "id": "oop-topic-30-friend-functions",
+          "title": "Friend functions"
+        },
+        {
+          "id": "oop-topic-31-static-functions",
+          "title": "Static functions"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "oop-week-13",
+      "type": "week",
+      "title": "Week 13",
+      "topics": [
+        {
+          "id": "oop-topic-32-relationship-between-classes",
+          "title": "Relationship between classes:",
+          "children": [
+            {
+              "id": "oop-topic-33-association",
+              "title": "Association"
+            },
+            {
+              "id": "oop-topic-34-aggregation",
+              "title": "Aggregation"
+            },
+            {
+              "id": "oop-topic-35-composition",
+              "title": "Composition"
+            },
+            {
+              "id": "oop-topic-36-generalization",
+              "title": "Generalization"
+            },
+            {
+              "id": "oop-topic-37-inner-nested-classes",
+              "title": "Inner/nested classes"
+            }
+          ]
+        }
+      ],
+      "assessments": [
+        "Assignment #03"
+      ],
+      "milestones": []
+    },
+    {
+      "id": "oop-weeks-14-15",
+      "type": "week",
+      "title": "Weeks 14–15",
+      "topics": [
+        {
+          "id": "oop-topic-38-exceptions",
+          "title": "Exceptions"
+        },
+        {
+          "id": "oop-topic-39-exception-handling",
+          "title": "Exception Handling"
+        },
+        {
+          "id": "oop-topic-40-stream-classes",
+          "title": "Stream Classes"
+        },
+        {
+          "id": "oop-topic-41-stream-errors",
+          "title": "Stream errors"
+        },
+        {
+          "id": "oop-topic-42-file-handling",
+          "title": "File handling"
+        },
+        {
+          "id": "oop-topic-43-fundamentals-of-pointers",
+          "title": "Fundamentals of pointers"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "oop-week-16",
+      "type": "week",
+      "title": "Week 16",
+      "topics": [
+        {
+          "id": "oop-topic-44-templates",
+          "title": "Templates"
+        },
+        {
+          "id": "oop-topic-45-function-templates",
+          "title": "Function templates"
+        },
+        {
+          "id": "oop-topic-46-class-templates",
+          "title": "Class templates"
+        },
+        {
+          "id": "oop-topic-47-standard-template-library",
+          "title": "Standard Template Library"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "oop-milestone-17",
+      "type": "milestone",
+      "title": "End Semester Exam",
+      "label": null
+    },
+    {
+      "id": "oop-week-18",
+      "type": "week",
+      "title": "Week 18",
+      "topics": [],
+      "assessments": [],
+      "milestones": [
+        "Final Semester Examination"
+      ]
+    }
+  ],
+  "topicCount": 47
+}

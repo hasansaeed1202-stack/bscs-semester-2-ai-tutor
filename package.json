@@ -1,0 +1,28 @@
+{
+  "name": "bscs-semester-2-ai-tutor",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "generate": "node scripts/build-syllabus-data.mjs",
+    "prebuild": "npm run generate",
+    "build": "vite build",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check": "npm run generate && npm test && npm run build"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "latest",
+    "vite": "latest",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "latest",
+    "@testing-library/react": "latest",
+    "@testing-library/user-event": "latest",
+    "jsdom": "latest",
+    "vitest": "latest"
+  }
+}
