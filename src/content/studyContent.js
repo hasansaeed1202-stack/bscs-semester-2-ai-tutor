@@ -1,3 +1,5 @@
+import { discreteMathematicsTopics } from './discreteMathematics'
+
 const seeds = {
   'digital-logic-design': {
     note: { heading: 'Number systems at a glance', explanation: 'A number system gives symbols a place value. Digital systems commonly use binary, while octal and hexadecimal provide compact ways to write binary patterns.', keyPoints: ['Binary uses base 2: digits 0 and 1.', 'Each position represents a power of the base.', 'Group binary digits in threes for octal and fours for hexadecimal.'], example: '1011₂ = 8 + 2 + 1 = 11₁₀.' },
@@ -121,5 +123,6 @@ const expositoryWritingTopics = {
 
 export function getSeed(subjectSlug, activeTopicId, firstTopicId) {
   if (subjectSlug === 'expository-writing') return expositoryWritingTopics[activeTopicId] ?? null
+  if (subjectSlug === 'discrete-mathematics') return discreteMathematicsTopics[activeTopicId] ?? null
   return activeTopicId === firstTopicId ? seeds[subjectSlug] : null
 }

@@ -26,3 +26,41 @@ describe('Expository Writing study content', () => {
     }
   })
 })
+
+describe('Discrete Mathematics study content', () => {
+  it('replaces placeholder content for all 67 existing syllabus topics', () => {
+    const topics = flattenTopics(syllabi['discrete-mathematics'].units)
+
+    expect(topics).toHaveLength(67)
+    for (const topic of topics) {
+      const seed = getSeed('discrete-mathematics', topic.id, topics[0].id)
+      expect(seed, topic.id).not.toBeNull()
+      expect(seed.note.heading).toBeTruthy()
+      expect(seed.note.explanation).toBeTruthy()
+      expect(seed.note.keyPoints).toEqual(expect.arrayContaining([
+        expect.stringMatching(/^Definition:/),
+        expect.stringMatching(/^Formula\/rule:/),
+        expect.stringMatching(/^Exam focus:/),
+        expect.stringMatching(/^Common mistake:/),
+      ]))
+      expect(seed.note.example).toBeTruthy()
+      expect(seed.practice).toMatchObject({ prompt: expect.any(String), hint: expect.any(String), answer: expect.any(String), explanation: expect.any(String) })
+      expect(seed.quiz.choices).toHaveLength(4)
+      expect(seed.quiz.correctIndex).toBeGreaterThanOrEqual(0)
+      expect(seed.quiz.correctIndex).toBeLessThan(seed.quiz.choices.length)
+      expect(seed.quiz.explanation).toBeTruthy()
+    }
+  })
+
+  it('does not create content for a topic outside the syllabus', () => {
+    expect(getSeed('discrete-mathematics', 'discrete-mathematics-topic-68-invented', 'unused')).toBeNull()
+  })
+
+  it('preserves relative-difference operators in runtime content', () => {
+    const seed = getSeed('discrete-mathematics', 'discrete-mathematics-topic-7-relative-difference', 'unused')
+
+    expect(seed.note.keyPoints).toContain('Formula/rule: A\\B=A∩Bᶜ; operand order matters.')
+    expect(seed.note.example).toContain('A\\B={1,3}')
+    expect(seed.practice.prompt).toBe('Find {p,q,r}\\{q,s}.')
+  })
+})
