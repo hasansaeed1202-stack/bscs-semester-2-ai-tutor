@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { flattenTopics } from '../components/TopicNavigation'
 import { syllabi } from '../data/syllabi'
+import { oopTopics } from './oop'
 import { getSeed } from './studyContent'
 
 describe('Expository Writing study content', () => {
@@ -62,5 +63,28 @@ describe('Discrete Mathematics study content', () => {
     expect(seed.note.keyPoints).toContain('Formula/rule: A\\B=A∩Bᶜ; operand order matters.')
     expect(seed.note.example).toContain('A\\B={1,3}')
     expect(seed.practice.prompt).toBe('Find {p,q,r}\\{q,s}.')
+  })
+})
+
+describe('Object Oriented Programming study content', () => {
+  it('provides complete content for every OOP syllabus topic', () => {
+    const topics = flattenTopics(syllabi.oop.units)
+    expect(topics).toHaveLength(47)
+    expect(Object.keys(oopTopics)).toEqual(topics.map((topic) => topic.id))
+    for (const topic of topics) {
+      const seed = getSeed('oop', topic.id, topics[0].id)
+      expect(seed, topic.id).not.toBeNull()
+      expect(seed.note).toMatchObject({ heading: expect.any(String), explanation: expect.any(String), example: expect.any(String) })
+      expect(seed.note.keyPoints).toEqual(expect.arrayContaining([expect.stringMatching(/^Definition:/), expect.stringMatching(/^Exam focus:/), expect.stringMatching(/^Common mistake:/)]))
+      expect(seed.practice).toMatchObject({ prompt: expect.any(String), hint: expect.any(String), answer: expect.any(String), explanation: expect.any(String) })
+      expect(seed.quiz.choices).toHaveLength(4)
+      expect(seed.quiz.correctIndex).toBeGreaterThanOrEqual(0)
+      expect(seed.quiz.correctIndex).toBeLessThan(4)
+      expect(seed.quiz.explanation).toBeTruthy()
+    }
+  })
+
+  it('does not resolve an out-of-syllabus OOP topic ID', () => {
+    expect(getSeed('oop', 'oop-topic-48-invented', 'unused')).toBeNull()
   })
 })

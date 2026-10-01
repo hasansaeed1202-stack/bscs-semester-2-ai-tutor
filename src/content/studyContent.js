@@ -1,4 +1,5 @@
 import { discreteMathematicsTopics } from './discreteMathematics'
+import { oopTopics } from './oop'
 
 const seeds = {
   'digital-logic-design': {
@@ -124,5 +125,6 @@ const expositoryWritingTopics = {
 export function getSeed(subjectSlug, activeTopicId, firstTopicId) {
   if (subjectSlug === 'expository-writing') return expositoryWritingTopics[activeTopicId] ?? null
   if (subjectSlug === 'discrete-mathematics') return discreteMathematicsTopics[activeTopicId] ?? null
+  if (subjectSlug === 'oop') return oopTopics[activeTopicId] ?? null
   return activeTopicId === firstTopicId ? seeds[subjectSlug] : null
 }
