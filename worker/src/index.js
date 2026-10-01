@@ -26,15 +26,21 @@ async function pseudonymousKey(ip, secret) {
   return [...new Uint8Array(digest)].slice(0, 16).map((byte) => byte.toString(16).padStart(2, '0')).join('')
 }
 
-async function callProvider(env, messages, signal) {
+async function callProvider(env, instructions, input, signal) {
   const result = await fetch(env.AI_API_URL, {
     method: 'POST', signal,
     headers: { authorization: `Bearer ${env.AI_API_KEY}`, 'content-type': 'application/json' },
-    body: JSON.stringify({ model: env.AI_MODEL, messages, max_tokens: LIMITS.maxOutputTokens, temperature: 0.2 }),
+    body: JSON.stringify({ model: env.AI_MODEL, instructions, input, max_output_tokens: LIMITS.maxOutputTokens, temperature: 0.2 }),
   })
   if (!result.ok) throw Object.assign(new Error('provider error'), { providerStatus: result.status })
-  const payload = await result.json()
-  const answer = payload?.choices?.[0]?.message?.content
+  let payload
+  try { payload = await result.json() } catch { throw Object.assign(new Error('invalid provider response'), { invalidProvider: true }) }
+  const answer = payload?.output
+    ?.filter((item) => item?.type === 'message' && item.role === 'assistant')
+    .flatMap((item) => item.content || [])
+    .filter((item) => item?.type === 'output_text' && typeof item.text === 'string')
+    .map((item) => item.text)
+    .join('')
   if (typeof answer !== 'string' || !answer.trim()) throw Object.assign(new Error('invalid provider response'), { invalidProvider: true })
   return answer.trim()
 }
@@ -72,8 +78,8 @@ export default {
     const controller = new AbortController()
     const timeout = setTimeout(() => controller.abort(), LIMITS.providerTimeoutMs)
     try {
-      const providerMessages = [{ role: 'system', content: buildSystemPrompt(subject, curriculum, body.activeTopicId) }, ...body.messages]
-      const answer = await callProvider(env, providerMessages, controller.signal)
+      const instructions = buildSystemPrompt(subject, curriculum, body.activeTopicId)
+      const answer = await callProvider(env, instructions, body.messages, controller.signal)
       return response({ answer, subjectSlug: body.subjectSlug, curriculumVersion: curriculum.curriculumVersion, usage: { limited: false } }, 200, effectiveRequestId, origin)
     } catch (cause) {
       if (cause.name === 'AbortError') return error('provider_timeout', effectiveRequestId, origin)
