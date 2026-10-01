@@ -1,5 +1,9 @@
 import { discreteMathematicsTopics } from './discreteMathematics'
 import { oopTopics } from './oop'
+import { digitalLogicDesignTopics } from './digitalLogicDesign'
+import { mathematics2Topics } from './mathematics2'
+import { ideologyConstitutionPakistanTopics } from './ideologyConstitutionPakistan'
+import { probabilityAndStatisticsTopics } from './probabilityAndStatistics'
 
 const seeds = {
   'digital-logic-design': {
@@ -125,6 +129,10 @@ const expositoryWritingTopics = {
 export function getSeed(subjectSlug, activeTopicId, firstTopicId) {
   if (subjectSlug === 'expository-writing') return expositoryWritingTopics[activeTopicId] ?? null
   if (subjectSlug === 'discrete-mathematics') return discreteMathematicsTopics[activeTopicId] ?? null
+  if (subjectSlug === 'digital-logic-design') return digitalLogicDesignTopics[activeTopicId] ?? null
+  if (subjectSlug === 'mathematics-2') return mathematics2Topics[activeTopicId] ?? null
   if (subjectSlug === 'oop') return oopTopics[activeTopicId] ?? null
+  if (subjectSlug === 'ideology-constitution-pakistan') return ideologyConstitutionPakistanTopics[activeTopicId] ?? null
+  if (subjectSlug === 'probability-and-statistics') return probabilityAndStatisticsTopics[activeTopicId] ?? null
   return activeTopicId === firstTopicId ? seeds[subjectSlug] : null
 }

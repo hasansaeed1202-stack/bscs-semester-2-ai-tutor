@@ -69,12 +69,13 @@ describe('study interactions', () => {
     expect(screen.getByRole('tab', { name: 'quiz' })).toHaveFocus()
   })
 
-  it('selects a topic and shows its coming-soon state', async () => {
+  it('selects a Digital Logic Design topic and shows its study notes', async () => {
     window.location.hash = '#/subjects/digital-logic-design'
     render(<App />)
     const user = userEvent.setup()
     await user.click(screen.getByRole('button', { name: 'Number Systems: Binary, Octal, Hexadecimal' }))
-    expect(screen.getByRole('heading', { name: /more study material/i })).toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: /more study material/i })).not.toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Positional number systems' })).toBeInTheDocument()
   })
 
   it('renders study notes instead of placeholders for all 16 Expository Writing topics', async () => {
@@ -97,9 +98,9 @@ describe('study interactions', () => {
     const user = userEvent.setup()
     await user.click(screen.getByRole('tab', { name: 'practice' }))
     await user.click(screen.getByRole('button', { name: 'Reveal answer' }))
-    expect(screen.getByText(/Answer: 9/)).toBeInTheDocument()
+    expect(screen.getByText(/Answer: No; input 1 has two outputs\./)).toBeInTheDocument()
     await user.click(screen.getByRole('tab', { name: 'quiz' }))
-    await user.click(screen.getByLabelText('All real numbers except 0'))
+    await user.click(screen.getByLabelText('A function is a relation in which every domain element has exactly one image.'))
     await user.click(screen.getByRole('button', { name: 'Check answer' }))
     expect(screen.getByRole('status')).toHaveTextContent('Correct · Score 1/1')
   })
@@ -114,7 +115,7 @@ describe('study interactions', () => {
     expect(await screen.findByRole('alert')).toBeInTheDocument()
     await user.click(screen.getByRole('tab', { name: 'practice' }))
     await user.click(screen.getByRole('button', { name: 'Reveal answer' }))
-    expect(screen.getByText(/Answer: 9/)).toBeInTheDocument()
+    expect(screen.getByText(/Answer: No; input 1 has two outputs\./)).toBeInTheDocument()
   })
 
   it('covers navigation data for every subject', () => {
