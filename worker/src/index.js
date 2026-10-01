@@ -30,7 +30,7 @@ async function callProvider(env, instructions, input, signal) {
   const result = await fetch(env.AI_API_URL, {
     method: 'POST', signal,
     headers: { authorization: `Bearer ${env.AI_API_KEY}`, 'content-type': 'application/json' },
-    body: JSON.stringify({ model: env.AI_MODEL, instructions, input, max_output_tokens: LIMITS.maxOutputTokens, temperature: 0.2 }),
+    body: JSON.stringify({ model: env.AI_MODEL, instructions, input, max_output_tokens: LIMITS.maxOutputTokens }),
   })
   if (!result.ok) throw Object.assign(new Error('provider error'), { providerStatus: result.status })
   let payload

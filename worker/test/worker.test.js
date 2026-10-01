@@ -35,6 +35,7 @@ describe('Worker request boundary', () => {
       expect(payload.max_output_tokens).toBe(800)
       expect(payload).not.toHaveProperty('messages')
       expect(payload).not.toHaveProperty('max_tokens')
+      expect(payload).not.toHaveProperty('temperature')
       return providerResponse('A class is a blueprint.')
     }); vi.stubGlobal('fetch', provider)
     const result = await worker.fetch(request(body()), environment())
