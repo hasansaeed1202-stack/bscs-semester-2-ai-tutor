@@ -9,7 +9,11 @@ bindings = [{ name = "LIMITER", class_name = "TutorLimiter" }]
 tag = "v1"
 new_sqlite_classes = ["TutorLimiter"]
 
+[ai]
+binding = "AI"
+
 [vars]
 TUTOR_ENABLED = "false"
-# Configure ALLOWED_ORIGINS, AI_API_URL, AI_MODEL and numeric budgets per environment.
-# Store AI_API_KEY and CLIENT_KEY_SECRET with `wrangler secret put`; never place them here.
+AI_MODEL = "@cf/meta/llama-3.1-8b-instruct-fp8"
+# Configure ALLOWED_ORIGINS and numeric budgets per environment.
+# Store CLIENT_KEY_SECRET with `wrangler secret put`; never place it here.

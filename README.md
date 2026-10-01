@@ -1,6 +1,6 @@
 # BSCS Semester 2 Study Companion
 
-A mobile-first, syllabus-led study site for seven BSCS courses. The static GitHub Pages frontend now includes an optional AI Tutor client backed by a separately deployed Cloudflare Worker; provider credentials never enter the frontend bundle.
+A mobile-first, syllabus-led study site for seven BSCS courses. The static GitHub Pages frontend now includes an optional AI Tutor client backed by a separately deployed Cloudflare Worker using its native Workers AI binding; no provider credential enters the frontend bundle or Worker runtime.
 
 ## Run locally
 
@@ -39,7 +39,7 @@ Commit regenerated JSON whenever a root syllabus changes. The generator also wri
 
 `.github/workflows/deploy-pages.yml` tests and builds every push to `main`, then uploads `dist/` to GitHub Pages. In the repository settings, set **Pages → Source** to **GitHub Actions**. No secrets are required.
 
-The Pages build may set `VITE_TUTOR_API_URL` to the Worker route. The Worker starts disabled in `wrangler.toml`. Before release, configure exact origins, the fixed provider endpoint/model, numeric budgets, provider caps/alerts, and encrypted `AI_API_KEY` and `CLIENT_KEY_SECRET` secrets. Never put secrets in a `VITE_` variable or tracked file.
+The Pages build may set `VITE_TUTOR_API_URL` to the Worker route. The Worker starts disabled in `wrangler.toml`, which also declares the native `AI` binding and the server-owned `@cf/meta/llama-3.1-8b-instruct-fp8` model. Before release, configure exact origins, numeric budgets, Workers AI allocation monitoring/alerts, and the encrypted `CLIENT_KEY_SECRET`. No OpenAI endpoint or API key is required. Never put secrets in a `VITE_` variable or tracked file.
 
 ## Accessibility and responsive checklist
 

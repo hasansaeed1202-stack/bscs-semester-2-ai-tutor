@@ -1,6 +1,6 @@
 # AI Tutor API, privacy, and cost contract
 
-The GitHub Pages client calls a separately deployed Cloudflare Worker. The client never receives a provider key and cannot choose the model, system prompt, tools, curriculum, or output limit.
+The GitHub Pages client calls a separately deployed Cloudflare Worker. The client cannot choose the model, system prompt, tools, curriculum, or output limit.
 
 ## HTTP contract (version 1)
 
@@ -12,8 +12,10 @@ Success returns `{requestId, answer, subjectSlug, curriculumVersion, usage}`. Er
 
 There is no authentication or server transcript. The UI keeps separate subject history in tab memory. The limiter receives only an HMAC of the Cloudflare client IP using rotating `CLIENT_KEY_SECRET`; raw IPs and content are never stored or logged. Logs may contain request ID, subject slug, coarse status/provider class, latency, estimated usage, and limiter decision. Provider and Cloudflare retention must be reviewed before release.
 
-## Cost and failure controls
+## Provider, cost, and failure controls
 
-The Durable Object atomically reserves per-client minute/hour/day counts and global daily request/output-token budgets before provider use. Defaults are 5/minute, 30/hour, 100/day, 5,000 global requests/day, and 2,000,000 reserved output tokens/day. Production owners set these deliberately. `TUTOR_ENABLED` is a fail-closed kill switch. Missing limiter, secret, curriculum, or config fails closed. Model and 800-token output ceiling are server-owned; calls time out after 20 seconds and are not retried.
+The Worker uses the native `AI` binding with `@cf/meta/llama-3.1-8b-instruct-fp8`. This instruction-tuned, Cloudflare-hosted text model has a 32,000-token context window and is eligible for Workers AI's daily free allocation. The binding requires no provider API key; `AI_MODEL` remains a non-secret, server-owned variable.
 
-Store `AI_API_KEY` and `CLIENT_KEY_SECRET` as Worker encrypted secrets. Configure exact origins, endpoint, model, budgets, provider hard caps, and billing alerts during release. Production deployment is intentionally outside this candidate.
+The Durable Object atomically reserves per-client minute/hour/day counts and global daily request/output-token budgets before provider use. Defaults are 5/minute, 30/hour, 100/day, 5,000 global requests/day, and 2,000,000 reserved output tokens/day. Production owners set these deliberately. `TUTOR_ENABLED` is a fail-closed kill switch. Missing limiter, secret, curriculum, AI binding, or model config fails closed. Model and 800-token output ceiling are server-owned; calls time out after 20 seconds and are not retried.
+
+Store only `CLIENT_KEY_SECRET` as a Worker encrypted secret. Configure exact origins, budgets, Workers AI allocation monitoring, and alerts during release. Workers AI currently includes 10,000 neurons per day at no charge and rejects further operations after the free allocation is exhausted on the Workers Free plan; the application's stricter reservation budgets remain a separate guard. Production deployment is intentionally outside this candidate.
