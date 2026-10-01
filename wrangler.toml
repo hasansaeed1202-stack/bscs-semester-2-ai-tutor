@@ -1,0 +1,15 @@
+name = "bscs-semester-2-ai-tutor"
+main = "worker/src/index.js"
+compatibility_date = "2026-09-01"
+
+[durable_objects]
+bindings = [{ name = "LIMITER", class_name = "TutorLimiter" }]
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["TutorLimiter"]
+
+[vars]
+TUTOR_ENABLED = "false"
+# Configure ALLOWED_ORIGINS, AI_API_URL, AI_MODEL and numeric budgets per environment.
+# Store AI_API_KEY and CLIENT_KEY_SECRET with `wrangler secret put`; never place them here.

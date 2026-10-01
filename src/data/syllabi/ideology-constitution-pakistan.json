@@ -1,0 +1,422 @@
+{
+  "subjectSlug": "ideology-constitution-pakistan",
+  "units": [
+    {
+      "id": "ideology-constitution-pakistan-week-1",
+      "type": "week",
+      "title": "Week 1",
+      "topics": [
+        {
+          "id": "ideology-constitution-pakistan-topic-1-ideology",
+          "title": "Ideology"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-2-definition",
+          "title": "Definition"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-3-explanation",
+          "title": "Explanation"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-4-main-kinds-of-ideology",
+          "title": "Main kinds of ideology"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "ideology-constitution-pakistan-week-2",
+      "type": "week",
+      "title": "Week 2",
+      "topics": [
+        {
+          "id": "ideology-constitution-pakistan-topic-5-the-pakistan-ideology",
+          "title": "The Pakistan Ideology"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-6-definition",
+          "title": "Definition"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-7-aims-and-objectives",
+          "title": "Aims and objectives"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-8-vision-of-quaid-e-azam-mohammad-ali-jinnah",
+          "title": "Vision of Quaid-e-Azam Mohammad Ali Jinnah"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-9-vision-of-dr-allama-iqbal",
+          "title": "Vision of Dr. Allama Iqbal"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "ideology-constitution-pakistan-week-3",
+      "type": "week",
+      "title": "Week 3",
+      "topics": [
+        {
+          "id": "ideology-constitution-pakistan-topic-10-historical-background",
+          "title": "Historical Background"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-11-hazrat-shah-wali-ullah",
+          "title": "Hazrat Shah Wali Ullah"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-12-mujahideen-movement",
+          "title": "Mujahideen Movement"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-13-war-of-independence-1857-and-its-impacts",
+          "title": "War of Independence 1857 and its impacts"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-14-role-of-sir-sayed-ahmad-khan-after-1857-war",
+          "title": "Role of Sir Sayed Ahmad Khan after 1857 war"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "ideology-constitution-pakistan-week-4",
+      "type": "week",
+      "title": "Week 4",
+      "topics": [
+        {
+          "id": "ideology-constitution-pakistan-topic-15-educational-movements",
+          "title": "Educational Movements"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-16-aligarh-school-of-thought",
+          "title": "Aligarh School of Thought"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-17-deoband-school-of-thought",
+          "title": "Deoband School of Thought"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-18-nadwa-tul-ulema",
+          "title": "Nadwa-tul-Ulema"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "ideology-constitution-pakistan-week-5",
+      "type": "week",
+      "title": "Week 5",
+      "topics": [
+        {
+          "id": "ideology-constitution-pakistan-topic-19-establishment-of-indian-national-congress",
+          "title": "Establishment of Indian National Congress"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-20-evolution-of-two-nation-theory",
+          "title": "Evolution of Two Nation Theory"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-21-partition-of-bengal-1905",
+          "title": "Partition of Bengal 1905"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-22-simla-deputation-1906",
+          "title": "Simla Deputation 1906"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-23-establishment-of-muslim-league-1906",
+          "title": "Establishment of Muslim League 1906"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-24-lahore-resolution-1940",
+          "title": "Lahore Resolution 1940"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "ideology-constitution-pakistan-week-6",
+      "type": "week",
+      "title": "Week 6",
+      "topics": [
+        {
+          "id": "ideology-constitution-pakistan-topic-25-early-constitutions-in-the-world",
+          "title": "Early Constitutions in the world"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-26-charter-of-medina",
+          "title": "Charter of Medina"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-27-magna-carta",
+          "title": "Magna Carta"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-28-concept-of-constitutional-government",
+          "title": "Concept of constitutional government"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-29-evolution-of-constitutionalism",
+          "title": "Evolution of constitutionalism"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "ideology-constitution-pakistan-week-7",
+      "type": "week",
+      "title": "Week 7",
+      "topics": [
+        {
+          "id": "ideology-constitution-pakistan-topic-30-constitutional-and-political-reforms-in-british-india-1858-1892",
+          "title": "Constitutional and Political Reforms in British India 1858–1892"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-31-minto-morley-reforms-1909",
+          "title": "Minto-Morley Reforms (1909)"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-32-montagu-chelmsford-reforms-1919",
+          "title": "Montagu-Chelmsford Reforms (1919)"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "ideology-constitution-pakistan-week-8",
+      "type": "week",
+      "title": "Week 8",
+      "topics": [
+        {
+          "id": "ideology-constitution-pakistan-topic-33-government-of-india-act-of-1935",
+          "title": "Government of India Act of 1935"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "ideology-constitution-pakistan-week-9",
+      "type": "week",
+      "title": "Week 9",
+      "topics": [],
+      "assessments": [],
+      "milestones": [
+        "Mid Semester Exam"
+      ]
+    },
+    {
+      "id": "ideology-constitution-pakistan-week-10",
+      "type": "week",
+      "title": "Week 10",
+      "topics": [
+        {
+          "id": "ideology-constitution-pakistan-topic-34-background-and-main-provision-of-indian-independence-act-1947",
+          "title": "Background and Main Provision of Indian Independence Act 1947"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-35-implementation",
+          "title": "Implementation"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-36-consequences",
+          "title": "Consequences"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-37-historical-significance",
+          "title": "Historical Significance"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "ideology-constitution-pakistan-week-11",
+      "type": "week",
+      "title": "Week 11",
+      "topics": [
+        {
+          "id": "ideology-constitution-pakistan-topic-38-political-and-constitutional-development-in-pakistan-1947-56",
+          "title": "Political and Constitutional development in Pakistan 1947–56"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-39-objective-resolution-1949",
+          "title": "Objective Resolution 1949"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-40-role-of-constituent-assembly",
+          "title": "Role of Constituent Assembly"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-41-first-report-of-basic-principle-committee",
+          "title": "First Report of Basic Principle Committee"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-42-second-report-of-basic-principle-committee",
+          "title": "Second Report of Basic Principle Committee"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-43-constitutional-deadlock-for-nine-years",
+          "title": "Constitutional deadlock for nine years"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "ideology-constitution-pakistan-week-12",
+      "type": "week",
+      "title": "Week 12",
+      "topics": [
+        {
+          "id": "ideology-constitution-pakistan-topic-44-constitution-of-1956",
+          "title": "Constitution of 1956"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-45-salient-features",
+          "title": "Salient features"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-46-shortcomings-of-1956-constitution",
+          "title": "Shortcomings of 1956 Constitution"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "ideology-constitution-pakistan-week-13",
+      "type": "week",
+      "title": "Week 13",
+      "topics": [
+        {
+          "id": "ideology-constitution-pakistan-topic-47-ayub-khan-martial-law-1958",
+          "title": "Ayub Khan Martial law 1958"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-48-background-and-constitution-of-1962",
+          "title": "Background and Constitution of 1962"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-49-features-of-constitution-of-1962",
+          "title": "Features of Constitution of 1962"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "ideology-constitution-pakistan-week-14",
+      "type": "week",
+      "title": "Week 14",
+      "topics": [
+        {
+          "id": "ideology-constitution-pakistan-topic-50-constitution-of-pakistan-1973",
+          "title": "Constitution of Pakistan 1973"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-51-salient-features",
+          "title": "Salient features"
+        },
+        {
+          "id": "ideology-constitution-pakistan-topic-52-significance-of-1973-constitution",
+          "title": "Significance of 1973 Constitution"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "ideology-constitution-pakistan-week-15",
+      "type": "week",
+      "title": "Week 15",
+      "topics": [
+        {
+          "id": "ideology-constitution-pakistan-topic-53-political-developments-in-general-zia-ul-haqs-era",
+          "title": "Political Developments in General Zia Ul Haq’s Era"
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "ideology-constitution-pakistan-week-16",
+      "type": "week",
+      "title": "Week 16",
+      "topics": [
+        {
+          "id": "ideology-constitution-pakistan-topic-54-constitutional-amendments-of-1973-constitution",
+          "title": "Constitutional Amendments of 1973 Constitution:",
+          "children": [
+            {
+              "id": "ideology-constitution-pakistan-topic-55-8th",
+              "title": "8th"
+            },
+            {
+              "id": "ideology-constitution-pakistan-topic-56-13th",
+              "title": "13th"
+            },
+            {
+              "id": "ideology-constitution-pakistan-topic-57-17th",
+              "title": "17th"
+            },
+            {
+              "id": "ideology-constitution-pakistan-topic-58-18th",
+              "title": "18th"
+            }
+          ]
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "ideology-constitution-pakistan-week-17",
+      "type": "week",
+      "title": "Week 17",
+      "topics": [
+        {
+          "id": "ideology-constitution-pakistan-topic-59-constitutional-amendments-of-1973-constitution",
+          "title": "Constitutional Amendments of 1973 Constitution:",
+          "children": [
+            {
+              "id": "ideology-constitution-pakistan-topic-60-19th",
+              "title": "19th"
+            },
+            {
+              "id": "ideology-constitution-pakistan-topic-61-21st",
+              "title": "21st"
+            },
+            {
+              "id": "ideology-constitution-pakistan-topic-62-25th",
+              "title": "25th"
+            }
+          ]
+        }
+      ],
+      "assessments": [],
+      "milestones": []
+    },
+    {
+      "id": "ideology-constitution-pakistan-week-18",
+      "type": "week",
+      "title": "Week 18",
+      "topics": [],
+      "assessments": [],
+      "milestones": [
+        "Final Term Examination"
+      ]
+    }
+  ],
+  "topicCount": 62
+}
