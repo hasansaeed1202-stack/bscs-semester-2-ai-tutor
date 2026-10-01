@@ -24,8 +24,10 @@ function Quiz({ item }) {
 }
 
 export default function StudyPanel({ tab, seed, topicTitle }) {
-  if (!seed) return <EmptyState topicTitle={topicTitle} />
-  if (tab === 'practice') return <Practice item={seed.practice} />
-  if (tab === 'quiz') return <Quiz item={seed.quiz} />
-  return <Notes note={seed.note} />
+  let content
+  if (!seed) content = <EmptyState topicTitle={topicTitle} />
+  else if (tab === 'practice') content = <Practice item={seed.practice} />
+  else if (tab === 'quiz') content = <Quiz item={seed.quiz} />
+  else content = <Notes note={seed.note} />
+  return <div id={`panel-${tab}`} role="tabpanel" aria-labelledby={`tab-${tab}`} tabIndex="0">{content}</div>
 }

@@ -34,6 +34,27 @@ describe('routing and pages', () => {
 })
 
 describe('study interactions', () => {
+  it.each([320, 768, 1280])('supports roving keyboard tabs at %ipx', async (width) => {
+    Object.defineProperty(window, 'innerWidth', { configurable: true, value: width })
+    window.location.hash = '#/subjects/oop'
+    render(<App />)
+    const user = userEvent.setup()
+    const notes = screen.getByRole('tab', { name: 'notes' })
+    notes.focus()
+    await user.keyboard('{ArrowRight}')
+    const practice = screen.getByRole('tab', { name: 'practice' })
+    expect(practice).toHaveFocus()
+    expect(practice).toHaveAttribute('tabindex', '0')
+    expect(practice).toHaveAttribute('aria-controls', 'panel-practice')
+    expect(screen.getByRole('tabpanel')).toHaveAttribute('aria-labelledby', 'tab-practice')
+    await user.keyboard('{End}')
+    expect(screen.getByRole('tab', { name: 'quiz' })).toHaveFocus()
+    await user.keyboard('{Home}')
+    expect(notes).toHaveFocus()
+    await user.keyboard('{ArrowLeft}')
+    expect(screen.getByRole('tab', { name: 'quiz' })).toHaveFocus()
+  })
+
   it('selects a topic and shows its coming-soon state', async () => {
     window.location.hash = '#/subjects/digital-logic-design'
     render(<App />)

@@ -2,23 +2,36 @@ const MINUTE = 60_000
 const HOUR = 60 * MINUTE
 const DAY = 24 * HOUR
 
+const LIMIT_CONFIG = Object.freeze({
+  minute: 'CLIENT_REQUESTS_PER_MINUTE',
+  hour: 'CLIENT_REQUESTS_PER_HOUR',
+  day: 'CLIENT_REQUESTS_PER_DAY',
+  globalRequests: 'GLOBAL_REQUESTS_PER_DAY',
+  globalTokens: 'GLOBAL_TOKENS_PER_DAY',
+})
+
+export function readLimiterLimits(env) {
+  return Object.fromEntries(Object.entries(LIMIT_CONFIG).map(([name, key]) => {
+    const raw = env[key]
+    const value = typeof raw === 'string' && raw.trim() === '' ? Number.NaN : Number(raw)
+    if (raw === undefined || raw === null || !Number.isFinite(value) || value <= 0) {
+      throw new TypeError(`${key} must be a finite number greater than zero`)
+    }
+    return [name, value]
+  }))
+}
+
 export class TutorLimiter {
   constructor(state, env) {
     this.state = state
-    this.env = env
+    this.limits = Object.freeze(readLimiterLimits(env))
   }
 
   async fetch(request) {
     if (request.method !== 'POST') return new Response('Method not allowed', { status: 405 })
     const { action = 'reserve', clientKey, estimatedTokens = 0 } = await request.json()
     const now = Date.now()
-    const limits = {
-      minute: Number(this.env.CLIENT_REQUESTS_PER_MINUTE || 5),
-      hour: Number(this.env.CLIENT_REQUESTS_PER_HOUR || 30),
-      day: Number(this.env.CLIENT_REQUESTS_PER_DAY || 100),
-      globalRequests: Number(this.env.GLOBAL_REQUESTS_PER_DAY || 5000),
-      globalTokens: Number(this.env.GLOBAL_TOKENS_PER_DAY || 2_000_000),
-    }
+    const limits = this.limits
     const result = await this.state.storage.transaction(async (storage) => {
       const activeKey = `c:${clientKey}:active`
       if (action === 'release') {
