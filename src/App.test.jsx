@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import App, { parseRoute } from './App'
+import { flattenTopics } from './components/TopicNavigation'
 import { subjects } from './data/subjects'
 import { syllabi } from './data/syllabi'
 
@@ -74,6 +75,20 @@ describe('study interactions', () => {
     const user = userEvent.setup()
     await user.click(screen.getByRole('button', { name: 'Number Systems: Binary, Octal, Hexadecimal' }))
     expect(screen.getByRole('heading', { name: /more study material/i })).toBeInTheDocument()
+  })
+
+  it('renders study notes instead of placeholders for all 16 Expository Writing topics', async () => {
+    window.location.hash = '#/subjects/expository-writing'
+    render(<App />)
+    const user = userEvent.setup()
+    const topics = flattenTopics(syllabi['expository-writing'].units)
+
+    expect(topics).toHaveLength(16)
+    for (const topic of topics) {
+      await user.click(screen.getByRole('button', { name: topic.title }))
+      expect(screen.queryByRole('heading', { name: /more study material/i })).not.toBeInTheDocument()
+      expect(screen.getByText('Starter notes')).toBeInTheDocument()
+    }
   })
 
   it('reveals practice and scores a quiz locally', async () => {
