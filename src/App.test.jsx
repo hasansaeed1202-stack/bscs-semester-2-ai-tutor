@@ -1,9 +1,11 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import App, { parseRoute } from './App'
 import { subjects } from './data/subjects'
 import { syllabi } from './data/syllabi'
+
+afterEach(() => vi.unstubAllGlobals())
 
 describe('routing and pages', () => {
   it('renders exactly seven linked subject cards', () => {
@@ -74,6 +76,19 @@ describe('study interactions', () => {
     await user.click(screen.getByLabelText('All real numbers except 0'))
     await user.click(screen.getByRole('button', { name: 'Check answer' }))
     expect(screen.getByRole('status')).toHaveTextContent('Correct · Score 1/1')
+  })
+
+  it('keeps static study materials usable when the tutor fails', async () => {
+    vi.stubGlobal('fetch', vi.fn(async () => Response.json({ error: { code: 'provider_unavailable' } }, { status: 502 })))
+    window.location.hash = '#/subjects/mathematics-2'
+    render(<App />)
+    const user = userEvent.setup()
+    await user.type(screen.getByLabelText('Your question'), 'Explain this')
+    await user.click(screen.getByRole('button', { name: 'Send' }))
+    expect(await screen.findByRole('alert')).toBeInTheDocument()
+    await user.click(screen.getByRole('tab', { name: 'practice' }))
+    await user.click(screen.getByRole('button', { name: 'Reveal answer' }))
+    expect(screen.getByText(/Answer: 9/)).toBeInTheDocument()
   })
 
   it('covers navigation data for every subject', () => {

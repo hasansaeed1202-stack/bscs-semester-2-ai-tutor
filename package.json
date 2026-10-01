@@ -8,6 +8,7 @@
     "generate": "node scripts/build-syllabus-data.mjs",
     "prebuild": "npm run generate",
     "build": "vite build",
+    "verify:production-url": "node scripts/verify-production-url.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
     "check": "npm run generate && npm test && npm run build"

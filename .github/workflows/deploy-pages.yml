@@ -25,7 +25,14 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
-      - run: npm run build
+      - name: Build production site
+        run: npm run build
+        env:
+          VITE_TUTOR_API_URL: ${{ vars.VITE_TUTOR_API_URL }}
+      - name: Verify Tutor Worker URL
+        run: npm run verify:production-url
+        env:
+          VITE_TUTOR_API_URL: ${{ vars.VITE_TUTOR_API_URL }}
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

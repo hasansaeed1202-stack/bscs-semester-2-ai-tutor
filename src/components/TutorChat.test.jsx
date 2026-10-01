@@ -4,9 +4,21 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import TutorChat, { resetTutorSessions } from './TutorChat'
 import { subjects } from '../data/subjects'
 
-afterEach(() => { vi.unstubAllGlobals(); resetTutorSessions() })
+afterEach(() => { vi.unstubAllGlobals(); vi.unstubAllEnvs(); resetTutorSessions() })
 
 describe('TutorChat', () => {
+  it('uses the configured Tutor Worker URL', async () => {
+    vi.stubEnv('VITE_TUTOR_API_URL', 'https://tutor-worker.example/v1/chat')
+    const provider = vi.fn(async () => Response.json({ answer: 'Configured response' }))
+    vi.stubGlobal('fetch', provider)
+    render(<TutorChat subject={subjects[0]} activeTopicId="topic-1" />)
+    const user = userEvent.setup()
+    await user.type(screen.getByLabelText('Your question'), 'Explain this')
+    await user.click(screen.getByRole('button', { name: 'Send' }))
+    await screen.findByText('Configured response')
+    expect(provider).toHaveBeenCalledWith('https://tutor-worker.example/v1/chat', expect.any(Object))
+  })
+
   it('sends the selected subject and renders provider text inertly', async () => {
     vi.stubGlobal('fetch', vi.fn(async (_url, options) => {
       expect(JSON.parse(options.body)).toMatchObject({ subjectSlug: 'oop', activeTopicId: 'topic-1' })
