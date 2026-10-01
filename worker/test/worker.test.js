@@ -35,6 +35,7 @@ describe('Worker request boundary', () => {
       expect(payload.max_output_tokens).toBe(800)
       expect(payload).not.toHaveProperty('messages')
       expect(payload).not.toHaveProperty('max_tokens')
+      expect(payload).not.toHaveProperty('temperature')
       return providerResponse('A class is a blueprint.')
     }); vi.stubGlobal('fetch', provider)
     const result = await worker.fetch(request(body()), environment())
@@ -121,3 +122,4 @@ it('bundles the same seven deterministic curricula as the allowlist', () => {
   expect(Object.keys(curricula)).toEqual(Object.keys(subjects))
   for (const curriculum of Object.values(curricula)) expect(curriculum.curriculumVersion).toMatch(/^[a-f0-9]{64}$/)
 })
+
