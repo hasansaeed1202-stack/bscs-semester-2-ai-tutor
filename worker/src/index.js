@@ -27,20 +27,15 @@ async function pseudonymousKey(ip, secret) {
 }
 
 async function callProvider(env, instructions, input, signal) {
-  const result = await fetch(env.AI_API_URL, {
-    method: 'POST', signal,
-    headers: { authorization: `Bearer ${env.AI_API_KEY}`, 'content-type': 'application/json' },
-    body: JSON.stringify({ model: env.AI_MODEL, instructions, input, max_output_tokens: LIMITS.maxOutputTokens, temperature: 0.2 }),
-  })
-  if (!result.ok) throw Object.assign(new Error('provider error'), { providerStatus: result.status })
-  let payload
-  try { payload = await result.json() } catch { throw Object.assign(new Error('invalid provider response'), { invalidProvider: true }) }
-  const answer = payload?.output
-    ?.filter((item) => item?.type === 'message' && item.role === 'assistant')
-    .flatMap((item) => item.content || [])
-    .filter((item) => item?.type === 'output_text' && typeof item.text === 'string')
-    .map((item) => item.text)
-    .join('')
+  const aborted = new Promise((_, reject) => signal.addEventListener('abort', () => reject(Object.assign(new Error('aborted'), { name: 'AbortError' })), { once: true }))
+  const payload = await Promise.race([
+    env.AI.run(env.AI_MODEL, {
+      messages: [{ role: 'system', content: instructions }, ...input],
+      max_tokens: LIMITS.maxOutputTokens,
+    }),
+    aborted,
+  ])
+  const answer = payload?.response
   if (typeof answer !== 'string' || !answer.trim()) throw Object.assign(new Error('invalid provider response'), { invalidProvider: true })
   return answer.trim()
 }
@@ -66,7 +61,7 @@ export default {
     const curriculum = curricula[body.subjectSlug]
     const subject = subjects[body.subjectSlug]
     if (!curriculum?.curriculumVersion || !subject) return error('curriculum_unavailable', effectiveRequestId, origin)
-    if (String(env.TUTOR_ENABLED).toLowerCase() !== 'true' || !env.LIMITER || !env.CLIENT_KEY_SECRET) return error('tutor_unavailable', effectiveRequestId, origin)
+    if (String(env.TUTOR_ENABLED).toLowerCase() !== 'true' || !env.LIMITER || !env.CLIENT_KEY_SECRET || !env.AI?.run || !env.AI_MODEL) return error('tutor_unavailable', effectiveRequestId, origin)
     let clientKey
     let stub
     try {
