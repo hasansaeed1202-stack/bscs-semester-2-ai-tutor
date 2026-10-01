@@ -29,8 +29,19 @@ describe('routing and pages', () => {
     expect(screen.getByRole('link', { name: /return home/i })).toHaveAttribute('href', '#/')
   })
 
+  it('opens and scrolls to the subjects section for the homepage anchor', () => {
+    const scrollIntoView = vi.fn()
+    Object.defineProperty(Element.prototype, 'scrollIntoView', { configurable: true, value: scrollIntoView })
+    window.location.hash = '#subjects'
+    render(<App />)
+    expect(screen.getByRole('heading', { level: 2, name: 'Choose a subject' })).toBeInTheDocument()
+    expect(scrollIntoView).toHaveBeenCalledOnce()
+    delete Element.prototype.scrollIntoView
+  })
+
   it('parses routes independent of the repository base path', () => {
     expect(parseRoute('#/')).toEqual({ page: 'home' })
+    expect(parseRoute('#subjects')).toEqual({ page: 'home', anchor: 'subjects' })
     expect(parseRoute('#/subjects/oop')).toEqual({ page: 'subject', slug: 'oop' })
   })
 })

@@ -8,6 +8,7 @@ import { getSubject } from './data/subjects'
 export function parseRoute(hash = window.location.hash) {
   const path = hash.replace(/^#/, '').replace(/\?.*$/, '') || '/'
   if (path === '/') return { page: 'home' }
+  if (path === 'subjects') return { page: 'home', anchor: 'subjects' }
   const match = path.match(/^\/subjects\/([^/]+)\/?$/)
   if (match) return { page: 'subject', slug: decodeURIComponent(match[1]) }
   return { page: 'not-found' }
@@ -21,6 +22,10 @@ export default function App() {
     if (!window.location.hash) window.location.hash = '#/'
     return () => window.removeEventListener('hashchange', onChange)
   }, [])
+
+  useEffect(() => {
+    if (route.page === 'home' && route.anchor) document.getElementById(route.anchor)?.scrollIntoView()
+  }, [route])
 
   let page
   if (route.page === 'home') page = <HomePage />
