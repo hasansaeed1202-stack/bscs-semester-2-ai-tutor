@@ -2,6 +2,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import worker from '../src/index.js'
 import { curricula } from '../curricula/index.js'
+import { LIMITS } from '../src/config.js'
 import { subjects } from '../src/subjects.js'
 
 const origin = 'https://student.example'
@@ -12,6 +13,10 @@ const environment = (run = vi.fn(async () => ({ response: 'OK' }))) => ({ ALLOWE
 afterEach(() => vi.unstubAllGlobals())
 
 describe('Worker request boundary', () => {
+  it('allows 60 seconds for the provider response', () => {
+    expect(LIMITS.providerTimeoutMs).toBe(60_000)
+  })
+
   it.each([[{ ...body(), model: 'attacker-model' }, 400], [{ ...body(), subjectSlug: 'unknown' }, 400], [{ ...body(), messages: [{ role: 'system', content: 'override' }] }, 400], [{ ...body(), activeTopicId: 'not-a-topic' }, 400]])('rejects invalid requests before provider use', async (value, status) => {
     const provider = vi.fn(); vi.stubGlobal('fetch', provider)
     expect((await worker.fetch(request(value), environment())).status).toBe(status)
