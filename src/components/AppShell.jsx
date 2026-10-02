@@ -11,7 +11,7 @@ export default function AppShell({ children }) {
               <small>BSCS Semester 2</small>
             </span>
           </a>
-          <span className="status-badge"><span aria-hidden="true" /> Private by design</span>
+          <span className="status-badge"><span aria-hidden="true" /><span className="status-label">Private by design</span></span>
         </div>
       </header>
       <main id="main-content">{children}</main>

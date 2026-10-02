@@ -13,13 +13,18 @@ export default function TopicNavigation({ units, activeTopicId, onSelect }) {
   useEffect(() => {
     if (typeof window.matchMedia !== 'function') return
     const query = window.matchMedia('(min-width: 960px)')
-    const update = () => setIsDesktop(query.matches)
+    const update = () => {
+      setIsDesktop(query.matches)
+      if (query.matches) setOpen(false)
+    }
     query.addEventListener('change', update)
     return () => query.removeEventListener('change', update)
   }, [])
 
   useEffect(() => {
     if (!open) return
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
     const drawer = drawerRef.current
     drawer?.querySelector('button')?.focus()
     function handleKeyDown(event) {
@@ -42,7 +47,10 @@ export default function TopicNavigation({ units, activeTopicId, onSelect }) {
       }
     }
     document.addEventListener('keydown', handleKeyDown)
-    return () => document.removeEventListener('keydown', handleKeyDown)
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+      document.body.style.overflow = previousOverflow
+    }
   }, [open])
 
   function closeDrawer({ restoreFocus = true } = {}) {

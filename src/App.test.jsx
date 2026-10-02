@@ -95,9 +95,12 @@ describe('study interactions', () => {
     const trigger = screen.getByRole('button', { name: /browse course map/i })
     await user.click(trigger)
     expect(screen.getByRole('button', { name: 'Close course map' })).toHaveFocus()
+    expect(screen.getByRole('navigation', { name: 'Course topics' })).toBeInTheDocument()
+    expect(document.body.style.overflow).toBe('hidden')
     await user.keyboard('{Escape}')
     expect(screen.queryByRole('navigation', { name: 'Course topics' })).not.toBeInTheDocument()
     expect(trigger).toHaveFocus()
+    expect(document.body.style.overflow).toBe('')
   })
 
   it('closes the mobile course map from its backdrop', async () => {
@@ -143,6 +146,7 @@ describe('study interactions', () => {
     expect(practice).toHaveAttribute('tabindex', '0')
     expect(practice).toHaveAttribute('aria-controls', 'panel-practice')
     expect(screen.getByRole('tabpanel')).toHaveAttribute('aria-labelledby', 'tab-practice')
+    expect(screen.getByRole('tablist')).toHaveAttribute('aria-orientation', 'horizontal')
     await user.keyboard('{End}')
     expect(screen.getByRole('tab', { name: 'quiz' })).toHaveFocus()
     await user.keyboard('{Home}')

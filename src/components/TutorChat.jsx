@@ -111,7 +111,7 @@ export default function TutorChat({ subject, activeTopicId }) {
       </header>
       <p className="tutor-notice"><strong>Study responsibly.</strong> The tutor can make mistakes, so check important answers. Don’t share personal information. This conversation stays in this browser tab.</p>
       {messages.length > 0 && <a className="skip-latest" href={`#latest-${subject.slug}`}>Skip to latest response</a>}
-      <div className="transcript" aria-label={`${subject.title} tutor conversation`}>
+      <div className="transcript" role="log" aria-live="polite" aria-relevant="additions" aria-label={`${subject.title} tutor conversation`}>
         {!messages.length && <div className="tutor-empty"><span className="empty-chat-icon" aria-hidden="true">&#10022;</span><h3>What would you like to learn?</h3><p>Ask for a clear explanation, a worked example, a practice problem, or a quick quiz about this course.</p><ul aria-label="Example questions"><li>Explain a difficult concept</li><li>Walk through an example</li><li>Test my understanding</li></ul></div>}
         {messages.map((message, index) => <article className={`chat-message ${message.role}`} key={`${message.role}-${index}`}><span className="message-avatar" aria-hidden="true">{message.role === 'user' ? 'Y' : 'AI'}</span><div><strong>{message.role === 'user' ? 'You' : 'Tutor'}</strong><p>{message.content}</p></div></article>)}
         {state === 'sending' && <div className="tutor-pending" role="status"><span className="message-avatar" aria-hidden="true">AI</span><div><strong>Tutor</strong><span className="thinking-dots" aria-label="Tutor is thinking"><i /><i /><i /></span></div></div>}
@@ -121,7 +121,7 @@ export default function TutorChat({ subject, activeTopicId }) {
       <p className="visually-hidden" aria-live="polite">{state === 'idle' && messages.at(-1)?.role === 'assistant' ? 'Tutor response received.' : ''}</p>
       <form className="tutor-composer" onSubmit={send}>
         <div className="composer-label"><label htmlFor={`tutor-input-${subject.slug}`}>Your question</label><small>about {subject.title}</small></div>
-        <div className="composer-field"><textarea id={`tutor-input-${subject.slug}`} value={draft} onChange={(event) => setDraft(event.target.value)} maxLength="4000" rows="3" placeholder="Type your study question…" disabled={state === 'sending'} /><span className="character-count" aria-hidden="true">{draft.length}/4000</span></div>
+        <div className="composer-field"><textarea id={`tutor-input-${subject.slug}`} value={draft} onChange={(event) => setDraft(event.target.value)} maxLength="4000" rows="3" placeholder="Type your study question…" disabled={state === 'sending'} aria-describedby={`tutor-count-${subject.slug}`} /><span id={`tutor-count-${subject.slug}`} className="character-count">{draft.length} of 4000 characters</span></div>
         <div className="composer-actions"><p>AI can make mistakes. Check important answers.</p><div className="button-row"><button className="primary-action" type="submit" disabled={!draft.trim() || state === 'sending'}>{state === 'error' ? 'Try again' : 'Send'} <span aria-hidden="true">→</span></button>{state === 'sending' && <button className="secondary-action" type="button" onClick={stop}>Stop response</button>}</div></div>
       </form>
     </section>

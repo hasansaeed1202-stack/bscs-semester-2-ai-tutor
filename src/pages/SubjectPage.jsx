@@ -51,7 +51,7 @@ export default function SubjectPage({ subject, topicId }) {
         <section className="study-workspace" ref={lessonRef} aria-labelledby="active-topic-heading">
           <p className="eyebrow">Current topic</p>
           <h2 id="active-topic-heading">{activeTopic.title}</h2>
-          <div className="tabs" role="tablist" aria-label="Study resources">
+          <div className="tabs" role="tablist" aria-label="Study resources" aria-orientation="horizontal">
             {tabNames.map((name, index) => (
               <button key={name} id={`tab-${name}`} ref={(node) => { tabRefs.current[index] = node }} role="tab" aria-selected={tab === name} aria-controls={`panel-${name}`} tabIndex={tab === name ? 0 : -1} onClick={() => setTab(name)} onKeyDown={(event) => selectTab(event, index)}>{name}</button>
             ))}

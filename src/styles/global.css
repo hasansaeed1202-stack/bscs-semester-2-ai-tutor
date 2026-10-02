@@ -32,7 +32,7 @@
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; min-width: 320px; }
-body { margin: 0; min-width: 320px; min-height: 100vh; background: var(--paper); -webkit-font-smoothing: antialiased; }
+body { margin: 0; min-width: 320px; min-height: 100vh; overflow-wrap: anywhere; background: var(--paper); -webkit-font-smoothing: antialiased; }
 button, input, textarea { font: inherit; }
 button, a { min-height: 44px; -webkit-tap-highlight-color: transparent; }
 a { color: inherit; }
@@ -196,6 +196,29 @@ p { line-height: 1.7; }
 .composer-field { position: relative; }.tutor-composer textarea { width: 100%; min-height: 104px; resize: vertical; padding: 14px 14px 30px; color: var(--ink); background: white; border: 1px solid #9fb3c8; border-radius: var(--radius-sm); transition: border-color var(--transition), box-shadow var(--transition); }.tutor-composer textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(10,118,109,.1); }.character-count { position: absolute; right: 12px; bottom: 10px; color: var(--muted); font-size: .68rem; }
 .composer-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 20px; }.composer-actions > p { margin: 8px 0 0; color: var(--muted); font-size: .72rem; }.tutor-composer .button-row { margin-top: 10px; }
 .tutor button, .tutor a { min-height: 44px; }
+
+@media (max-width: 420px) {
+  .container { width: min(100% - 24px, 1180px); }
+  .header-inner { min-height: 72px; }
+  .status-badge { flex: 0 0 34px; justify-content: center; width: 34px; padding-inline: 0; }
+  .status-label { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+  .hero { padding-block: 56px; }
+  .hero h1 { font-size: clamp(2.35rem, 13vw, 3.25rem); }
+  .hero-panel { min-height: 350px; padding: 24px; }
+  .subjects-section { padding-top: 60px; }
+  .subject-card { min-height: 290px; padding: 22px; }
+  .subject-hero { padding-block: 40px; }
+  .subject-hero .back-link { margin-bottom: 34px; }
+  .content-card-heading { gap: 12px; }
+  .content-card-icon { flex-basis: 38px; width: 38px; height: 38px; }
+  .quiz-choice { grid-template-columns: auto 32px minmax(0, 1fr); gap: 9px; padding-inline: 10px; }
+  .choice-result { grid-column: 2 / -1; }
+  .chat-message, .tutor-pending { width: 100%; }
+  .message-avatar { flex-basis: 28px; width: 28px; height: 28px; }
+  .composer-label { display: block; }
+  .composer-label small { display: block; margin-top: 2px; }
+  .composer-actions .button-row, .composer-actions .button-row > * { width: 100%; }
+}
 
 @keyframes panel-in { from { opacity: 0; transform: translateY(5px); } }
 @keyframes reveal-in { from { opacity: 0; transform: translateY(-4px); } }

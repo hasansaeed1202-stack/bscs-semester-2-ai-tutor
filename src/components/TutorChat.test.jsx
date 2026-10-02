@@ -13,6 +13,12 @@ describe('TutorChat', () => {
     }))
   }
 
+  it('labels the transcript as a live log and describes the input limit', () => {
+    render(<TutorChat subject={subjects[0]} activeTopicId="topic-1" />)
+    expect(screen.getByRole('log', { name: `${subjects[0].title} tutor conversation` })).toHaveAttribute('aria-live', 'polite')
+    expect(screen.getByLabelText('Your question')).toHaveAccessibleDescription('0 of 4000 characters')
+  })
+
   it('uses the configured Tutor Worker URL', async () => {
     vi.stubEnv('VITE_TUTOR_API_URL', 'https://tutor-worker.example/v1/chat')
     const provider = vi.fn(async () => Response.json({ answer: 'Configured response' }))
