@@ -6,18 +6,22 @@ export default function HomePage() {
     <div>
       <section className="hero">
         <div className="container hero-grid">
-          <div>
-            <p className="eyebrow">BSCS · Semester 2</p>
-            <h1>One clear place to keep your semester moving.</h1>
-            <p className="hero-copy">Follow every subject week by week, review concise starter notes, practise core ideas, and check your understanding.</p>
-            <a className="primary-action" href="#subjects">Explore subjects <span aria-hidden="true">↓</span></a>
+          <div className="hero-content">
+            <p className="eyebrow">BSCS <span aria-hidden="true">/</span> Semester 2</p>
+            <h1>Your semester,<br /><span>beautifully organized.</span></h1>
+            <p className="hero-copy">Move through every course with syllabus-led notes, focused practice, and quick knowledge checks—all in one calm workspace.</p>
+            <div className="hero-actions">
+              <a className="primary-action" href="#subjects">Explore subjects <span aria-hidden="true">↓</span></a>
+              <span className="hero-note">No sign-up. No distractions.</span>
+            </div>
           </div>
           <div className="hero-panel" aria-label="Semester overview">
-            <span className="hero-number">07</span>
-            <span>subjects</span>
-            <hr />
-            <strong>One syllabus-led path</strong>
-            <small>No account, tracking, or server required.</small>
+            <div className="overview-orbit" aria-hidden="true"><span>02</span></div>
+            <p className="panel-label">Semester overview</p>
+            <div className="semester-stat"><span className="hero-number">07</span><span>curated<br />subjects</span></div>
+            <div className="panel-divider" />
+            <strong>Syllabus-led from start to finish</strong>
+            <small>Everything you need to stay oriented and keep making progress.</small>
           </div>
         </div>
       </section>
@@ -25,9 +29,9 @@ export default function HomePage() {
         <div className="section-heading">
           <div>
             <p className="eyebrow">Your curriculum</p>
-            <h2 id="subjects-heading">Choose a subject</h2>
+            <h2 id="subjects-heading">Choose where to begin.</h2>
           </div>
-          <p>Seven courses, organized in the same order as the official weekly plans.</p>
+          <p>Seven courses, thoughtfully organized to match your official weekly plans.</p>
         </div>
         <div className="subject-grid">
           {subjects.map((subject, index) => <SubjectCard key={subject.slug} subject={subject} number={index + 1} />)}
