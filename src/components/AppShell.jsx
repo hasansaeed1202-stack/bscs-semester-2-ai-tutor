@@ -6,14 +6,23 @@ export default function AppShell({ children }) {
         <div className="container header-inner">
           <a className="brand" href="#/" aria-label="Semester Two Study Companion home">
             <span className="brand-mark" aria-hidden="true">S2</span>
-            <span>Study Companion</span>
+            <span className="brand-copy">
+              <strong>Study Companion</strong>
+              <small>BSCS Semester 2</small>
+            </span>
           </a>
-          <span className="static-badge">Static · Private by design</span>
+          <span className="status-badge"><span aria-hidden="true" /> Private by design</span>
         </div>
       </header>
       <main id="main-content">{children}</main>
       <footer className="site-footer">
-        <div className="container">Built around the official course syllabi. Study progress stays in this browser session.</div>
+        <div className="container footer-inner">
+          <div>
+            <strong>Semester 2 Study Companion</strong>
+            <p>Built around the official course syllabi.</p>
+          </div>
+          <p>Study progress stays in this browser session.</p>
+        </div>
       </footer>
     </>
   )

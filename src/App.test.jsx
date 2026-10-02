@@ -16,6 +16,15 @@ describe('routing and pages', () => {
     for (const subject of subjects) expect(screen.getByRole('link', { name: `Study ${subject.title}` })).toHaveAttribute('href', `#/subjects/${subject.slug}`)
   })
 
+  it('presents the homepage CTA, private status, and syllabus overview', () => {
+    window.location.hash = '#/'
+    render(<App />)
+    expect(screen.getByRole('link', { name: /explore subjects/i })).toHaveAttribute('href', '#subjects')
+    expect(screen.getByText(/private by design/i)).toBeInTheDocument()
+    expect(screen.getByLabelText('Semester overview')).toHaveTextContent('07')
+    expect(screen.getByRole('contentinfo')).toHaveTextContent(/official course syllabi/i)
+  })
+
   it.each(subjects)('resolves $slug to the reusable subject page', (subject) => {
     window.location.hash = `#/subjects/${subject.slug}`
     render(<App />)
@@ -35,7 +44,7 @@ describe('routing and pages', () => {
     Object.defineProperty(Element.prototype, 'scrollIntoView', { configurable: true, value: scrollIntoView })
     window.location.hash = '#subjects'
     render(<App />)
-    expect(screen.getByRole('heading', { level: 2, name: 'Choose a subject' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 2, name: 'Choose where to begin.' })).toBeInTheDocument()
     expect(scrollIntoView).toHaveBeenCalledOnce()
     delete Element.prototype.scrollIntoView
   })
