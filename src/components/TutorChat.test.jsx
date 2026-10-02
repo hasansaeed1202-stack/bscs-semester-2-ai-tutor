@@ -38,6 +38,24 @@ describe('TutorChat', () => {
     expect(screen.getByLabelText('Your question')).toHaveValue('Please explain this')
   })
 
+  it('retries a preserved question and clears the completed chat', async () => {
+    const provider = vi.fn()
+      .mockResolvedValueOnce(Response.json({ error: { code: 'provider_unavailable' } }, { status: 502 }))
+      .mockResolvedValueOnce(Response.json({ answer: 'Recovered answer' }))
+    vi.stubGlobal('fetch', provider)
+    render(<TutorChat subject={subjects[0]} activeTopicId="topic-1" />)
+    const user = userEvent.setup()
+    await user.type(screen.getByLabelText('Your question'), 'Try this question')
+    await user.click(screen.getByRole('button', { name: 'Send' }))
+    expect(await screen.findByRole('alert')).toHaveTextContent('Message not sent')
+    await user.click(screen.getByRole('button', { name: 'Try again' }))
+    expect(await screen.findByText('Recovered answer')).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: 'Clear chat' }))
+    expect(screen.queryByText('Recovered answer')).not.toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'What would you like to learn?' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Clear chat' })).toBeDisabled()
+  })
+
   it('keeps conversation history isolated per subject', async () => {
     vi.stubGlobal('fetch', vi.fn(async () => Response.json({ answer: 'Subject answer' })))
     const oop = subjects.find((item) => item.slug === 'oop')
