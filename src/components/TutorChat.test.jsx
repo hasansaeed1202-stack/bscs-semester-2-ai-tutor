@@ -7,6 +7,12 @@ import { subjects } from '../data/subjects'
 afterEach(() => { vi.unstubAllGlobals(); vi.unstubAllEnvs(); resetTutorSessions() })
 
 describe('TutorChat', () => {
+  function pendingProvider() {
+    return vi.fn((_url, options) => new Promise((_resolve, reject) => {
+      options.signal.addEventListener('abort', () => reject(new DOMException('Aborted', 'AbortError')))
+    }))
+  }
+
   it('uses the configured Tutor Worker URL', async () => {
     vi.stubEnv('VITE_TUTOR_API_URL', 'https://tutor-worker.example/v1/chat')
     const provider = vi.fn(async () => Response.json({ answer: 'Configured response' }))
@@ -54,6 +60,43 @@ describe('TutorChat', () => {
     expect(screen.queryByText('Recovered answer')).not.toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'What would you like to learn?' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Clear chat' })).toBeDisabled()
+  })
+
+  it('restores the pending question when the user stops a response', async () => {
+    vi.stubGlobal('fetch', pendingProvider())
+    render(<TutorChat subject={subjects[0]} activeTopicId="topic-1" />)
+    const user = userEvent.setup()
+    await user.type(screen.getByLabelText('Your question'), 'Keep this draft')
+    await user.click(screen.getByRole('button', { name: 'Send' }))
+    await user.click(screen.getByRole('button', { name: 'Stop response' }))
+    await waitFor(() => expect(screen.getByLabelText('Your question')).toHaveValue('Keep this draft'))
+    expect(screen.getByRole('heading', { name: 'What would you like to learn?' })).toBeInTheDocument()
+  })
+
+  it('does not restore an in-flight question after clearing chat', async () => {
+    vi.stubGlobal('fetch', pendingProvider())
+    render(<TutorChat subject={subjects[0]} activeTopicId="topic-1" />)
+    const user = userEvent.setup()
+    await user.type(screen.getByLabelText('Your question'), 'Discard this question')
+    await user.click(screen.getByRole('button', { name: 'Send' }))
+    await user.click(screen.getByRole('button', { name: 'Clear chat' }))
+    await waitFor(() => expect(screen.getByLabelText('Your question')).toHaveValue(''))
+    expect(screen.queryByText('Discard this question')).not.toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'What would you like to learn?' })).toBeInTheDocument()
+  })
+
+  it('ignores an aborted request after switching subjects', async () => {
+    vi.stubGlobal('fetch', pendingProvider())
+    const oop = subjects.find((item) => item.slug === 'oop')
+    const math = subjects.find((item) => item.slug === 'mathematics-2')
+    const view = render(<TutorChat subject={oop} activeTopicId="oop-topic-1" />)
+    const user = userEvent.setup()
+    await user.type(screen.getByLabelText('Your question'), 'OOP pending question')
+    await user.click(screen.getByRole('button', { name: 'Send' }))
+    view.rerender(<TutorChat subject={math} activeTopicId="math-topic-1" />)
+    await waitFor(() => expect(screen.getByLabelText('Your question')).toHaveValue(''))
+    expect(screen.queryByText('OOP pending question')).not.toBeInTheDocument()
+    expect(screen.getByText('about Mathematics II')).toBeInTheDocument()
   })
 
   it('keeps conversation history isolated per subject', async () => {

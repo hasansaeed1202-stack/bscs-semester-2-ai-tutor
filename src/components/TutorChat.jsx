@@ -16,20 +16,31 @@ export default function TutorChat({ subject, activeTopicId }) {
   const [draft, setDraft] = useState(initial.draft)
   const [state, setState] = useState('idle')
   const [error, setError] = useState('')
-  const controller = useRef(null)
+  const activeRequest = useRef(null)
   const latest = useRef(null)
 
   useEffect(() => {
+    const request = activeRequest.current
+    if (request) {
+      request.cancelMode = 'discard'
+      activeRequest.current = null
+      request.controller.abort()
+    }
     const saved = sessions.get(subject.slug) || emptySession()
     setMessages(saved.messages)
     setDraft(saved.draft)
     setState('idle')
     setError('')
-    controller.current?.abort()
   }, [subject.slug])
 
   useEffect(() => { sessions.set(subject.slug, { messages, draft }) }, [subject.slug, messages, draft])
-  useEffect(() => () => controller.current?.abort(), [])
+  useEffect(() => () => {
+    const request = activeRequest.current
+    if (request) {
+      request.cancelMode = 'discard'
+      request.controller.abort()
+    }
+  }, [])
 
   async function send(event) {
     event.preventDefault()
@@ -41,20 +52,33 @@ export default function TutorChat({ subject, activeTopicId }) {
     setDraft('')
     setError('')
     setState('sending')
-    controller.current = new AbortController()
+    const request = { controller: new AbortController(), cancelMode: 'stop' }
+    activeRequest.current = request
     try {
       const result = await fetch(import.meta.env.VITE_TUTOR_API_URL || '/v1/chat', {
-        method: 'POST', signal: controller.current.signal,
+        method: 'POST', signal: request.controller.signal,
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ subjectSlug: subject.slug, activeTopicId, messages: outbound, requestId: crypto.randomUUID() }),
       })
       const payload = await result.json().catch(() => ({}))
       if (!result.ok) throw Object.assign(new Error(), { status: result.status, code: payload?.error?.code })
+      if (activeRequest.current !== request) return
+      activeRequest.current = null
       setMessages((current) => [...current, { role: 'assistant', content: payload.answer }])
       setState('idle')
       requestAnimationFrame(() => latest.current?.focus())
     } catch (cause) {
-      if (cause.name === 'AbortError') { setDraft(content); setMessages(priorMessages); setState('idle'); return }
+      if (cause.name === 'AbortError') {
+        if (request.cancelMode === 'stop' && activeRequest.current === request) {
+          activeRequest.current = null
+          setDraft(content)
+          setMessages(priorMessages)
+          setState('idle')
+        }
+        return
+      }
+      if (activeRequest.current !== request) return
+      activeRequest.current = null
       setDraft(content)
       setMessages(priorMessages)
       setError(apiErrorMessage(cause.status || 0, cause.code))
@@ -63,11 +87,20 @@ export default function TutorChat({ subject, activeTopicId }) {
   }
 
   function clear() {
-    controller.current?.abort()
+    const request = activeRequest.current
+    if (request) {
+      request.cancelMode = 'discard'
+      activeRequest.current = null
+      request.controller.abort()
+    }
     setMessages([])
     setDraft('')
     setError('')
     setState('idle')
+  }
+
+  function stop() {
+    activeRequest.current?.controller.abort()
   }
 
   return (
@@ -89,7 +122,7 @@ export default function TutorChat({ subject, activeTopicId }) {
       <form className="tutor-composer" onSubmit={send}>
         <div className="composer-label"><label htmlFor={`tutor-input-${subject.slug}`}>Your question</label><small>about {subject.title}</small></div>
         <div className="composer-field"><textarea id={`tutor-input-${subject.slug}`} value={draft} onChange={(event) => setDraft(event.target.value)} maxLength="4000" rows="3" placeholder="Type your study question…" disabled={state === 'sending'} /><span className="character-count" aria-hidden="true">{draft.length}/4000</span></div>
-        <div className="composer-actions"><p>AI can make mistakes. Check important answers.</p><div className="button-row"><button className="primary-action" type="submit" disabled={!draft.trim() || state === 'sending'}>{state === 'error' ? 'Try again' : 'Send'} <span aria-hidden="true">→</span></button>{state === 'sending' && <button className="secondary-action" type="button" onClick={() => controller.current?.abort()}>Stop response</button>}</div></div>
+        <div className="composer-actions"><p>AI can make mistakes. Check important answers.</p><div className="button-row"><button className="primary-action" type="submit" disabled={!draft.trim() || state === 'sending'}>{state === 'error' ? 'Try again' : 'Send'} <span aria-hidden="true">→</span></button>{state === 'sending' && <button className="secondary-action" type="button" onClick={stop}>Stop response</button>}</div></div>
       </form>
     </section>
   )
