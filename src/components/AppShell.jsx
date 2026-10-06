@@ -1,4 +1,6 @@
 export default function AppShell({ children }) {
+  const isTutor = window.location.hash.startsWith('#/subjects/')
+  if (isTutor) return <><a className="skip-link" href="#main-content">Skip to main content</a><main id="main-content">{children}</main></>
   return (
     <>
       <a className="skip-link" href="#main-content">Skip to main content</a>
