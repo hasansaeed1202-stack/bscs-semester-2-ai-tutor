@@ -209,7 +209,7 @@ export default function TutorChat({ subject, activeTopicId }) {
   }
 
   return (
-    <section id="tutor-chat" className={`tutor ${messages.length ? 'tutor--active' : 'tutor--empty'}`} aria-labelledby={`tutor-heading-${subject.slug}`}>
+    <section className="tutor" aria-labelledby={`tutor-heading-${subject.slug}`}>
       <header className="tutor-heading">
         <div className="tutor-identity"><span className="tutor-avatar" aria-hidden="true">AI</span><div><p className="eyebrow">AI study support <span>·</span> {subject.code}</p><h2 id={`tutor-heading-${subject.slug}`}>Ask the Tutor</h2><p className="tutor-status"><span aria-hidden="true" /> Ready to help with this course</p></div></div>
         <button className="clear-chat" type="button" onClick={clear} disabled={!messages.length && !draft}><span aria-hidden="true">×</span> Clear chat</button>
@@ -230,10 +230,10 @@ export default function TutorChat({ subject, activeTopicId }) {
         {attachmentError && <p className="attachment-error" role="alert">{attachmentError}</p>}
         <div className="composer-shell">
           <label className="attach-image" title="Attach a photo of your work"><span aria-hidden="true">+</span><span className="visually-hidden">Attach image</span><input aria-label="Attach image" type="file" accept="image/jpeg,image/png,image/webp" capture="environment" onChange={chooseImage} disabled={state === 'sending'} /></label>
-          <div className="composer-field"><textarea id={`tutor-input-${subject.slug}`} value={draft} onChange={updateDraft} onKeyDown={handleComposerKeyDown} maxLength="4000" rows="1" placeholder={`Ask about ${subject.title}…`} disabled={state === 'sending'} aria-describedby={`tutor-count-${subject.slug}`} /><span id={`tutor-count-${subject.slug}`} className="character-count">{draft.length} of 4000 characters</span></div>
-          <button className={`primary-action composer-send ${state === 'sending' ? 'is-stopping' : ''}`} type={state === 'sending' ? 'button' : 'submit'} onClick={state === 'sending' ? stop : undefined} disabled={state !== 'sending' && !draft.trim()} aria-label={state === 'sending' ? 'Stop response' : state === 'error' ? 'Try again' : 'Send'}>{state === 'sending' ? <span className="stop-glyph" aria-hidden="true" /> : state === 'error' ? <span className="retry-glyph" aria-hidden="true">↻</span> : <span aria-hidden="true">↑</span>}</button>
+          <div className="composer-field"><textarea id={`tutor-input-${subject.slug}`} value={draft} onChange={updateDraft} onKeyDown={handleComposerKeyDown} maxLength="4000" rows="1" placeholder="Ask about this topic…" disabled={state === 'sending'} aria-describedby={`tutor-count-${subject.slug}`} /><span id={`tutor-count-${subject.slug}`} className="character-count">{draft.length} of 4000 characters</span></div>
+          <button className="primary-action composer-send" type="submit" disabled={!draft.trim() || state === 'sending'} aria-label={state === 'error' ? 'Try again' : 'Send'}>{state === 'error' ? 'Retry' : <span aria-hidden="true">↑</span>}</button>
         </div>
-        <div className="composer-actions"><p>JPEG, PNG or WEBP · 3 MB max. Images aren’t stored.</p></div>
+        <div className="composer-actions"><p>JPEG, PNG or WEBP · 3 MB max. Images aren’t stored.</p>{state === 'sending' && <button className="secondary-action" type="button" onClick={stop}>Stop response</button>}</div>
       </form>
     </section>
   )
