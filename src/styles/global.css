@@ -412,3 +412,88 @@ p { line-height: 1.7; }
   .tutor-stage .tutor-empty p { font-size: .82rem; }
   .tutor-stage .transcript { min-height: 48dvh; }
 }
+
+/* Final Style 1 polish: stronger depth, clearer hierarchy and a chat-first
+   mobile state, without introducing concept-only controls. */
+.tutor-app {
+  background:
+    radial-gradient(ellipse at 57% -8%, rgba(47, 105, 255, .24), transparent 34rem),
+    radial-gradient(ellipse at 92% 38%, rgba(126, 45, 255, .18), transparent 30rem),
+    linear-gradient(145deg, #020612 0%, #04102a 54%, #020819 100%);
+}
+.subject-sidebar {
+  width: 282px;
+  padding: 24px 18px 20px;
+  background:
+    linear-gradient(180deg, rgba(4, 11, 32, .97), rgba(6, 23, 63, .99)),
+    radial-gradient(circle at 40% 70%, rgba(40, 91, 230, .42), transparent 52%);
+  border-right-color: rgba(70, 137, 255, .52);
+  box-shadow: 18px 0 60px rgba(0, 0, 0, .42), inset -1px 0 rgba(111, 67, 255, .25);
+}
+.subject-sidebar::before { content: ''; position: absolute; inset: 0 0 auto; height: 3px; background: linear-gradient(90deg, #1788ff, #6845ff 58%, #d132ff); box-shadow: 0 0 22px #397aff; }
+.workspace-links a, .subject-list a { transition: transform 150ms ease, color 150ms ease, background 150ms ease, border-color 150ms ease, box-shadow 150ms ease; }
+.workspace-links a:hover, .subject-list a:hover { transform: translateX(2px); }
+.workspace-links a.active { min-height: 52px; background: linear-gradient(110deg, #1d62ff, #5f3df2 67%, #883eff); border-color: #8b8dff; box-shadow: 0 0 0 1px rgba(57, 180, 255, .28), 0 0 28px rgba(83, 56, 255, .52), inset 0 1px rgba(255,255,255,.18); }
+.sidebar-label { margin-top: 28px; color: #91ace0; letter-spacing: .14em; }
+.subject-list { gap: 7px; }
+.subject-list a { min-height: 56px; padding: 7px 10px; border: 1px solid rgba(76, 120, 204, .08); }
+.subject-list a:hover { color: #fff; background: rgba(39, 87, 182, .22); border-color: rgba(86, 139, 235, .3); }
+.subject-list a.active { background: linear-gradient(105deg, rgba(33, 105, 255, .9), rgba(103, 55, 244, .68)); border-color: #8294ff; box-shadow: 0 0 28px rgba(62, 83, 255, .38), inset 0 1px rgba(255,255,255,.16); }
+.subject-list a.active .subject-glyph { box-shadow: 0 0 20px rgba(58, 232, 255, .48), inset 0 0 0 1px rgba(255,255,255,.42); }
+.study-smarter { margin-top: 22px; padding: 16px; background: linear-gradient(135deg, rgba(30, 78, 181, .68), rgba(47, 31, 132, .72)); border-color: rgba(66, 149, 255, .8); box-shadow: inset 0 1px rgba(255,255,255,.1), 0 0 24px rgba(33, 86, 219, .18); }
+.tutor-stage { width: min(1180px, calc(100% - 316px)); margin-left: max(298px, calc((100vw - 282px - 1180px)/2 + 282px)); padding: 12px 18px 62px; }
+.subject-header { min-height: 82px; padding: 14px 18px; background: linear-gradient(125deg, rgba(17, 46, 103, .96), rgba(9, 26, 64, .96) 62%, rgba(32, 24, 91, .92)); border-color: rgba(65, 137, 255, .62); border-radius: 20px; box-shadow: inset 0 1px rgba(255,255,255,.08), 0 0 0 1px rgba(85, 55, 255, .12), 0 16px 38px rgba(0,0,0,.3); }
+.subject-title-icon { border-radius: 15px; box-shadow: inset 0 0 0 1px rgba(255,255,255,.38), 0 0 22px rgba(35, 223, 215, .34); }
+.subject-header h1 { font-size: clamp(1.3rem, 2vw, 1.75rem); }
+.course-map-trigger { min-height: 48px; padding-inline: 19px; border-radius: 15px; box-shadow: inset 0 1px rgba(255,255,255,.15), 0 0 25px rgba(66, 76, 255, .38); }
+.tutor-stage .tutor { min-height: calc(100dvh - 126px); }
+.tutor-stage .tutor-heading { padding: 12px 5px 9px; }
+.tutor-stage .tutor-notice { max-width: 780px; margin-bottom: 3px; }
+.tutor-stage .transcript { gap: 20px; min-height: 440px; padding: 24px 10px 22px; scroll-padding-bottom: 120px; }
+.tutor-stage .chat-message, .tutor-stage .tutor-pending { width: min(92%, 860px); }
+.tutor-stage .chat-message > div, .tutor-stage .tutor-pending > div { padding: 19px 21px; background: linear-gradient(145deg, rgba(15, 39, 85, .98), rgba(7, 22, 52, .98)); border-color: rgba(75, 127, 220, .52); border-radius: 8px 24px 24px; box-shadow: inset 0 1px rgba(255,255,255,.055), 0 16px 40px rgba(0,0,0,.32), 0 0 24px rgba(28, 85, 191, .1); }
+.tutor-stage .chat-message.user > div { padding: 16px 20px; background: linear-gradient(135deg, #256dff, #503ff5 62%, #773af1); border-color: rgba(145, 157, 255, .9); border-radius: 24px 8px 24px 24px; box-shadow: inset 0 1px rgba(255,255,255,.2), 0 0 34px rgba(74, 68, 255, .38), 0 14px 32px rgba(0,0,0,.25); }
+.tutor-stage .message-avatar { box-shadow: 0 0 20px rgba(48, 158, 255, .4); }
+.tutor-stage .copy-answer { min-height: 38px; padding-inline: 13px; border: 1px solid rgba(90, 142, 236, .28); }
+.tutor-stage .tutor-composer { padding: 9px; background: linear-gradient(135deg, rgba(8, 25, 59, .97), rgba(12, 24, 62, .98)); border-color: rgba(101, 113, 255, .78); border-radius: 32px; box-shadow: inset 0 1px rgba(255,255,255,.08), 0 0 0 1px rgba(36, 153, 255, .11), 0 0 38px rgba(75, 50, 255, .28), 0 22px 50px rgba(0,0,0,.46); }
+.tutor-stage .composer-shell { grid-template-columns: 50px minmax(0,1fr) 54px; align-items: center; }
+.tutor-stage .attach-image { width: 50px; height: 50px; border-color: rgba(79, 132, 224, .58); box-shadow: inset 0 1px rgba(255,255,255,.06); }
+.tutor-stage .attach-image:hover { transform: translateY(-1px); box-shadow: 0 0 18px rgba(44, 124, 255, .28); }
+.tutor-stage .composer-send { width: 54px; height: 54px; border-radius: 50%; font-size: 1.5rem; box-shadow: inset 0 1px rgba(255,255,255,.2), 0 0 26px rgba(76, 91, 255, .64); }
+.tutor-stage .composer-send.is-stopping { background: linear-gradient(135deg, #ff416c, #d32455); box-shadow: 0 0 24px rgba(255, 55, 99, .48); }
+.stop-glyph { display: block; width: 15px; height: 15px; margin: auto; background: #fff; border-radius: 4px; box-shadow: 0 0 8px rgba(255,255,255,.55); }
+.retry-glyph { font-size: 1.2rem; }
+.image-preview { color: #dceaff; background: rgba(13, 38, 83, .96); border-color: rgba(65, 125, 222, .58); }
+.image-preview button { min-height: 40px; color: #b8d4ff; background: rgba(40, 82, 161, .42); border-radius: 999px; }
+
+@media (max-width: 959px) {
+  .tutor-stage { width: 100%; margin: 0; padding: 0 0 36px; }
+  .mobile-brand { padding: max(10px, env(safe-area-inset-top)) 13px 9px; background: linear-gradient(180deg, rgba(5, 15, 42, .99), rgba(5, 18, 48, .97)); box-shadow: 0 8px 24px rgba(0,0,0,.24); }
+  .mobile-brand .brand-cap { width: 38px; height: 38px; border-radius: 11px; }
+  .mobile-brand .tutor-brand strong { font-size: 1.08rem; }
+  .subject-header { min-height: 72px; margin: 8px 8px 3px; padding: 10px 11px; border-radius: 17px; }
+  .subject-header h1 { font-size: .96rem; }
+  .course-map-trigger { min-width: 46px; min-height: 46px; padding: 0; border-radius: 14px; justify-content: center; }
+  .tutor-stage .tutor-heading { padding: 7px 10px; }
+  .tutor-stage .tutor-heading h2 { font-size: .95rem; }
+  .tutor-stage .tutor-notice { margin-inline: 8px; padding: 7px 10px; }
+  .tutor-stage .transcript { min-height: 53dvh; padding: 14px 8px 110px; }
+  .tutor-stage .tutor--active .transcript { padding-top: 10px; }
+  .tutor-stage .tutor--active .tutor-heading { padding-block: 5px; }
+  .tutor-stage .tutor--active .tutor-identity .eyebrow, .tutor-stage .tutor--active .tutor-status { display: none; }
+  .tutor-stage .tutor--active .tutor-notice { display: none; }
+  .tutor-stage .chat-message, .tutor-stage .tutor-pending { width: 100%; }
+  .tutor-stage .chat-message > div, .tutor-stage .tutor-pending > div { max-width: calc(100% - 42px); padding: 15px; border-radius: 7px 20px 20px; }
+  .tutor-stage .chat-message.user > div { padding: 14px 16px; border-radius: 20px 7px 20px 20px; }
+  .tutor-stage .tutor-composer { position: fixed; right: 0; left: 0; bottom: max(7px, env(safe-area-inset-bottom)); margin: 0 7px; border-radius: 29px; }
+  .tutor-stage .composer-shell { grid-template-columns: 46px minmax(0,1fr) 50px; }
+  .tutor-stage .attach-image { width: 46px; height: 46px; }
+  .tutor-stage .composer-send { width: 50px; height: 50px; }
+  .premium-study { margin-top: 24px; }
+}
+@media (max-width: 390px) {
+  .subject-header p:last-child { max-width: 190px; }
+  .tutor-stage .tutor-empty { padding-block: 20px; }
+  .tutor-stage .tutor--active .transcript { min-height: 58dvh; }
+  .tutor-stage .message-avatar { flex-basis: 32px; width: 32px; height: 32px; }
+}
