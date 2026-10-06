@@ -28,16 +28,44 @@ async function pseudonymousKey(ip, secret) {
 
 async function callProvider(env, instructions, input, signal) {
   const aborted = new Promise((_, reject) => signal.addEventListener('abort', () => reject(Object.assign(new Error('aborted'), { name: 'AbortError' })), { once: true }))
-  const payload = await Promise.race([
-    env.AI.run(env.AI_MODEL, {
-      messages: [{ role: 'system', content: instructions }, ...input],
-      max_tokens: LIMITS.maxOutputTokens,
-    }),
-    aborted,
-  ])
-  const answer = payload?.response
-  if (typeof answer !== 'string' || !answer.trim()) throw Object.assign(new Error('invalid provider response'), { invalidProvider: true })
-  return answer.trim()
+  const stream = await Promise.race([env.AI.run(env.AI_MODEL, {
+    messages: [{ role: 'system', content: instructions }, ...input],
+    max_tokens: LIMITS.maxOutputTokens,
+    stream: true,
+  }), aborted])
+  if (!stream || typeof stream.getReader !== 'function') throw Object.assign(new Error('invalid provider response'), { invalidProvider: true })
+  return stream
+}
+
+function streamingResponse(stream, signal, cleanup, origin) {
+  const reader = stream.getReader()
+  const aborted = new Promise((_, reject) => signal.addEventListener('abort', () => reject(Object.assign(new Error('aborted'), { name: 'AbortError' })), { once: true }))
+  let cleaned = false
+  const finish = async () => {
+    if (cleaned) return
+    cleaned = true
+    await cleanup()
+  }
+  const body = new ReadableStream({
+    async pull(controller) {
+      try {
+        const { value, done } = await Promise.race([reader.read(), aborted])
+        if (done) {
+          controller.close()
+          await finish()
+        } else controller.enqueue(value)
+      } catch (cause) {
+        await reader.cancel(cause).catch(() => {})
+        controller.error(cause)
+        await finish()
+      }
+    },
+    async cancel(reason) {
+      await reader.cancel(reason).catch(() => {})
+      await finish()
+    },
+  })
+  return new Response(body, { status: 200, headers: { 'content-type': 'text/event-stream; charset=utf-8', 'cache-control': 'no-cache, no-transform', 'access-control-allow-origin': origin, 'x-accel-buffering': 'no', vary: 'Origin' } })
 }
 
 export default {
@@ -72,17 +100,19 @@ export default {
     } catch { return error('tutor_unavailable', effectiveRequestId, origin) }
     const controller = new AbortController()
     const timeout = setTimeout(() => controller.abort(), LIMITS.providerTimeoutMs)
+    const cleanup = async () => {
+      clearTimeout(timeout)
+      try { await stub.fetch('https://limiter/release', { method: 'POST', body: JSON.stringify({ action: 'release', clientKey }) }) } catch { /* lease expires automatically */ }
+    }
     try {
       const instructions = buildSystemPrompt(subject, curriculum, body.activeTopicId)
-      const answer = await callProvider(env, instructions, body.messages, controller.signal)
-      return response({ answer, subjectSlug: body.subjectSlug, curriculumVersion: curriculum.curriculumVersion, usage: { limited: false } }, 200, effectiveRequestId, origin)
+      const stream = await callProvider(env, instructions, body.messages, controller.signal)
+      return streamingResponse(stream, controller.signal, cleanup, origin)
     } catch (cause) {
+      await cleanup()
       if (cause.name === 'AbortError') return error('provider_timeout', effectiveRequestId, origin)
       if (cause.invalidProvider) return error('invalid_provider_response', effectiveRequestId, origin)
       return error(cause.providerStatus === 400 ? 'provider_rejected' : 'provider_unavailable', effectiveRequestId, origin)
-    } finally {
-      clearTimeout(timeout)
-      try { await stub.fetch('https://limiter/release', { method: 'POST', body: JSON.stringify({ action: 'release', clientKey }) }) } catch { /* lease expires automatically */ }
     }
   },
 }

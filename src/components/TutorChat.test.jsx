@@ -7,6 +7,18 @@ import { subjects } from '../data/subjects'
 afterEach(() => { vi.unstubAllGlobals(); vi.unstubAllEnvs(); resetTutorSessions() })
 
 describe('TutorChat', () => {
+  function streamResponse(...chunks) {
+    const encoder = new TextEncoder()
+    return new Response(new ReadableStream({
+      start(controller) {
+        chunks.forEach((chunk) => controller.enqueue(encoder.encode(chunk)))
+        controller.close()
+      },
+    }), { headers: { 'content-type': 'text/event-stream' } })
+  }
+
+  const answer = (text) => streamResponse(`data: ${JSON.stringify({ response: text })}\n\ndata: [DONE]\n\n`)
+
   function pendingProvider() {
     return vi.fn((_url, options) => new Promise((_resolve, reject) => {
       options.signal.addEventListener('abort', () => reject(new DOMException('Aborted', 'AbortError')))
@@ -21,7 +33,7 @@ describe('TutorChat', () => {
 
   it('uses the configured Tutor Worker URL', async () => {
     vi.stubEnv('VITE_TUTOR_API_URL', 'https://tutor-worker.example/v1/chat')
-    const provider = vi.fn(async () => Response.json({ answer: 'Configured response' }))
+    const provider = vi.fn(async () => answer('Configured response'))
     vi.stubGlobal('fetch', provider)
     render(<TutorChat subject={subjects[0]} activeTopicId="topic-1" />)
     const user = userEvent.setup()
@@ -34,7 +46,7 @@ describe('TutorChat', () => {
   it('sends the selected subject and renders provider text inertly', async () => {
     vi.stubGlobal('fetch', vi.fn(async (_url, options) => {
       expect(JSON.parse(options.body)).toMatchObject({ subjectSlug: 'oop', activeTopicId: 'topic-1' })
-      return Response.json({ answer: '<img src=x onerror=alert(1)>' })
+      return answer('<img src=x onerror=alert(1)>')
     }))
     render(<TutorChat subject={subjects.find((item) => item.slug === 'oop')} activeTopicId="topic-1" />)
     const user = userEvent.setup(); await user.type(screen.getByLabelText('Your question'), 'What is a class?'); await user.click(screen.getByRole('button', { name: 'Send' }))
@@ -53,7 +65,7 @@ describe('TutorChat', () => {
   it('retries a preserved question and clears the completed chat', async () => {
     const provider = vi.fn()
       .mockResolvedValueOnce(Response.json({ error: { code: 'provider_unavailable' } }, { status: 502 }))
-      .mockResolvedValueOnce(Response.json({ answer: 'Recovered answer' }))
+      .mockResolvedValueOnce(answer('Recovered answer'))
     vi.stubGlobal('fetch', provider)
     render(<TutorChat subject={subjects[0]} activeTopicId="topic-1" />)
     const user = userEvent.setup()
@@ -77,6 +89,54 @@ describe('TutorChat', () => {
     await user.click(screen.getByRole('button', { name: 'Stop response' }))
     await waitFor(() => expect(screen.getByLabelText('Your question')).toHaveValue('Keep this draft'))
     expect(screen.getByRole('heading', { name: 'What would you like to learn?' })).toBeInTheDocument()
+  })
+
+  it('renders one assistant message progressively across arbitrary SSE chunk boundaries', async () => {
+    let controller
+    vi.stubGlobal('fetch', vi.fn(async () => new Response(new ReadableStream({ start(value) { controller = value } }))))
+    render(<TutorChat subject={subjects[0]} activeTopicId="topic-1" />)
+    const user = userEvent.setup()
+    await user.type(screen.getByLabelText('Your question'), 'Stream this')
+    await user.click(screen.getByRole('button', { name: 'Send' }))
+    expect(screen.getByLabelText('Tutor is thinking')).toBeInTheDocument()
+    const encoder = new TextEncoder()
+    controller.enqueue(encoder.encode('data: {"res'))
+    controller.enqueue(encoder.encode('ponse":"Hel"}\r\n\r\ndata: {"response":"lo"}\n\n'))
+    expect(await screen.findByText('Hello')).toBeInTheDocument()
+    expect(screen.queryByLabelText('Tutor is thinking')).not.toBeInTheDocument()
+    expect(document.querySelectorAll('.chat-message.assistant')).toHaveLength(1)
+    controller.enqueue(encoder.encode('data: [DONE]\n\n'))
+    controller.close()
+    await waitFor(() => expect(screen.queryByRole('button', { name: 'Stop response' })).not.toBeInTheDocument())
+  })
+
+  it('keeps partial text when a streaming response is stopped', async () => {
+    let controller
+    vi.stubGlobal('fetch', vi.fn(async (_url, options) => new Response(new ReadableStream({
+      start(value) {
+        controller = value
+        options.signal.addEventListener('abort', () => value.error(new DOMException('Aborted', 'AbortError')))
+      },
+    }))))
+    render(<TutorChat subject={subjects[0]} activeTopicId="topic-1" />)
+    const user = userEvent.setup()
+    await user.type(screen.getByLabelText('Your question'), 'Keep partial')
+    await user.click(screen.getByRole('button', { name: 'Send' }))
+    controller.enqueue(new TextEncoder().encode('data: {"response":"Partial"}\n\n'))
+    expect(await screen.findByText('Partial')).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: 'Stop response' }))
+    await waitFor(() => expect(screen.queryByRole('button', { name: 'Stop response' })).not.toBeInTheDocument())
+    expect(screen.getByText('Partial')).toBeInTheDocument()
+    expect(screen.getByLabelText('Your question')).toBeEnabled()
+  })
+
+  it('ignores malformed events and flushes a final unterminated event', async () => {
+    vi.stubGlobal('fetch', vi.fn(async () => streamResponse('data: not-json\n\ndata: {"response":"Final"}')))
+    render(<TutorChat subject={subjects[0]} activeTopicId="topic-1" />)
+    const user = userEvent.setup()
+    await user.type(screen.getByLabelText('Your question'), 'Finish buffered')
+    await user.click(screen.getByRole('button', { name: 'Send' }))
+    expect(await screen.findByText('Final')).toBeInTheDocument()
   })
 
   it('does not restore an in-flight question after clearing chat', async () => {
@@ -106,7 +166,7 @@ describe('TutorChat', () => {
   })
 
   it('keeps conversation history isolated per subject', async () => {
-    vi.stubGlobal('fetch', vi.fn(async () => Response.json({ answer: 'Subject answer' })))
+    vi.stubGlobal('fetch', vi.fn(async () => answer('Subject answer')))
     const oop = subjects.find((item) => item.slug === 'oop')
     const math = subjects.find((item) => item.slug === 'mathematics-2')
     const view = render(<TutorChat subject={oop} activeTopicId="oop-topic-1" />)
@@ -122,7 +182,7 @@ describe('TutorChat', () => {
   })
 
   it.each(subjects)('sends a valid UI payload for $slug', async (subject) => {
-    const provider = vi.fn(async () => Response.json({ answer: 'OK' }))
+    const provider = vi.fn(async () => answer('OK'))
     vi.stubGlobal('fetch', provider)
     render(<TutorChat subject={subject} activeTopicId="topic-1" />)
     const user = userEvent.setup()
