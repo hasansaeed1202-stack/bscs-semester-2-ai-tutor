@@ -32,6 +32,10 @@ export default function SubjectPage({ subject, topicId }) {
     <div className="tutor-app">
       <aside className="subject-sidebar" aria-label="Semester 2 subjects">
         <a className="tutor-brand" href="#/" aria-label="BSCS Semester 2 AI Tutor home"><span className="brand-cap" aria-hidden="true">◇</span><span><strong>BSCS</strong><small>Semester 2 AI Tutor</small></span></a>
+        <nav className="workspace-links" aria-label="Tutor workspace">
+          <a className="active" href="#tutor-chat"><span aria-hidden="true">◌</span> Chat</a>
+          <a href="#study-resources"><span aria-hidden="true">▤</span> Study resources</a>
+        </nav>
         <p className="sidebar-label">Semester 2 subjects</p>
         <nav className="subject-list">{subjects.map((item, index) => <a key={item.slug} href={`#/subjects/${item.slug}`} className={item.slug === subject.slug ? 'active' : ''} aria-current={item.slug === subject.slug ? 'page' : undefined}><span className={`subject-glyph glyph-${index}`} aria-hidden="true">{subjectIcons[index]}</span><span><strong>{item.title}</strong><small>{item.code}</small></span></a>)}</nav>
         <div className="study-smarter"><span aria-hidden="true">✦</span><div><strong>Study smarter</strong><small>Ask from your Semester 2 syllabus.</small></div></div>
@@ -44,7 +48,7 @@ export default function SubjectPage({ subject, topicId }) {
           <TopicNavigation subjectTitle={subject.title} units={syllabus.units} activeTopicId={activeTopic.id} onSelect={selectTopic} />
         </div>
         <TutorChat subject={subject} activeTopicId={activeTopic.id} />
-        <section className="study-workspace premium-study" ref={lessonRef} aria-labelledby="active-topic-heading">
+        <section id="study-resources" className="study-workspace premium-study" ref={lessonRef} aria-labelledby="active-topic-heading">
           <p className="eyebrow">Current topic</p><h2 id="active-topic-heading">{activeTopic.title}</h2>
           <div className="tabs" role="tablist" aria-label="Study resources" aria-orientation="horizontal">{tabNames.map((name, index) => <button key={name} id={`tab-${name}`} ref={(node) => { tabRefs.current[index] = node }} role="tab" aria-selected={tab === name} aria-controls={`panel-${name}`} tabIndex={tab === name ? 0 : -1} onClick={() => setTab(name)} onKeyDown={(event) => selectTab(event, index)}>{name}</button>)}</div>
           <StudyPanel tab={tab} seed={seed} topicTitle={activeTopic.title} />
