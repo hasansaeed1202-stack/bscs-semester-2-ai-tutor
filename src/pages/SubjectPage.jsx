@@ -28,6 +28,10 @@ export default function SubjectPage({ subject, topicId }) {
   const seed = getSeed(subject.slug, activeTopic.id, topics[0].id)
   const iconIndex = subjects.findIndex((item) => item.slug === subject.slug)
   const selectTopic = (nextTopicId) => { window.location.hash = `#/subjects/${subject.slug}?topic=${encodeURIComponent(nextTopicId)}` }
+  const openResource = (nextTab) => {
+    setTab(nextTab)
+    requestAnimationFrame(() => lessonRef.current?.scrollIntoView?.({ block: 'start', behavior: 'smooth' }))
+  }
   return (
     <div className="tutor-app">
       <aside className="subject-sidebar" aria-label="Semester 2 subjects">
@@ -47,7 +51,26 @@ export default function SubjectPage({ subject, topicId }) {
           <div><p className="eyebrow">{subject.code} · {syllabus.topicCount} syllabus topics</p><div className="subject-name-line"><h1>{subject.title}</h1><span>({subject.code})</span></div><p>Ask questions, get clear explanations, examples and exam help.</p></div>
           <TopicNavigation subjectTitle={subject.title} units={syllabus.units} activeTopicId={activeTopic.id} onSelect={selectTopic} />
         </div>
-        <TutorChat subject={subject} activeTopicId={activeTopic.id} />
+        <div className="tutor-dashboard">
+          <TutorChat subject={subject} activeTopicId={activeTopic.id} />
+          <aside className="tutor-quick-rail" aria-label="Quick course navigation">
+            <section className="quick-rail-card">
+              <div className="quick-rail-heading"><div><p className="eyebrow">Syllabus</p><h2>Quick topics</h2></div><span aria-hidden="true">{topics.length}</span></div>
+              <div className="quick-topic-list">
+                {topics.slice(0, 6).map((topic, index) => <button key={topic.id} type="button" aria-label={`Quick topic: ${topic.title}`} className={topic.id === activeTopic.id ? 'active' : ''} onClick={() => selectTopic(topic.id)}><span className={`quick-topic-glyph glyph-${index % 7}`} aria-hidden="true">{subjectIcons[index % 7]}</span><span>{topic.title}</span><span aria-hidden="true">›</span></button>)}
+              </div>
+              <button className="all-topics-button" type="button" onClick={() => document.querySelector('.course-map-trigger')?.click()}>Browse all topics <span aria-hidden="true">→</span></button>
+            </section>
+            <section className="quick-rail-card resource-card">
+              <div className="quick-rail-heading"><div><p className="eyebrow">This topic</p><h2>Study resources</h2></div></div>
+              <div className="resource-shortcuts">
+                <button type="button" onClick={() => openResource('notes')}><span aria-hidden="true">▤</span><strong>Notes</strong><small>Review key ideas</small></button>
+                <button type="button" onClick={() => openResource('practice')}><span aria-hidden="true">∑</span><strong>Practice</strong><small>Work examples</small></button>
+                <button type="button" onClick={() => openResource('quiz')}><span aria-hidden="true">?</span><strong>Quiz</strong><small>Check recall</small></button>
+              </div>
+            </section>
+          </aside>
+        </div>
         <section id="study-resources" className="study-workspace premium-study" ref={lessonRef} aria-labelledby="active-topic-heading">
           <p className="eyebrow">Current topic</p><h2 id="active-topic-heading">{activeTopic.title}</h2>
           <div className="tabs" role="tablist" aria-label="Study resources" aria-orientation="horizontal">{tabNames.map((name, index) => <button key={name} id={`tab-${name}`} ref={(node) => { tabRefs.current[index] = node }} role="tab" aria-selected={tab === name} aria-controls={`panel-${name}`} tabIndex={tab === name ? 0 : -1} onClick={() => setTab(name)} onKeyDown={(event) => selectTab(event, index)}>{name}</button>)}</div>

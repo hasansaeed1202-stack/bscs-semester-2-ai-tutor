@@ -413,6 +413,61 @@ p { line-height: 1.7; }
   .tutor-stage .transcript { min-height: 48dvh; }
 }
 
+/* Reference-aligned dashboard rail and final chat proportions. The rail only
+   exposes existing syllabus navigation and the three real study panels. */
+.tutor-stage {
+  width: calc(100% - 282px);
+  max-width: none;
+  margin-left: 282px;
+  padding-inline: clamp(14px, 1.6vw, 24px);
+}
+.tutor-dashboard { display: grid; grid-template-columns: minmax(0, 1fr) 252px; gap: 16px; align-items: start; }
+.tutor-dashboard > .tutor { grid-column: 1; min-width: 0; }
+.tutor-quick-rail { position: sticky; top: 12px; grid-column: 2; display: grid; gap: 14px; min-width: 0; }
+.quick-rail-card { overflow: hidden; padding: 15px; background: linear-gradient(155deg, rgba(12, 34, 76, .97), rgba(5, 20, 49, .98)); border: 1px solid rgba(57, 128, 246, .52); border-radius: 20px; box-shadow: inset 0 1px rgba(255,255,255,.06), 0 16px 38px rgba(0,0,0,.3), 0 0 28px rgba(54,71,255,.1); }
+.quick-rail-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.quick-rail-heading .eyebrow { margin: 0 0 2px; color: #759bd8; font-size: .58rem; letter-spacing: .14em; }
+.quick-rail-heading h2 { margin: 0; color: #f6f9ff; font-size: 1rem; }
+.quick-rail-heading > span { display: grid; place-items: center; min-width: 30px; height: 30px; color: #a8c9ff; background: rgba(37, 91, 185, .3); border: 1px solid rgba(87, 143, 237, .35); border-radius: 10px; font-size: .7rem; font-weight: 800; }
+.quick-topic-list { display: grid; gap: 7px; }
+.quick-topic-list button { display: grid; grid-template-columns: 32px minmax(0,1fr) auto; gap: 9px; align-items: center; min-height: 47px; padding: 6px 9px 6px 7px; color: #c9d8f1; text-align: left; background: linear-gradient(135deg, rgba(22, 51, 104, .76), rgba(12, 35, 77, .8)); border: 1px solid rgba(65, 104, 174, .45); border-radius: 12px; cursor: pointer; transition: 150ms ease; }
+.quick-topic-list button:hover { color: #fff; border-color: #518cff; background: linear-gradient(135deg, rgba(35, 78, 158, .86), rgba(31, 48, 119, .9)); transform: translateX(2px); }
+.quick-topic-list button.active { color: #fff; border-color: #788cff; background: linear-gradient(120deg, rgba(37, 99, 225, .76), rgba(91, 54, 218, .68)); box-shadow: 0 0 19px rgba(66, 76, 255, .24); }
+.quick-topic-list button > span:nth-child(2) { overflow: hidden; font-size: .72rem; font-weight: 700; line-height: 1.2; text-overflow: ellipsis; white-space: nowrap; }
+.quick-topic-glyph { display: grid; place-items: center; width: 32px; height: 32px; color: #fff; border-radius: 9px; font-size: .8rem; font-weight: 900; }
+.all-topics-button { display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 42px; margin-top: 10px; padding: 0 12px; color: #9ec5ff; background: rgba(28, 63, 130, .28); border: 1px solid rgba(70, 118, 204, .38); border-radius: 12px; font-size: .72rem; font-weight: 800; cursor: pointer; }
+.all-topics-button:hover { color: #fff; background: rgba(42, 83, 168, .48); border-color: #568cff; }
+.resource-shortcuts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
+.resource-shortcuts button { display: grid; justify-items: center; min-width: 0; min-height: 90px; padding: 10px 4px; color: #b8c9e8; background: linear-gradient(150deg, rgba(20, 50, 103, .8), rgba(12, 31, 69, .9)); border: 1px solid rgba(62, 105, 180, .42); border-radius: 13px; cursor: pointer; transition: 150ms ease; }
+.resource-shortcuts button:hover { color: #fff; border-color: #5b8ff4; transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,.22); }
+.resource-shortcuts button > span { color: #62e6ff; font-size: 1.05rem; }.resource-shortcuts strong { font-size: .68rem; }.resource-shortcuts small { color: #718bb5; font-size: .55rem; line-height: 1.15; }
+.tutor-stage .chat-message, .tutor-stage .tutor-pending { width: min(97%, 940px); }
+.tutor-stage .chat-message.user { width: min(80%, 720px); }
+.tutor-stage .transcript { padding-inline: 2px; }
+.tutor-stage .tutor-notice { max-width: none; }
+.tutor-stage .tutor-composer { margin-top: 4px; }
+
+@media (max-width: 1180px) and (min-width: 960px) {
+  .tutor-dashboard { grid-template-columns: minmax(0, 1fr) 224px; gap: 12px; }
+  .resource-shortcuts { grid-template-columns: 1fr; }
+  .resource-shortcuts button { grid-template-columns: 30px 1fr; justify-items: start; align-items: center; min-height: 50px; text-align: left; }
+  .resource-shortcuts small { display: none; }
+}
+
+@media (max-width: 959px) {
+  .tutor-stage { width: 100%; margin-left: 0; padding-inline: 0; }
+  .tutor-dashboard { display: block; }
+  .tutor-dashboard > .tutor, .tutor-quick-rail { grid-column: auto; }
+  .tutor-quick-rail { display: none; }
+  .tutor-stage .tutor--active { padding-bottom: calc(138px + env(safe-area-inset-bottom)); }
+  .tutor-stage .tutor--active .transcript { padding-bottom: calc(150px + env(safe-area-inset-bottom)); scroll-padding-bottom: calc(150px + env(safe-area-inset-bottom)); }
+  .tutor-stage .transcript { width: 100%; min-width: 0; overflow-x: clip; }
+  .tutor-stage .chat-message, .tutor-stage .tutor-pending { min-width: 0; max-width: 100%; }
+  .tutor-stage .chat-message.user { width: 94%; }
+  .tutor-stage .chat-message > div, .tutor-stage .tutor-pending > div { min-width: 0; overflow-wrap: anywhere; }
+  .tutor-stage .answer-content, .tutor-stage .answer-content pre { min-width: 0; max-width: 100%; }
+}
+
 /* Final Style 1 polish: stronger depth, clearer hierarchy and a chat-first
    mobile state, without introducing concept-only controls. */
 .tutor-app {
@@ -496,4 +551,24 @@ p { line-height: 1.7; }
   .tutor-stage .tutor-empty { padding-block: 20px; }
   .tutor-stage .tutor--active .transcript { min-height: 58dvh; }
   .tutor-stage .message-avatar { flex-basis: 32px; width: 32px; height: 32px; }
+}
+
+/* Final cascade: the new desktop rail uses the full canvas, while mobile keeps
+   enough real scroll space for every response to clear the fixed composer. */
+@media (min-width: 960px) {
+  .tutor-stage { width: calc(100% - 282px); max-width: none; margin-left: 282px; padding-inline: clamp(14px, 1.6vw, 24px); }
+  .tutor-stage .chat-message, .tutor-stage .tutor-pending { width: min(97%, 940px); }
+  .tutor-stage .chat-message.user { width: min(80%, 720px); }
+}
+@media (max-width: 959px) {
+  .tutor-stage { width: 100%; margin-left: 0; padding-inline: 0; }
+  .tutor-dashboard { display: block; }
+  .tutor-quick-rail { display: none; }
+  .tutor-stage .tutor--active { padding-bottom: calc(138px + env(safe-area-inset-bottom)); }
+  .tutor-stage .tutor--active .transcript { padding-bottom: calc(150px + env(safe-area-inset-bottom)); scroll-padding-bottom: calc(150px + env(safe-area-inset-bottom)); }
+  .tutor-stage .transcript { width: 100%; min-width: 0; overflow-x: clip; }
+  .tutor-stage .chat-message, .tutor-stage .tutor-pending { min-width: 0; max-width: 100%; }
+  .tutor-stage .chat-message.user { width: 94%; }
+  .tutor-stage .chat-message > div, .tutor-stage .tutor-pending > div { min-width: 0; overflow-wrap: anywhere; }
+  .tutor-stage .answer-content, .tutor-stage .answer-content pre { min-width: 0; max-width: 100%; }
 }
