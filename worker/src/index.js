@@ -28,9 +28,19 @@ async function pseudonymousKey(ip, secret) {
 
 async function callProvider(env, instructions, input, image, signal) {
   const aborted = new Promise((_, reject) => signal.addEventListener('abort', () => reject(Object.assign(new Error('aborted'), { name: 'AbortError' })), { once: true }))
+  const messages = [{ role: 'system', content: instructions }, ...input]
+  if (image) {
+    const last = messages.at(-1)
+    messages[messages.length - 1] = {
+      ...last,
+      content: [
+        { type: 'image_url', image_url: { url: image.data } },
+        { type: 'text', text: last.content },
+      ],
+    }
+  }
   const stream = await Promise.race([env.AI.run(image ? env.VISION_MODEL : env.AI_MODEL, {
-    messages: [{ role: 'system', content: instructions }, ...input],
-    ...(image ? { image: image.data } : {}),
+    messages,
     max_tokens: LIMITS.maxOutputTokens,
     stream: true,
   }), aborted])

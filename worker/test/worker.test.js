@@ -54,14 +54,32 @@ describe('Worker request boundary', () => {
 
   it.each(Object.entries(images))('validates %s bytes and routes image requests to the fixed vision model', async (mimeType, data) => {
     const provider = vi.fn(async () => stream('Vision answer'))
-    const result = await worker.fetch(request(body({ image: { mimeType, data } })), environment(provider))
+    const messages = [
+      { role: 'user', content: 'What is inheritance?' },
+      { role: 'assistant', content: 'Inheritance lets a class reuse another class.' },
+      { role: 'user', content: 'Explain the class diagram in this image.' },
+    ]
+    const result = await worker.fetch(request(body({ messages, image: { mimeType, data } })), environment(provider))
     expect(result.status).toBe(200)
     expect(await result.text()).toContain('Vision answer')
     const [model, payload] = provider.mock.calls[0]
     expect(model).toBe('@cf/meta/llama-3.2-11b-vision-instruct')
-    expect(payload.image).toBe(data)
-    expect(payload.messages[0].content).toContain(JSON.stringify(curricula.oop))
-    expect(payload.stream).toBe(true)
+    expect(payload).toEqual({
+      messages: [
+        { role: 'system', content: expect.stringContaining(JSON.stringify(curricula.oop)) },
+        ...messages.slice(0, -1),
+        {
+          role: 'user',
+          content: [
+            { type: 'image_url', image_url: { url: data } },
+            { type: 'text', text: messages.at(-1).content },
+          ],
+        },
+      ],
+      max_tokens: 800,
+      stream: true,
+    })
+    expect(payload).not.toHaveProperty('image')
   })
 
   it('rejects malformed, mismatched, unsupported, and oversized image input before provider use', async () => {
