@@ -1,6 +1,7 @@
 export const CONTRACT_VERSION = '1'
 export const LIMITS = Object.freeze({
-  maxBodyBytes: 16_000,
+  maxBodyBytes: 4_300_000,
+  maxImageBytes: 3 * 1024 * 1024,
   maxMessages: 12,
   maxMessageCharacters: 4_000,
   maxTotalCharacters: 12_000,
@@ -20,5 +21,6 @@ export const ERROR_STATUS = Object.freeze({
   invalid_provider_response: 502,
   curriculum_unavailable: 503,
   tutor_unavailable: 503,
+  vision_unavailable: 503,
   provider_timeout: 504,
 })

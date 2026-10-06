@@ -246,3 +246,28 @@ p { line-height: 1.7; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
 }
+
+/* Mobile-first Tutor additions. Kept as overrides to preserve the established desktop surface. */
+.message-meta { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.copy-answer { min-height: 32px !important; padding: 4px 8px; color: var(--primary-dark); background: transparent; border: 0; border-radius: 7px; font-size: .72rem; font-weight: 750; cursor: pointer; }
+.answer-content { min-width: 0; overflow-wrap: anywhere; }
+.answer-content > :first-child { margin-top: 8px; }.answer-content > :last-child { margin-bottom: 0; }
+.answer-content h3, .answer-content h4, .answer-content h5 { margin: 18px 0 8px; line-height: 1.3; }
+.answer-content ul, .answer-content ol { margin: 8px 0; padding-left: 1.35rem; }.answer-content li { margin-block: 5px; line-height: 1.55; }
+.answer-content code { padding: .1em .35em; background: #e8eeeb; border-radius: 5px; font: .88em ui-monospace, SFMono-Regular, Consolas, monospace; }
+.answer-content pre { max-width: 100%; margin: 12px 0; overflow-x: auto; overscroll-behavior-inline: contain; padding: 14px; color: #eaf4f1; background: #102d2b; border-radius: 10px; }
+.answer-content pre code { padding: 0; color: inherit; background: transparent; white-space: pre; }
+.composer-shell { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; gap: 8px; align-items: end; padding: 7px; background: white; border: 1px solid #9fb3c8; border-radius: 18px; box-shadow: 0 8px 24px rgba(16,45,43,.08); }
+.composer-shell .composer-field { min-width: 0; }.composer-shell textarea { display: block; min-height: 48px; max-height: 160px; resize: none; overflow-y: auto; padding: 12px 12px 23px; background: transparent; border: 0; }.composer-shell textarea:focus { outline: 0; box-shadow: none; }.composer-shell:focus-within { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(10,118,109,.1); }
+.attach-image { display: grid; place-items: center; width: 44px; height: 44px; color: var(--primary-dark); background: var(--surface-soft); border-radius: 50%; font-size: 1.5rem; cursor: pointer; }.attach-image input { position: absolute; width: 1px; height: 1px; overflow: hidden; opacity: 0; }.composer-send { width: 44px; min-height: 44px; padding: 0; border-radius: 50%; font-size: 1.25rem; }
+.image-preview { display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; gap: 10px; align-items: center; margin-bottom: 10px; padding: 8px; background: var(--surface-soft); border: 1px solid var(--line); border-radius: 12px; }.image-preview img { width: 52px; height: 52px; object-fit: cover; border-radius: 8px; }.image-preview span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: .78rem; }.image-preview button { padding: 6px 9px; color: #8b3427; background: white; border: 1px solid #e6b8ae; border-radius: 8px; cursor: pointer; }.attachment-error { margin: 0 0 8px; color: #9b3022; font-size: .8rem; }
+
+@media (max-width: 959px) {
+  .subject-layout { width: 100%; gap: 24px; padding-inline: 12px; }
+  .tutor { margin-inline: -12px; border-inline: 0; border-radius: 0; }
+  .tutor-heading, .tutor-notice, .transcript { padding-inline: max(12px, env(safe-area-inset-left)); }
+  .transcript { min-height: 52dvh; max-height: none; overflow: visible; padding-bottom: 24px; }
+  .tutor-composer { position: sticky; z-index: 20; bottom: 0; padding: 10px max(12px, env(safe-area-inset-right)) max(10px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left)); background: var(--surface); border-top: 1px solid var(--line); box-shadow: 0 -10px 30px rgba(16,45,43,.1); }
+  .composer-label { margin-bottom: 6px; font-size: .78rem; }
+  .composer-actions > p { margin-top: 6px; }
+}

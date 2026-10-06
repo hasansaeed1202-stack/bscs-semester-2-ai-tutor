@@ -1,7 +1,7 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import TutorChat, { resetTutorSessions } from './TutorChat'
+import TutorChat, { MAX_IMAGE_BYTES, resetTutorSessions } from './TutorChat'
 import { subjects } from '../data/subjects'
 
 afterEach(() => { vi.unstubAllGlobals(); vi.unstubAllEnvs(); resetTutorSessions() })
@@ -52,6 +52,50 @@ describe('TutorChat', () => {
     const user = userEvent.setup(); await user.type(screen.getByLabelText('Your question'), 'What is a class?'); await user.click(screen.getByRole('button', { name: 'Send' }))
     expect(await screen.findByText('<img src=x onerror=alert(1)>')).toBeInTheDocument()
     expect(document.querySelector('img')).toBeNull()
+  })
+
+  it('renders educational formatting without interpreting raw HTML and copies source text', async () => {
+    const markdown = '## Steps\n\n1. Use **binary**\n2. Run `sum()`\n\n```js\n<img src=x onerror=alert(1)>\n```'
+    vi.stubGlobal('fetch', vi.fn(async () => answer(markdown)))
+    render(<TutorChat subject={subjects[0]} activeTopicId="topic-1" />)
+    const user = userEvent.setup()
+    const writeText = vi.spyOn(navigator.clipboard, 'writeText').mockResolvedValue()
+    await user.type(screen.getByLabelText('Your question'), 'Show steps')
+    await user.click(screen.getByRole('button', { name: 'Send' }))
+    expect(await screen.findByRole('heading', { name: 'Steps' })).toBeInTheDocument()
+    expect(screen.getByText('binary', { selector: 'strong' })).toBeInTheDocument()
+    expect(document.querySelector('.answer-content img')).toBeNull()
+    await user.click(screen.getByRole('button', { name: 'Copy Tutor answer' }))
+    expect(writeText).toHaveBeenCalledWith(markdown)
+    expect(screen.getByRole('button', { name: 'Copy Tutor answer' })).toHaveTextContent('Copied')
+  })
+
+  it('previews and sends a valid image with the grounded request', async () => {
+    const provider = vi.fn(async () => answer('Image checked'))
+    vi.stubGlobal('fetch', provider)
+    render(<TutorChat subject={subjects[0]} activeTopicId="topic-1" />)
+    const user = userEvent.setup()
+    const png = new File([new Uint8Array([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0, 0, 0, 0])], 'work.png', { type: 'image/png' })
+    await user.upload(screen.getByLabelText('Attach image'), png)
+    expect(await screen.findByAltText('Preview of attached student work')).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: 'Remove work.png' }))
+    expect(screen.queryByAltText('Preview of attached student work')).not.toBeInTheDocument()
+    await user.upload(screen.getByLabelText('Attach image'), png)
+    await user.type(screen.getByLabelText('Your question'), 'Where is my mistake?')
+    await user.click(screen.getByRole('button', { name: 'Send' }))
+    await screen.findByText('Image checked')
+    const sent = JSON.parse(provider.mock.calls[0][1].body)
+    expect(sent).toMatchObject({ subjectSlug: subjects[0].slug, activeTopicId: 'topic-1', image: { mimeType: 'image/png' } })
+    expect(sent.image.data).toMatch(/^data:image\/png;base64,/)
+  })
+
+  it('rejects unsupported and oversized image attachments', async () => {
+    render(<TutorChat subject={subjects[0]} activeTopicId="topic-1" />)
+    const user = userEvent.setup()
+    fireEvent.change(screen.getByLabelText('Attach image'), { target: { files: [new File(['text'], 'notes.txt', { type: 'text/plain' })] } })
+    expect(screen.getByRole('alert')).toHaveTextContent('JPEG, PNG, or WEBP')
+    fireEvent.change(screen.getByLabelText('Attach image'), { target: { files: [new File([new Uint8Array(MAX_IMAGE_BYTES + 1)], 'huge.jpg', { type: 'image/jpeg' })] } })
+    expect(screen.getByRole('alert')).toHaveTextContent('3 MB or smaller')
   })
 
   it('restores the draft after a recoverable failure', async () => {

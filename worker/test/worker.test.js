@@ -8,7 +8,12 @@ const origin = 'https://student.example'
 const body = (changes = {}) => ({ subjectSlug: 'oop', activeTopicId: curricula.oop.units.find((u) => u.topics?.length).topics[0].id, messages: [{ role: 'user', content: 'Explain classes.' }], requestId: crypto.randomUUID(), ...changes })
 const request = (value, headers = {}) => new Request('https://api.example/v1/chat', { method: 'POST', headers: { origin, 'content-type': 'application/json', ...headers }, body: JSON.stringify(value) })
 const stream = (text = 'OK') => new ReadableStream({ start(controller) { controller.enqueue(new TextEncoder().encode(`data: ${JSON.stringify({ response: text })}\n\ndata: [DONE]\n\n`)); controller.close() } })
-const environment = (run = vi.fn(async () => stream())) => ({ ALLOWED_ORIGINS: origin, TUTOR_ENABLED: 'true', CLIENT_KEY_SECRET: 'test-secret', AI_MODEL: '@cf/meta/llama-3.1-8b-instruct-fp8', AI: { run }, LIMITER: { idFromName: () => 'global', get: () => ({ fetch: async () => Response.json({ allowed: true }) }) } })
+const environment = (run = vi.fn(async () => stream())) => ({ ALLOWED_ORIGINS: origin, TUTOR_ENABLED: 'true', CLIENT_KEY_SECRET: 'test-secret', AI_MODEL: '@cf/meta/llama-3.1-8b-instruct-fp8', VISION_MODEL: '@cf/meta/llama-3.2-11b-vision-instruct', AI: { run }, LIMITER: { idFromName: () => 'global', get: () => ({ fetch: async () => Response.json({ allowed: true }) }) } })
+const images = {
+  'image/jpeg': 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQ==',
+  'image/png': 'data:image/png;base64,iVBORw0KGgoAAAAAAAAA',
+  'image/webp': 'data:image/webp;base64,UklGRgAAAABXRUJQAAAAAA==',
+}
 
 afterEach(() => vi.unstubAllGlobals())
 
@@ -40,6 +45,36 @@ describe('Worker request boundary', () => {
     expect(payload.max_tokens).toBe(800)
     expect(payload.stream).toBe(true)
     expect(payload).not.toHaveProperty('prompt')
+  })
+
+  it.each(Object.entries(images))('validates %s bytes and routes image requests to the fixed vision model', async (mimeType, data) => {
+    const provider = vi.fn(async () => stream('Vision answer'))
+    const result = await worker.fetch(request(body({ image: { mimeType, data } })), environment(provider))
+    expect(result.status).toBe(200)
+    expect(await result.text()).toContain('Vision answer')
+    const [model, payload] = provider.mock.calls[0]
+    expect(model).toBe('@cf/meta/llama-3.2-11b-vision-instruct')
+    expect(payload.image).toBe(data)
+    expect(payload.messages[0].content).toContain(JSON.stringify(curricula.oop))
+    expect(payload.stream).toBe(true)
+  })
+
+  it('rejects malformed, mismatched, unsupported, and oversized image input before provider use', async () => {
+    const provider = vi.fn(async () => stream())
+    for (const image of [
+      { mimeType: 'image/png', data: 'data:image/png;base64,bm90LWFuLWltYWdl' },
+      { mimeType: 'image/jpeg', data: images['image/png'] },
+      { mimeType: 'image/gif', data: 'data:image/gif;base64,R0lGODlhAQABAIAA' },
+      { mimeType: 'image/png', data: `data:image/png;base64,${'A'.repeat(4_194_308)}` },
+    ]) expect((await worker.fetch(request(body({ image })), environment(provider))).status).toBe(400)
+    expect(provider).not.toHaveBeenCalled()
+  })
+
+  it('fails closed for image requests when the vision model is not configured', async () => {
+    const env = environment(); delete env.VISION_MODEL
+    const result = await worker.fetch(request(body({ image: { mimeType: 'image/png', data: images['image/png'] } })), env)
+    expect(result.status).toBe(503)
+    expect((await result.json()).error.code).toBe('vision_unavailable')
   })
 
   it('fails closed when the limiter fails', async () => {

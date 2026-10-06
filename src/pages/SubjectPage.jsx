@@ -47,7 +47,7 @@ export default function SubjectPage({ subject, topicId }) {
         </div>
       </section>
       <div className="container subject-layout">
-        <TopicNavigation units={syllabus.units} activeTopicId={activeTopic.id} onSelect={selectTopic} />
+        <TopicNavigation subjectTitle={subject.title} units={syllabus.units} activeTopicId={activeTopic.id} onSelect={selectTopic} />
         <section className="study-workspace" ref={lessonRef} aria-labelledby="active-topic-heading">
           <p className="eyebrow">Current topic</p>
           <h2 id="active-topic-heading">{activeTopic.title}</h2>

@@ -4,7 +4,7 @@ export function flattenTopics(units) {
   return units.flatMap((unit) => (unit.topics ?? []).flatMap((topic) => [topic, ...(topic.children ?? [])]))
 }
 
-export default function TopicNavigation({ units, activeTopicId, onSelect }) {
+export default function TopicNavigation({ subjectTitle, units, activeTopicId, onSelect }) {
   const [open, setOpen] = useState(false)
   const [isDesktop, setIsDesktop] = useState(() => typeof window.matchMedia !== 'function' || window.matchMedia('(min-width: 960px)').matches)
   const openerRef = useRef(null)
@@ -65,12 +65,12 @@ export default function TopicNavigation({ units, activeTopicId, onSelect }) {
 
   return (
     <div className="course-map">
-      <button ref={openerRef} className="course-map-trigger" type="button" aria-expanded={open} aria-controls="course-map-navigation" onClick={() => setOpen(true)}>
-        <span><small>Current lesson</small>Browse course map</span><span aria-hidden="true">☰</span>
+      <button ref={openerRef} className="course-map-trigger" type="button" aria-label={`Browse course map: ${subjectTitle || 'Topics'}`} aria-expanded={open} aria-controls="course-map-navigation" onClick={() => setOpen(true)}>
+        <span><small>{subjectTitle || 'Current subject'}</small>Topics</span><span aria-hidden="true">☰</span>
       </button>
       {open && <button className="course-map-backdrop" type="button" tabIndex="-1" aria-label="Dismiss course map" onClick={() => closeDrawer()} />}
       <nav ref={drawerRef} id="course-map-navigation" className={`topic-navigation ${open ? 'is-open' : ''}`} aria-label="Course topics" aria-hidden={!isDesktop && !open} inert={!isDesktop && !open ? true : undefined}>
-      <div className="topic-nav-heading"><span>Course map</span><small>In syllabus order</small><button className="course-map-close" type="button" aria-label="Close course map" onClick={() => closeDrawer()}>×</button></div>
+      <div className="topic-nav-heading"><span>{subjectTitle || 'Course'} topics</span><small>In syllabus order</small><button className="course-map-close" type="button" aria-label="Close course map" onClick={() => closeDrawer()}>×</button></div>
       {units.map((unit) => unit.type === 'milestone' ? (
         <div className="milestone" key={unit.id}><span aria-hidden="true">◆</span>{unit.title}</div>
       ) : (

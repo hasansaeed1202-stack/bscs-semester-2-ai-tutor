@@ -26,10 +26,11 @@ async function pseudonymousKey(ip, secret) {
   return [...new Uint8Array(digest)].slice(0, 16).map((byte) => byte.toString(16).padStart(2, '0')).join('')
 }
 
-async function callProvider(env, instructions, input, signal) {
+async function callProvider(env, instructions, input, image, signal) {
   const aborted = new Promise((_, reject) => signal.addEventListener('abort', () => reject(Object.assign(new Error('aborted'), { name: 'AbortError' })), { once: true }))
-  const stream = await Promise.race([env.AI.run(env.AI_MODEL, {
+  const stream = await Promise.race([env.AI.run(image ? env.VISION_MODEL : env.AI_MODEL, {
     messages: [{ role: 'system', content: instructions }, ...input],
+    ...(image ? { image: image.data } : {}),
     max_tokens: LIMITS.maxOutputTokens,
     stream: true,
   }), aborted])
@@ -90,6 +91,7 @@ export default {
     const subject = subjects[body.subjectSlug]
     if (!curriculum?.curriculumVersion || !subject) return error('curriculum_unavailable', effectiveRequestId, origin)
     if (String(env.TUTOR_ENABLED).toLowerCase() !== 'true' || !env.LIMITER || !env.CLIENT_KEY_SECRET || !env.AI?.run || !env.AI_MODEL) return error('tutor_unavailable', effectiveRequestId, origin)
+    if (body.image && !env.VISION_MODEL) return error('vision_unavailable', effectiveRequestId, origin, 'Image analysis is not configured.')
     let clientKey
     let stub
     try {
@@ -106,7 +108,7 @@ export default {
     }
     try {
       const instructions = buildSystemPrompt(subject, curriculum, body.activeTopicId)
-      const stream = await callProvider(env, instructions, body.messages, controller.signal)
+      const stream = await callProvider(env, instructions, body.messages, body.image, controller.signal)
       return streamingResponse(stream, controller.signal, cleanup, origin)
     } catch (cause) {
       await cleanup()

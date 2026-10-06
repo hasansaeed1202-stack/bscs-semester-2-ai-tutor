@@ -1,7 +1,19 @@
 import { useEffect, useRef, useState } from 'react'
+import AnswerContent from './AnswerContent'
 
 const sessions = new Map()
 const emptySession = () => ({ messages: [], draft: '' })
+export const MAX_IMAGE_BYTES = 3 * 1024 * 1024
+const IMAGE_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp'])
+
+function fileToDataUrl(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => resolve(reader.result)
+    reader.onerror = () => reject(reader.error)
+    reader.readAsDataURL(file)
+  })
+}
 
 function apiErrorMessage(status, code) {
   if (status === 429) return 'You have reached the tutor limit. Please wait and try again.'
@@ -23,6 +35,9 @@ export default function TutorChat({ subject, activeTopicId }) {
   const [draft, setDraft] = useState(initial.draft)
   const [state, setState] = useState('idle')
   const [error, setError] = useState('')
+  const [attachment, setAttachment] = useState(null)
+  const [attachmentError, setAttachmentError] = useState('')
+  const [copiedIndex, setCopiedIndex] = useState(null)
   const activeRequest = useRef(null)
   const latest = useRef(null)
 
@@ -38,6 +53,8 @@ export default function TutorChat({ subject, activeTopicId }) {
     setDraft(saved.draft)
     setState('idle')
     setError('')
+    setAttachment(null)
+    setAttachmentError('')
   }, [subject.slug])
 
   useEffect(() => { sessions.set(subject.slug, { messages, draft }) }, [subject.slug, messages, draft])
@@ -65,7 +82,7 @@ export default function TutorChat({ subject, activeTopicId }) {
       const result = await fetch(import.meta.env.VITE_TUTOR_API_URL || '/v1/chat', {
         method: 'POST', signal: request.controller.signal,
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ subjectSlug: subject.slug, activeTopicId, messages: outbound, requestId: crypto.randomUUID() }),
+        body: JSON.stringify({ subjectSlug: subject.slug, activeTopicId, messages: outbound, requestId: crypto.randomUUID(), ...(attachment ? { image: { mimeType: attachment.file.type, data: attachment.dataUrl } } : {}) }),
       })
       if (!result.ok) {
         const payload = await result.json().catch(() => ({}))
@@ -113,6 +130,7 @@ export default function TutorChat({ subject, activeTopicId }) {
       if (activeRequest.current !== request) return
       activeRequest.current = null
       setState('idle')
+      setAttachment(null)
       requestAnimationFrame(() => latest.current?.focus())
     } catch (cause) {
       if (cause.name === 'AbortError') {
@@ -146,11 +164,48 @@ export default function TutorChat({ subject, activeTopicId }) {
     setMessages([])
     setDraft('')
     setError('')
+    setAttachment(null)
+    setAttachmentError('')
     setState('idle')
   }
 
   function stop() {
     activeRequest.current?.controller.abort()
+  }
+
+  async function chooseImage(event) {
+    const file = event.target.files?.[0]
+    event.target.value = ''
+    if (!file) return
+    if (!IMAGE_TYPES.has(file.type)) return setAttachmentError('Choose a JPEG, PNG, or WEBP image.')
+    if (file.size > MAX_IMAGE_BYTES) return setAttachmentError('The image must be 3 MB or smaller.')
+    try {
+      setAttachment({ file, dataUrl: await fileToDataUrl(file) })
+      setAttachmentError('')
+    } catch {
+      setAttachmentError('The image could not be read. Choose another image.')
+    }
+  }
+
+  async function copyAnswer(content, index) {
+    try {
+      await navigator.clipboard.writeText(content)
+      setCopiedIndex(index)
+      setTimeout(() => setCopiedIndex((current) => current === index ? null : current), 1800)
+    } catch { setCopiedIndex(null) }
+  }
+
+  function updateDraft(event) {
+    setDraft(event.target.value)
+    event.target.style.height = 'auto'
+    event.target.style.height = `${Math.min(event.target.scrollHeight, 160)}px`
+  }
+
+  function handleComposerKeyDown(event) {
+    if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing) {
+      event.preventDefault()
+      event.currentTarget.form?.requestSubmit()
+    }
   }
 
   return (
@@ -163,7 +218,7 @@ export default function TutorChat({ subject, activeTopicId }) {
       {messages.length > 0 && <a className="skip-latest" href={`#latest-${subject.slug}`}>Skip to latest response</a>}
       <div className="transcript" role="log" aria-live="polite" aria-relevant="additions" aria-label={`${subject.title} tutor conversation`}>
         {!messages.length && <div className="tutor-empty"><span className="empty-chat-icon" aria-hidden="true">&#10022;</span><h3>What would you like to learn?</h3><p>Ask for a clear explanation, a worked example, a practice problem, or a quick quiz about this course.</p><ul aria-label="Example questions"><li>Explain a difficult concept</li><li>Walk through an example</li><li>Test my understanding</li></ul></div>}
-        {messages.map((message, index) => <article className={`chat-message ${message.role}`} key={`${message.role}-${index}`}><span className="message-avatar" aria-hidden="true">{message.role === 'user' ? 'Y' : 'AI'}</span><div><strong>{message.role === 'user' ? 'You' : 'Tutor'}</strong><p>{message.content}</p></div></article>)}
+        {messages.map((message, index) => <article className={`chat-message ${message.role}`} key={`${message.role}-${index}`}><span className="message-avatar" aria-hidden="true">{message.role === 'user' ? 'Y' : 'AI'}</span><div><div className="message-meta"><strong>{message.role === 'user' ? 'You' : 'Tutor'}</strong>{message.role === 'assistant' && <button type="button" className="copy-answer" onClick={() => copyAnswer(message.content, index)} aria-label="Copy Tutor answer">{copiedIndex === index ? 'Copied' : 'Copy'}</button>}</div>{message.role === 'assistant' ? <AnswerContent content={message.content} /> : <p>{message.content}</p>}</div></article>)}
         {state === 'sending' && messages.at(-1)?.role !== 'assistant' && <div className="tutor-pending" role="status"><span className="message-avatar" aria-hidden="true">AI</span><div><strong>Tutor</strong><span className="thinking-dots" aria-label="Tutor is thinking"><i /><i /><i /></span></div></div>}
         <span id={`latest-${subject.slug}`} ref={latest} tabIndex="-1" />
       </div>
@@ -171,8 +226,14 @@ export default function TutorChat({ subject, activeTopicId }) {
       <p className="visually-hidden" aria-live="polite">{state === 'idle' && messages.at(-1)?.role === 'assistant' ? 'Tutor response received.' : ''}</p>
       <form className="tutor-composer" onSubmit={send}>
         <div className="composer-label"><label htmlFor={`tutor-input-${subject.slug}`}>Your question</label><small>about {subject.title}</small></div>
-        <div className="composer-field"><textarea id={`tutor-input-${subject.slug}`} value={draft} onChange={(event) => setDraft(event.target.value)} maxLength="4000" rows="3" placeholder="Type your study question…" disabled={state === 'sending'} aria-describedby={`tutor-count-${subject.slug}`} /><span id={`tutor-count-${subject.slug}`} className="character-count">{draft.length} of 4000 characters</span></div>
-        <div className="composer-actions"><p>AI can make mistakes. Check important answers.</p><div className="button-row"><button className="primary-action" type="submit" disabled={!draft.trim() || state === 'sending'}>{state === 'error' ? 'Try again' : 'Send'} <span aria-hidden="true">→</span></button>{state === 'sending' && <button className="secondary-action" type="button" onClick={stop}>Stop response</button>}</div></div>
+        {attachment && <div className="image-preview"><img src={attachment.dataUrl} alt="Preview of attached student work" /><span title={attachment.file.name}>{attachment.file.name}</span><button type="button" onClick={() => setAttachment(null)} aria-label={`Remove ${attachment.file.name}`}>Remove</button></div>}
+        {attachmentError && <p className="attachment-error" role="alert">{attachmentError}</p>}
+        <div className="composer-shell">
+          <label className="attach-image" title="Attach a photo of your work"><span aria-hidden="true">+</span><span className="visually-hidden">Attach image</span><input aria-label="Attach image" type="file" accept="image/jpeg,image/png,image/webp" capture="environment" onChange={chooseImage} disabled={state === 'sending'} /></label>
+          <div className="composer-field"><textarea id={`tutor-input-${subject.slug}`} value={draft} onChange={updateDraft} onKeyDown={handleComposerKeyDown} maxLength="4000" rows="1" placeholder="Ask about this topic…" disabled={state === 'sending'} aria-describedby={`tutor-count-${subject.slug}`} /><span id={`tutor-count-${subject.slug}`} className="character-count">{draft.length} of 4000 characters</span></div>
+          <button className="primary-action composer-send" type="submit" disabled={!draft.trim() || state === 'sending'} aria-label={state === 'error' ? 'Try again' : 'Send'}>{state === 'error' ? 'Retry' : <span aria-hidden="true">↑</span>}</button>
+        </div>
+        <div className="composer-actions"><p>JPEG, PNG or WEBP · 3 MB max. Images aren’t stored.</p>{state === 'sending' && <button className="secondary-action" type="button" onClick={stop}>Stop response</button>}</div>
       </form>
     </section>
   )
