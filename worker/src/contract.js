@@ -12,10 +12,14 @@ function validImage(image) {
   const match = /^data:(image\/(?:jpeg|png|webp));base64,([A-Za-z0-9+/]+={0,2})$/.exec(image.data)
   if (!match || match[1] !== image.mimeType) return false
   const encoded = match[2]
-  const byteLength = Math.floor(encoded.length * 3 / 4) - (encoded.endsWith('==') ? 2 : encoded.endsWith('=') ? 1 : 0)
-  if (byteLength < 12 || byteLength > LIMITS.maxImageBytes) return false
+  if (encoded.length % 4 !== 0) return false
   let bytes
-  try { bytes = Uint8Array.from(atob(encoded.slice(0, 24)), (character) => character.charCodeAt(0)) } catch { return false }
+  try {
+    const decoded = atob(encoded)
+    bytes = Uint8Array.from(decoded, (character) => character.charCodeAt(0))
+    if (btoa(decoded) !== encoded) return false
+  } catch { return false }
+  if (bytes.byteLength < 12 || bytes.byteLength > LIMITS.maxImageBytes) return false
   if (image.mimeType === 'image/jpeg') return bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff
   if (image.mimeType === 'image/png') return [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a].every((value, index) => bytes[index] === value)
   return String.fromCharCode(...bytes.slice(0, 4)) === 'RIFF' && String.fromCharCode(...bytes.slice(8, 12)) === 'WEBP'

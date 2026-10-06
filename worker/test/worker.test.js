@@ -14,6 +14,11 @@ const images = {
   'image/png': 'data:image/png;base64,iVBORw0KGgoAAAAAAAAA',
   'image/webp': 'data:image/webp;base64,UklGRgAAAABXRUJQAAAAAA==',
 }
+const pngBytes = (size) => {
+  const bytes = Buffer.alloc(size)
+  Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]).copy(bytes)
+  return `data:image/png;base64,${bytes.toString('base64')}`
+}
 
 afterEach(() => vi.unstubAllGlobals())
 
@@ -67,6 +72,35 @@ describe('Worker request boundary', () => {
       { mimeType: 'image/gif', data: 'data:image/gif;base64,R0lGODlhAQABAIAA' },
       { mimeType: 'image/png', data: `data:image/png;base64,${'A'.repeat(4_194_308)}` },
     ]) expect((await worker.fetch(request(body({ image })), environment(provider))).status).toBe(400)
+    expect(provider).not.toHaveBeenCalled()
+  })
+
+  it.each([
+    ['invalid base64 length modulo 4', 'iVBORw0KGgoAAAAAAAA', 'image/png'],
+    ['invalid base64 characters', 'iVBORw0KGgoAAAAAAA!AA', 'image/png'],
+    ['invalid base64 padding', 'iVBORw0KGgoAAAAAAA=A', 'image/png'],
+    ['non-canonical base64 pad bits', '/9j/4AAQSkZJRgABAR==', 'image/jpeg'],
+    ['malformed trailing content after a valid prefix', 'iVBORw0KGgoAAAAAAAAA=trailing', 'image/png'],
+  ])('rejects %s before provider use', async (_description, encoded, mimeType) => {
+    const provider = vi.fn(async () => stream())
+    const image = { mimeType, data: `data:${mimeType};base64,${encoded}` }
+    expect((await worker.fetch(request(body({ image })), environment(provider))).status).toBe(400)
+    expect(provider).not.toHaveBeenCalled()
+  })
+
+  it('accepts an image decoded to exactly 3 MiB', async () => {
+    const provider = vi.fn(async () => stream('Boundary accepted'))
+    const image = { mimeType: 'image/png', data: pngBytes(3 * 1024 * 1024) }
+    const result = await worker.fetch(request(body({ image })), environment(provider))
+    expect(result.status).toBe(200)
+    expect(await result.text()).toContain('Boundary accepted')
+    expect(provider).toHaveBeenCalledOnce()
+  })
+
+  it('rejects an image decoded to 3 MiB plus 1 byte', async () => {
+    const provider = vi.fn(async () => stream())
+    const image = { mimeType: 'image/png', data: pngBytes(3 * 1024 * 1024 + 1) }
+    expect((await worker.fetch(request(body({ image })), environment(provider))).status).toBe(400)
     expect(provider).not.toHaveBeenCalled()
   })
 
