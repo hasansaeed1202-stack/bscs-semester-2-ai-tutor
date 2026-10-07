@@ -40,16 +40,16 @@ export default function SubjectPage({ subject, topicId }) {
     <div className="subject-page">
       <section className={`subject-hero accent-${subject.accent}`}>
         <div className="container">
-          <a className="back-link" href="#/">← All subjects</a>
-          <p className="eyebrow">{subject.code} · {syllabus.topicCount} syllabus topics</p>
+          <a className="back-link" href="#/">← Course network</a>
+          <p className="eyebrow">{subject.code} <span aria-hidden="true">//</span> {syllabus.topicCount} syllabus topics</p>
           <h1>{subject.title}</h1>
-          <p>{subject.summary}</p>
+          <p>{subject.summary}</p><div className="subject-signal" aria-hidden="true"><span /><span /><span /></div>
         </div>
       </section>
       <div className="container subject-layout">
         <TopicNavigation subjectTitle={subject.title} units={syllabus.units} activeTopicId={activeTopic.id} onSelect={selectTopic} />
         <section className="study-workspace" ref={lessonRef} aria-labelledby="active-topic-heading">
-          <p className="eyebrow">Current topic</p>
+          <p className="eyebrow">Active learning node</p>
           <h2 id="active-topic-heading">{activeTopic.title}</h2>
           <div className="tabs" role="tablist" aria-label="Study resources" aria-orientation="horizontal">
             {tabNames.map((name, index) => (

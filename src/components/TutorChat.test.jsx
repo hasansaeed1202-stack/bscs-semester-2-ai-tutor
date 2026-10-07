@@ -70,6 +70,19 @@ describe('TutorChat', () => {
     expect(screen.getByRole('button', { name: 'Copy Tutor answer' })).toHaveTextContent('Copied')
   })
 
+  it('skips to the latest response without changing the application route', async () => {
+    vi.stubGlobal('fetch', vi.fn(async () => answer('Latest answer')))
+    window.location.hash = '#/subjects/digital-logic-design?topic=topic-1'
+    render(<TutorChat subject={subjects[0]} activeTopicId="topic-1" />)
+    const user = userEvent.setup()
+    await user.type(screen.getByLabelText('Your question'), 'Show the latest')
+    await user.click(screen.getByRole('button', { name: 'Send' }))
+    await screen.findByText('Latest answer')
+    await user.click(screen.getByRole('button', { name: 'Skip to latest response' }))
+    expect(window.location.hash).toBe('#/subjects/digital-logic-design?topic=topic-1')
+    expect(document.activeElement).toHaveAttribute('id', `latest-${subjects[0].slug}`)
+  })
+
   it('previews and sends a valid image with the grounded request', async () => {
     const provider = vi.fn(async () => answer('Image checked'))
     vi.stubGlobal('fetch', provider)

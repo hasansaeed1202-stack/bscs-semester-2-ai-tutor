@@ -40,6 +40,23 @@ export default function TutorChat({ subject, activeTopicId }) {
   const [copiedIndex, setCopiedIndex] = useState(null)
   const activeRequest = useRef(null)
   const latest = useRef(null)
+  const transcript = useRef(null)
+  const shouldFollow = useRef(true)
+
+  function isNearBottom(node) {
+    return node.scrollHeight - node.scrollTop - node.clientHeight < 96
+  }
+
+  function scrollToLatest({ focus = false, behavior = 'smooth' } = {}) {
+    const node = transcript.current
+    if (node?.scrollTo) node.scrollTo({ top: node.scrollHeight, behavior })
+    else if (node) node.scrollTop = node.scrollHeight
+    if (focus) latest.current?.focus({ preventScroll: true })
+  }
+
+  function handleTranscriptScroll(event) {
+    shouldFollow.current = isNearBottom(event.currentTarget)
+  }
 
   useEffect(() => {
     const request = activeRequest.current
@@ -58,6 +75,9 @@ export default function TutorChat({ subject, activeTopicId }) {
   }, [subject.slug])
 
   useEffect(() => { sessions.set(subject.slug, { messages, draft }) }, [subject.slug, messages, draft])
+  useEffect(() => {
+    if (state === 'sending' && shouldFollow.current) requestAnimationFrame(() => scrollToLatest({ behavior: 'auto' }))
+  }, [messages, state])
   useEffect(() => () => {
     const request = activeRequest.current
     if (request) {
@@ -76,6 +96,8 @@ export default function TutorChat({ subject, activeTopicId }) {
     setDraft('')
     setError('')
     setState('sending')
+    shouldFollow.current = true
+    requestAnimationFrame(() => scrollToLatest())
     const request = { controller: new AbortController(), cancelMode: 'stop', answer: '', truncated: false }
     activeRequest.current = request
     try {
@@ -136,7 +158,7 @@ export default function TutorChat({ subject, activeTopicId }) {
         setState('truncated')
       } else setState('idle')
       setAttachment(null)
-      requestAnimationFrame(() => latest.current?.focus())
+      requestAnimationFrame(() => scrollToLatest({ focus: true }))
     } catch (cause) {
       if (cause.name === 'AbortError') {
         if (request.cancelMode === 'stop' && activeRequest.current === request) {
@@ -146,7 +168,7 @@ export default function TutorChat({ subject, activeTopicId }) {
             setMessages(priorMessages)
           }
           setState('idle')
-          requestAnimationFrame(() => latest.current?.focus())
+          requestAnimationFrame(() => scrollToLatest({ focus: true }))
         }
         return
       }
@@ -216,15 +238,15 @@ export default function TutorChat({ subject, activeTopicId }) {
   return (
     <section className="tutor" aria-labelledby={`tutor-heading-${subject.slug}`}>
       <header className="tutor-heading">
-        <div className="tutor-identity"><span className="tutor-avatar" aria-hidden="true">AI</span><div><p className="eyebrow">AI study support <span>·</span> {subject.code}</p><h2 id={`tutor-heading-${subject.slug}`}>Ask the Tutor</h2><p className="tutor-status"><span aria-hidden="true" /> Ready to help with this course</p></div></div>
+        <div className="tutor-identity"><span className="tutor-avatar" aria-hidden="true"><i />AI</span><div><p className="eyebrow">Neural study interface <span>//</span> {subject.code}</p><h2 id={`tutor-heading-${subject.slug}`}>ALEXI</h2><p className="tutor-status"><span aria-hidden="true" /> AI Study Tutor · Ready</p></div></div>
         <button className="clear-chat" type="button" onClick={clear} disabled={!messages.length && !draft}><span aria-hidden="true">×</span> Clear chat</button>
       </header>
       <p className="tutor-notice"><strong>Study responsibly.</strong> The tutor can make mistakes, so check important answers. Don’t share personal information. This conversation stays in this browser tab.</p>
-      {messages.length > 0 && <a className="skip-latest" href={`#latest-${subject.slug}`}>Skip to latest response</a>}
-      <div className="transcript" role="log" aria-live="polite" aria-relevant="additions" aria-label={`${subject.title} tutor conversation`}>
+      {messages.length > 0 && <button className="skip-latest" type="button" onClick={() => { shouldFollow.current = true; scrollToLatest({ focus: true }) }}>Skip to latest response</button>}
+      <div className="transcript" ref={transcript} onScroll={handleTranscriptScroll} role="log" aria-live="polite" aria-relevant="additions" aria-label={`${subject.title} tutor conversation`}>
         {!messages.length && <div className="tutor-empty"><span className="empty-chat-icon" aria-hidden="true">&#10022;</span><h3>What would you like to learn?</h3><p>Ask for a clear explanation, a worked example, a practice problem, or a quick quiz about this course.</p><ul aria-label="Example questions"><li>Explain a difficult concept</li><li>Walk through an example</li><li>Test my understanding</li></ul></div>}
-        {messages.map((message, index) => <article className={`chat-message ${message.role}`} key={`${message.role}-${index}`}><span className="message-avatar" aria-hidden="true">{message.role === 'user' ? 'Y' : 'AI'}</span><div><div className="message-meta"><strong>{message.role === 'user' ? 'You' : 'Tutor'}</strong>{message.role === 'assistant' && <button type="button" className="copy-answer" onClick={() => copyAnswer(message.content, index)} aria-label="Copy Tutor answer">{copiedIndex === index ? 'Copied' : 'Copy'}</button>}</div>{message.role === 'assistant' ? <AnswerContent content={message.content} /> : <p>{message.content}</p>}</div></article>)}
-        {state === 'sending' && messages.at(-1)?.role !== 'assistant' && <div className="tutor-pending" role="status"><span className="message-avatar" aria-hidden="true">AI</span><div><strong>Tutor</strong><span className="thinking-dots" aria-label="Tutor is thinking"><i /><i /><i /></span></div></div>}
+        {messages.map((message, index) => <article className={`chat-message ${message.role}`} key={`${message.role}-${index}`}><span className="message-avatar" aria-hidden="true">{message.role === 'user' ? 'ST' : 'AI'}</span><div><div className="message-meta"><strong>{message.role === 'user' ? 'STUDENT' : 'ALEXI'}</strong>{message.role === 'assistant' && <button type="button" className="copy-answer" onClick={() => copyAnswer(message.content, index)} aria-label="Copy Tutor answer">{copiedIndex === index ? 'Copied' : 'Copy'}</button>}</div>{message.role === 'assistant' ? <AnswerContent content={message.content} /> : <p>{message.content}</p>}</div></article>)}
+        {state === 'sending' && messages.at(-1)?.role !== 'assistant' && <div className="tutor-pending" role="status"><span className="message-avatar" aria-hidden="true">AI</span><div><strong>ALEXI</strong><span className="thinking-dots" aria-label="Tutor is thinking"><i /><i /><i /></span></div></div>}
         <span id={`latest-${subject.slug}`} ref={latest} tabIndex="-1" />
       </div>
       {error && <div className="tutor-error" role="alert"><span className="error-icon" aria-hidden="true">!</span><div><strong>{state === 'truncated' ? 'Response incomplete' : 'Message not sent'}</strong><p>{error}</p>{state !== 'truncated' && <small>Your question is still in the composer. Select “Try again” when you’re ready.</small>}</div></div>}
