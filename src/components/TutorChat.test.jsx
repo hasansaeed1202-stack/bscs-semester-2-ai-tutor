@@ -154,6 +154,41 @@ describe('TutorChat', () => {
     await waitFor(() => expect(screen.queryByRole('button', { name: 'Stop response' })).not.toBeInTheDocument())
   })
 
+  it('accumulates a long multi-chunk answer through normal completion and stops at DONE', async () => {
+    const sections = [
+      'Probability describes uncertainty. ',
+      'For independent events, multiply their probabilities. ',
+      'For mutually exclusive events, add their probabilities. ',
+      'A worked example reaches the final result of 0.42.',
+    ]
+    vi.stubGlobal('fetch', vi.fn(async () => streamResponse(
+      ...sections.map((response) => `data: ${JSON.stringify({ response })}\n\n`),
+      'data: [DONE]\n\ndata: {"response":"ignored after completion"}\n\n',
+    )))
+    render(<TutorChat subject={subjects[0]} activeTopicId="topic-1" />)
+    const user = userEvent.setup()
+    await user.type(screen.getByLabelText('Your question'), 'Give me a complete worked explanation')
+    await user.click(screen.getByRole('button', { name: 'Send' }))
+    expect(await screen.findByText(sections.join(''))).toBeInTheDocument()
+    expect(screen.queryByText(/ignored after completion/)).not.toBeInTheDocument()
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument()
+  })
+
+  it('keeps the partial answer and warns when the provider reports its token ceiling', async () => {
+    vi.stubGlobal('fetch', vi.fn(async () => streamResponse(
+      'data: {"response":"The means of X and Y are"}\n\n',
+      'data: {"response":"","finish_reason":"length"}\n\n',
+      'data: [DONE]\n\n',
+    )))
+    render(<TutorChat subject={subjects[0]} activeTopicId="topic-1" />)
+    const user = userEvent.setup()
+    await user.type(screen.getByLabelText('Your question'), 'Explain the means')
+    await user.click(screen.getByRole('button', { name: 'Send' }))
+    expect(await screen.findByText('The means of X and Y are')).toBeInTheDocument()
+    expect(await screen.findByRole('alert')).toHaveTextContent('Response incomplete')
+    expect(screen.getByRole('alert')).toHaveTextContent('reached its response limit')
+  })
+
   it('keeps partial text when a streaming response is stopped', async () => {
     let controller
     vi.stubGlobal('fetch', vi.fn(async (_url, options) => new Response(new ReadableStream({

@@ -76,7 +76,7 @@ export default function TutorChat({ subject, activeTopicId }) {
     setDraft('')
     setError('')
     setState('sending')
-    const request = { controller: new AbortController(), cancelMode: 'stop', answer: '' }
+    const request = { controller: new AbortController(), cancelMode: 'stop', answer: '', truncated: false }
     activeRequest.current = request
     try {
       const result = await fetch(import.meta.env.VITE_TUTOR_API_URL || '/v1/chat', {
@@ -102,6 +102,8 @@ export default function TutorChat({ subject, activeTopicId }) {
         if (data.trim() === '[DONE]') return true
         try {
           const parsed = JSON.parse(data)
+          const finishReason = parsed.finish_reason || parsed.choices?.[0]?.finish_reason
+          if (['length', 'max_tokens', 'max_output_tokens'].includes(finishReason)) request.truncated = true
           if (typeof parsed.response !== 'string' || !parsed.response) return false
           request.answer += parsed.response
           setMessages((current) => {
@@ -129,7 +131,10 @@ export default function TutorChat({ subject, activeTopicId }) {
       if (finished) await reader.cancel().catch(() => {})
       if (activeRequest.current !== request) return
       activeRequest.current = null
-      setState('idle')
+      if (request.truncated) {
+        setError('The Tutor reached its response limit before finishing. Try asking for the remaining steps or a shorter section.')
+        setState('truncated')
+      } else setState('idle')
       setAttachment(null)
       requestAnimationFrame(() => latest.current?.focus())
     } catch (cause) {
@@ -222,7 +227,7 @@ export default function TutorChat({ subject, activeTopicId }) {
         {state === 'sending' && messages.at(-1)?.role !== 'assistant' && <div className="tutor-pending" role="status"><span className="message-avatar" aria-hidden="true">AI</span><div><strong>Tutor</strong><span className="thinking-dots" aria-label="Tutor is thinking"><i /><i /><i /></span></div></div>}
         <span id={`latest-${subject.slug}`} ref={latest} tabIndex="-1" />
       </div>
-      {error && <div className="tutor-error" role="alert"><span className="error-icon" aria-hidden="true">!</span><div><strong>Message not sent</strong><p>{error}</p><small>Your question is still in the composer. Select “Try again” when you’re ready.</small></div></div>}
+      {error && <div className="tutor-error" role="alert"><span className="error-icon" aria-hidden="true">!</span><div><strong>{state === 'truncated' ? 'Response incomplete' : 'Message not sent'}</strong><p>{error}</p>{state !== 'truncated' && <small>Your question is still in the composer. Select “Try again” when you’re ready.</small>}</div></div>}
       <p className="visually-hidden" aria-live="polite">{state === 'idle' && messages.at(-1)?.role === 'assistant' ? 'Tutor response received.' : ''}</p>
       <form className="tutor-composer" onSubmit={send}>
         <div className="composer-label"><label htmlFor={`tutor-input-${subject.slug}`}>Your question</label><small>about {subject.title}</small></div>
