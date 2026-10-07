@@ -5,8 +5,8 @@ export const LIMITS = Object.freeze({
   maxMessages: 12,
   maxMessageCharacters: 4_000,
   maxTotalCharacters: 12_000,
-  maxOutputTokens: 1_600,
-  providerTimeoutMs: 20_000,
+  maxOutputTokens: 800,
+  providerTimeoutMs: 60_000,
 })
 
 export const ERROR_STATUS = Object.freeze({
